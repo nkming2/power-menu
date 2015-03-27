@@ -16,17 +16,18 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// Disable the standard activity launch animation
-		overridePendingTransition(0, 0);
 		super.onCreate(savedInstanceState);
 
 		if (!ensureDeviceAdmin())
 		{
 			// We don't want the animation here
 			super.finish();
+			mIsAnimateClose = false;
 			return;
 		}
 
+		// Disable the standard activity launch animation
+		overridePendingTransition(0, 0);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null)
 		{
@@ -41,14 +42,20 @@ public class MainActivity extends ActionBarActivity
 	protected void onUserLeaveHint()
 	{
 		super.onUserLeaveHint();
-		overridePendingTransition(0, R.anim.activity_close_exit);
+		if (mIsAnimateClose)
+		{
+			overridePendingTransition(0, R.anim.activity_close_exit);
+		}
 	}
 
 	@Override
 	public void finish()
 	{
 		super.finish();
-		overridePendingTransition(0, R.anim.activity_close_exit);
+		if (mIsAnimateClose)
+		{
+			overridePendingTransition(0, R.anim.activity_close_exit);
+		}
 	}
 
 	/**
@@ -69,4 +76,5 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	private MainFragment mFrag;
+	private boolean mIsAnimateClose = true;
 }
