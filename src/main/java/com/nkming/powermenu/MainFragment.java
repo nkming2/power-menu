@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import com.shamanland.fab.FloatingActionButton;
 
@@ -93,7 +94,12 @@ public class MainFragment extends Fragment
 
 	private void onShutdownClick()
 	{
-
+		if (!SystemHelper.shutdown(getActivity()))
+		{
+			Toast.makeText(getActivity(), R.string.shutdown_fail,
+					Toast.LENGTH_LONG).show();
+			getActivity().finish();
+		}
 	}
 
 	private void onSleepClick()

@@ -1,3 +1,5 @@
 <resources>
 	<string name="app_name">Power Menu</string>
+
+	<string name="shutdown_fail">Failed shutting down, not installed as system app?</string>
 </resources>
