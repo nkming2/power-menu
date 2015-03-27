@@ -7,9 +7,15 @@
 		<item name="android:windowBackground">@color/app_bg</item>
 		<item name="android:windowContentOverlay">@null</item>
 		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowAnimationStyle">@style/AppTheme.Animation</item>
 
 		<item name="colorPrimary">@color/color_primary</item>
 		<item name="colorPrimaryDark">@color/color_primary_dark</item>
 		<item name="colorAccent">@color/color_accent</item>
+	</style>
+
+	<style name="AppTheme.Animation" parent="android:style/Animation.Activity">
+		<item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+		<item name="android:windowEnterAnimation">@anim/activity_open_enter</item>
 	</style>
 </resources>

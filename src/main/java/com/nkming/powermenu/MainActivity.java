@@ -16,6 +16,8 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		// Disable the standard activity launch animation
+		overridePendingTransition(0, 0);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null)
