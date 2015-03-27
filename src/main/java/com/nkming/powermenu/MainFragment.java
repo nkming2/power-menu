@@ -32,6 +32,14 @@ public class MainFragment extends Fragment
 	private void initButton(View root)
 	{
 		mShutdownBtn = (FloatingActionButton)root.findViewById(R.id.shutdown_id);
+		mShutdownBtn.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				onShutdownClick();
+			}
+		});
 		mShutdownBtn.setScaleX(0.0f);
 		mShutdownBtn.setScaleY(0.0f);
 		mShutdownBtn.animate().scaleX(1.0f).scaleY(1.0f)
@@ -39,18 +47,50 @@ public class MainFragment extends Fragment
 				.setDuration(250);
 
 		mSleepBtn = (FloatingActionButton)root.findViewById(R.id.sleep_btn);
+		mSleepBtn.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				onSleepClick();
+			}
+		});
 		mSleepBtn.setScaleX(0.0f);
 		mSleepBtn.setScaleY(0.0f);
 		mSleepBtn.animate().scaleX(1.0f).scaleY(1.0f)
 				.setInterpolator(new DecelerateInterpolator())
 				.setDuration(250).setStartDelay(100);
 
+
 		mRestartBtn = (FloatingActionButton)root.findViewById(R.id.restart_btn);
+		mRestartBtn.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				onRestartClick();
+			}
+		});
 		mRestartBtn.setScaleX(0.0f);
 		mRestartBtn.setScaleY(0.0f);
 		mRestartBtn.animate().scaleX(1.0f).scaleY(1.0f)
 				.setInterpolator(new DecelerateInterpolator())
 				.setDuration(250).setStartDelay(200);
+	}
+
+	private void onShutdownClick()
+	{
+
+	}
+
+	private void onSleepClick()
+	{
+
+	}
+
+	private void onRestartClick()
+	{
+
 	}
 
 	private FloatingActionButton mShutdownBtn;
