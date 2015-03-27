@@ -104,7 +104,12 @@ public class MainFragment extends Fragment
 
 	private void onSleepClick()
 	{
-
+		if (!SystemHelper.sleep(getActivity()))
+		{
+			Toast.makeText(getActivity(), R.string.sleep_fail,
+					Toast.LENGTH_LONG).show();
+		}
+		getActivity().finish();
 	}
 
 	private void onRestartClick()
