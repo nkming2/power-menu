@@ -16,6 +16,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="8dp"
+			android:src="@drawable/ic_action_shutdown"
 			app:floatingActionButtonColor="@color/shutdown_bg"
 			app:floatingActionButtonSize="normal"/>
 
@@ -24,6 +25,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="8dp"
+			android:src="@drawable/ic_action_sleep"
 			app:floatingActionButtonColor="@color/sleep_bg"
 			app:floatingActionButtonSize="normal"/>
 
@@ -32,6 +34,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="8dp"
+			android:src="@drawable/ic_action_restart"
 			app:floatingActionButtonColor="@color/restart_bg"
 			app:floatingActionButtonSize="normal"/>
 	</LinearLayout>
