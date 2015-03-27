@@ -19,6 +19,14 @@ public class MainActivity extends ActionBarActivity
 		// Disable the standard activity launch animation
 		overridePendingTransition(0, 0);
 		super.onCreate(savedInstanceState);
+
+		if (!ensureDeviceAdmin())
+		{
+			// We don't want the animation here
+			super.finish();
+			return;
+		}
+
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null)
 		{
@@ -41,6 +49,23 @@ public class MainActivity extends ActionBarActivity
 	{
 		super.finish();
 		overridePendingTransition(0, R.anim.activity_close_exit);
+	}
+
+	/**
+	 * Ensure device admin rights are granted to this app. If not, the app would
+	 * be finished and direct user to the device admin settings instead
+	 */
+	private boolean ensureDeviceAdmin()
+	{
+		if (!SystemHelper.isDeviceAdmin(this))
+		{
+			SystemHelper.enableDeviceAdmin(this);
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 	private MainFragment mFrag;
