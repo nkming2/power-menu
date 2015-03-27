@@ -29,5 +29,19 @@ public class MainActivity extends ActionBarActivity
 		}
 	}
 
+	@Override
+	protected void onUserLeaveHint()
+	{
+		super.onUserLeaveHint();
+		overridePendingTransition(0, R.anim.activity_close_exit);
+	}
+
+	@Override
+	public void finish()
+	{
+		super.finish();
+		overridePendingTransition(0, R.anim.activity_close_exit);
+	}
+
 	private MainFragment mFrag;
 }
