@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="color_primary">@color/md_light_blue_500</color>
+	<color name="color_primary_dark">@color/md_light_blue_700</color>
+	<color name="color_primary_light">@color/md_light_blue_100</color>
+	<color name="color_accent">@color/md_purple_A200</color>
+</resources>
