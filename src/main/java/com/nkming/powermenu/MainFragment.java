@@ -25,8 +25,21 @@ public class MainFragment extends Fragment
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
 	{
 		View root = inflater.inflate(R.layout.frag_main, container, false);
+		initRoot(root);
 		initButton(root);
 		return root;
+	}
+
+	private void initRoot(View root)
+	{
+		root.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				getActivity().finish();
+			}
+		});
 	}
 
 	private void initButton(View root)
