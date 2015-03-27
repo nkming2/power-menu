@@ -6,7 +6,4 @@
 	<color name="color_accent">@color/md_purple_A200</color>
 
 	<color name="app_bg">#80000000</color>
-	<color name="shutdown_bg">@color/md_red_500</color>
-	<color name="sleep_bg">@color/md_green_500</color>
-	<color name="restart_bg">@color/md_blue_500</color>
 </resources>
