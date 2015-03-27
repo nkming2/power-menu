@@ -1,0 +1,7 @@
+# Ignore all sub-dirs but src/
+*/*
+!src/*
+
+# Ignore additional files in root dir
+*.iml
+proguard-rules.pro
