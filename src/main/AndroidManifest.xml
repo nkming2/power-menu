@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.nkming.powermenu" >
 
+	<uses-permission android:name="android.permission.REBOOT" />
 	<uses-permission android:name="android.permission.SHUTDOWN" />
 
 	<application
