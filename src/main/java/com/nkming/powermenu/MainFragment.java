@@ -174,7 +174,7 @@ public class MainFragment extends Fragment
 					.setInterpolator(new AccelerateInterpolator())
 					.setDuration(Res.ANIMATION_FAST)
 					.setStartDelay(50 * i);
-			disableButton(ids[i]);
+			disableButton(mActionBtns[ids[i]]);
 		}
 
 		mActionBtns[RESTART_ID].animate().rotationBy(360)
@@ -231,16 +231,16 @@ public class MainFragment extends Fragment
 						.setInterpolator(new AccelerateInterpolator())
 						.setDuration(Res.ANIMATION_FAST).setStartDelay(0);
 			}
-			disableButton(i);
+			disableButton(mActionBtns[i]);
 		}
 	}
 
-	private void disableButton(int btnId)
+	private void disableButton(View btn)
 	{
-		mActionBtns[btnId].setOnClickListener(null);
-		mActionBtns[btnId].setFocusable(false);
-		mActionBtns[btnId].setClickable(false);
-		mActionBtns[btnId].setEnabled(false);
+		btn.setOnClickListener(null);
+		btn.setFocusable(false);
+		btn.setClickable(false);
+		btn.setEnabled(false);
 	}
 
 	/**
