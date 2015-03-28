@@ -226,9 +226,31 @@ public class MainFragment extends Fragment
 				});
 	}
 
-	private void onRestartMenuClick(int id)
+	private void onRestartMenuClick(final int id)
 	{
+		startReveal(mRestartBtns[id], R.color.restart_bg,
+				new PostAnimationCallback()
+		{
+			@Override
+			public void run()
+			{
+				// App probably closed
+				if (getActivity() == null)
+				{
+					return;
+				}
+				if (!SystemHelper.reboot(getRebootMode(id), getActivity()))
+				{
+					Toast.makeText(getActivity(), R.string.restart_fail,
+							Toast.LENGTH_LONG).show();
+				}
+				getActivity().finish();
+			}
+		});
 
+		mRestartBtns[id].setShadow(false);
+		dismissOtherButtons(mRestartBtns, mRestartBtns[id]);
+		dismissOtherButtons(mRestartLabels, null);
 	}
 
 	private void startReveal(View atView, int colorId,
@@ -350,6 +372,23 @@ public class MainFragment extends Fragment
 
 		case RESTART_ID:
 			return R.id.restart_btn;
+		}
+	}
+
+	private SystemHelper.RebootMode getRebootMode(int restartBtnId)
+	{
+		switch (restartBtnId)
+		{
+		default:
+			Log.e(LOG_TAG + ".getRebootMode", "Unknown id");
+		case RESTART_NORMAL_ID:
+			return SystemHelper.RebootMode.NORMAL;
+
+		case RESTART_RECOVERY_ID:
+			return SystemHelper.RebootMode.RECOVERY;
+
+		case RESTART_BOOTLOADER_ID:
+			return SystemHelper.RebootMode.BOOTLOADER;
 		}
 	}
 
