@@ -207,6 +207,10 @@ public class MainFragment extends Fragment
 						.setInterpolator(new AccelerateInterpolator())
 						.setDuration(Res.ANIMATION_FAST).setStartDelay(0);
 			}
+			mActionBtns[i].setOnClickListener(null);
+			mActionBtns[i].setFocusable(false);
+			mActionBtns[i].setClickable(false);
+			mActionBtns[i].setEnabled(false);
 		}
 	}
 
