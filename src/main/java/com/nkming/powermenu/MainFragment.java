@@ -14,6 +14,7 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
+import com.nkming.utils.unit.DimensionUtils;
 import com.shamanland.fab.FloatingActionButton;
 
 public class MainFragment extends Fragment
@@ -162,7 +164,15 @@ public class MainFragment extends Fragment
 			@Override
 			public void run()
 			{
-				getActivity().finish();
+				// App probably closed
+				if (getActivity() == null)
+				{
+					return;
+				}
+				FragmentTransaction ft = getChildFragmentManager()
+						.beginTransaction();
+				ft.add(R.id.details, RestartDetailFragment.create());
+				ft.commit();
 			}
 		});
 	}
@@ -207,7 +217,7 @@ public class MainFragment extends Fragment
 			{
 				mActionBtns[i].setShadow(false);
 				mActionBtns[i].animate().x(mReveal.getWidth() / 2 - btnRadius)
-						.y(mReveal.getHeight() / 2 - btnRadius - 100)
+						.y(DimensionUtils.dpToPx(getActivity(), 64))
 						.setInterpolator(new AccelerateDecelerateInterpolator())
 						.setDuration(Res.ANIMATION_MID).setStartDelay(0);
 			}

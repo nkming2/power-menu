@@ -4,6 +4,17 @@
 	<string name="shutdown_fail">Failed shutting down, not installed as system app?</string>
 	<string name="sleep_fail">Failed putting to sleep, not activated as device admin?</string>
 
+	<string name="restart_text">Restart to?</string>
+	<string name="restart_mode_normal">Normal</string>
+	<string name="restart_mode_recovery">Recovery</string>
+	<string name="restart_mode_bootloader">Bootloader</string>
+
+	<string-array name="restart_mode">
+		<item>@string/restart_mode_normal</item>
+		<item>@string/restart_mode_recovery</item>
+		<item>@string/restart_mode_bootloader</item>
+	</string-array>
+
 	<string name="device_admin_label">Power Menu</string>
 	<string name="device_admin_description">Allow Power Menu to put device to sleep</string>
 </resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center_horizontal"
+	android:background="@color/restart_primary">
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/TextAppearance.AppCompat.Title"
+		android:text="@string/restart_text"
+		android:textColor="@android:color/white"
+		android:padding="8dp"/>
+
+	<Button
+		android:id="@+id/restart_normal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		style="?android:attr/borderlessButtonStyle"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:text="@string/restart_mode_normal"
+		android:textColor="@color/restart_accent"/>
+
+	<Button
+		android:id="@+id/restart_recovery"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		style="?android:attr/borderlessButtonStyle"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:text="@string/restart_mode_recovery"
+		android:textColor="@color/restart_accent"/>
+
+	<Button
+		android:id="@+id/restart_bootloader"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		style="?android:attr/borderlessButtonStyle"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:text="@string/restart_mode_bootloader"
+		android:textColor="@color/restart_accent"/>
+</LinearLayout>

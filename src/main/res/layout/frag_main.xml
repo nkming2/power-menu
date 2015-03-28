@@ -43,4 +43,12 @@
 			app:floatingActionButtonColor="@color/restart_bg"
 			app:floatingActionButtonSize="normal"/>
 	</LinearLayout>
+
+	<FrameLayout
+		android:id="@+id/details"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:translationY="116dp">
+
+	</FrameLayout>
 </FrameLayout>
