@@ -142,7 +142,8 @@ public class MainFragment extends Fragment
 
 	private void onShutdownClick()
 	{
-		startReveal(SHUTDOWN_ID, new PostAnimationCallback()
+		startReveal(mActionBtns[SHUTDOWN_ID], R.color.shutdown_bg,
+				new PostAnimationCallback()
 		{
 			@Override
 			public void run()
@@ -160,11 +161,15 @@ public class MainFragment extends Fragment
 				}
 			}
 		});
+
+		mActionBtns[SHUTDOWN_ID].setShadow(false);
+		dismissOtherButtons(mActionBtns, mActionBtns[SHUTDOWN_ID]);
 	}
 
 	private void onSleepClick()
 	{
-		startReveal(SLEEP_ID, new PostAnimationCallback()
+		startReveal(mActionBtns[SLEEP_ID], R.color.sleep_bg,
+				new PostAnimationCallback()
 		{
 			@Override
 			public void run()
@@ -182,6 +187,9 @@ public class MainFragment extends Fragment
 				getActivity().finish();
 			}
 		});
+
+		mActionBtns[SLEEP_ID].setShadow(false);
+		dismissOtherButtons(mActionBtns, mActionBtns[SLEEP_ID]);
 	}
 
 	private void onRestartClick()
@@ -217,25 +225,26 @@ public class MainFragment extends Fragment
 
 	}
 
-	private void startReveal(int btnId, final PostAnimationCallback callback)
+	private void startReveal(View atView, int colorId,
+			final PostAnimationCallback callback)
 	{
-		mReveal.setColor(getResources().getColor(getColorId(btnId)));
+		mReveal.setColor(getResources().getColor(colorId));
 
 		int location[] = new int[2];
-		mActionBtns[btnId].getLocationInWindow(location);
+		atView.getLocationInWindow(location);
 		int revealLocation[] = new int[2];
 		mReveal.getLocationInWindow(revealLocation);
-		int btnRadius = mActionBtns[btnId].getWidth() / 2;
-		int x = location[0] - revealLocation[0] + btnRadius;
-		int y = location[1] - revealLocation[1] + btnRadius;
+		int viewRadius = atView.getWidth() / 2;
+		int x = location[0] - revealLocation[0] + viewRadius;
+		int y = location[1] - revealLocation[1] + viewRadius;
 		mReveal.setCenter(x, y);
 
 		int longerW = Math.max(mReveal.getWidth() - x, x);
 		int longerH = Math.max(mReveal.getHeight() - y, y);
-		float radius = (float)Math.sqrt(Math.pow(longerW, 2) + Math.pow(
+		float revealRadius = (float)Math.sqrt(Math.pow(longerW, 2) + Math.pow(
 				longerH, 2));
 		ObjectAnimator anim = ObjectAnimator.ofFloat(mReveal, "radius",
-				btnRadius, radius);
+				viewRadius, revealRadius);
 		anim.setInterpolator(new AccelerateInterpolator());
 		anim.setDuration(Res.ANIMATION_MID);
 		if (callback != null)
@@ -250,20 +259,19 @@ public class MainFragment extends Fragment
 			});
 		}
 		anim.start();
+	}
 
-		for (int i = 0; i < 3; ++i)
+	private void dismissOtherButtons(View btns[], View keepBtn)
+	{
+		for (View v : btns)
 		{
-			if (i == btnId)
+			if (v != keepBtn)
 			{
-				mActionBtns[i].setShadow(false);
-			}
-			else
-			{
-				mActionBtns[i].animate().alpha(0.0f)
+				v.animate().alpha(0.0f)
 						.setInterpolator(new AccelerateInterpolator())
 						.setDuration(Res.ANIMATION_FAST).setStartDelay(0);
 			}
-			disableButton(mActionBtns[i]);
+			disableButton(v);
 		}
 	}
 
