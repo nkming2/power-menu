@@ -10,39 +10,45 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
-	<LinearLayout
+	<RelativeLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:gravity="center"
-		android:orientation="horizontal">
-
-		<com.shamanland.fab.FloatingActionButton
-			android:id="@+id/shutdown_id"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
-			android:src="@drawable/ic_action_shutdown"
-			app:floatingActionButtonColor="@color/shutdown_bg"
-			app:floatingActionButtonSize="normal"/>
+		android:layout_height="match_parent">
 
 		<com.shamanland.fab.FloatingActionButton
 			android:id="@+id/sleep_btn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_centerInParent="true"
 			android:src="@drawable/ic_action_sleep"
 			app:floatingActionButtonColor="@color/sleep_bg"
+			app:floatingActionButtonSize="normal"/>
+
+		<com.shamanland.fab.FloatingActionButton
+			android:id="@+id/shutdown_id"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_toLeftOf="@id/sleep_btn"
+			android:layout_alignTop="@id/sleep_btn"
+			android:src="@drawable/ic_action_shutdown"
+			app:floatingActionButtonColor="@color/shutdown_bg"
 			app:floatingActionButtonSize="normal"/>
 
 		<com.shamanland.fab.FloatingActionButton
 			android:id="@+id/restart_btn"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_toRightOf="@id/sleep_btn"
+			android:layout_alignTop="@id/sleep_btn"
 			android:src="@drawable/ic_action_restart"
 			app:floatingActionButtonColor="@color/restart_bg"
 			app:floatingActionButtonSize="normal"/>
-	</LinearLayout>
+	</RelativeLayout>
 
 	<FrameLayout
 		android:id="@+id/details"
