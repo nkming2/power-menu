@@ -88,10 +88,16 @@ public class MainFragment extends Fragment
 		}
 
 		mRestartBtns[RESTART_NORMAL_ID] = mActionBtns[RESTART_ID];
+		mRestartLabels[RESTART_NORMAL_ID] = root.findViewById(
+				R.id.restart_normal_label);
 		mRestartBtns[RESTART_RECOVERY_ID] = (FloatingActionButton)root
 				.findViewById(R.id.restart_recovery_btn);
+		mRestartLabels[RESTART_RECOVERY_ID] = root.findViewById(
+				R.id.restart_recovery_label);
 		mRestartBtns[RESTART_BOOTLOADER_ID] = (FloatingActionButton)root
 				.findViewById(R.id.restart_bootloader_btn);
+		mRestartLabels[RESTART_BOOTLOADER_ID] = root.findViewById(
+				R.id.restart_bootloader_label);
 	}
 
 	private void initReveal(View root)
@@ -294,19 +300,23 @@ public class MainFragment extends Fragment
 		int ids[] = {RESTART_RECOVERY_ID, RESTART_BOOTLOADER_ID};
 		for (int i = 0; i < ids.length; ++i)
 		{
-			mRestartBtns[ids[i]].setVisibility(View.VISIBLE);
-			mRestartBtns[ids[i]].setAlpha(0.0f);
-			mRestartBtns[ids[i]].setY(mRestartBtns[ids[i]].getY() + 50);
-			mRestartBtns[ids[i]].animate().alpha(1.0f).yBy(-50)
-					.setInterpolator(new DecelerateInterpolator())
-					.setDuration(Res.ANIMATION_FAST)
-					.setStartDelay(delay);
+			final int id = ids[i];
+			View views[] = {mRestartBtns[id], mRestartLabels[id]};
+			for (View v : views)
+			{
+				v.setVisibility(View.VISIBLE);
+				v.setAlpha(0.0f);
+				v.setY(v.getY() + 50);
+				v.animate().alpha(1.0f).yBy(-50)
+						.setInterpolator(new DecelerateInterpolator())
+						.setDuration(Res.ANIMATION_FAST)
+						.setStartDelay(delay);
+			}
 		}
 
-		View normalLabel = getView().findViewById(R.id.restart_normal_label);
-		normalLabel.setVisibility(View.VISIBLE);
-		normalLabel.setAlpha(0.0f);
-		normalLabel.animate().alpha(1.0f)
+		mRestartLabels[RESTART_NORMAL_ID].setVisibility(View.VISIBLE);
+		mRestartLabels[RESTART_NORMAL_ID].setAlpha(0.0f);
+		mRestartLabels[RESTART_NORMAL_ID].animate().alpha(1.0f)
 				.setInterpolator(new DecelerateInterpolator())
 				.setDuration(Res.ANIMATION_FAST)
 				.setStartDelay(delay);
@@ -314,7 +324,8 @@ public class MainFragment extends Fragment
 		// once here
 		if (callback != null)
 		{
-			normalLabel.animate().setListener(new AnimatorListenerAdapter()
+			mRestartLabels[RESTART_NORMAL_ID].animate().setListener(
+					new AnimatorListenerAdapter()
 			{
 				@Override
 				public void onAnimationEnd(Animator animation)
@@ -322,20 +333,6 @@ public class MainFragment extends Fragment
 					callback.run();
 				}
 			});
-		}
-
-		View labels[] = new View[2];
-		labels[0] = getView().findViewById(R.id.restart_recovery_label);
-		labels[1] = getView().findViewById(R.id.restart_bootloader_label);
-		for (int i = 0; i < 2; ++i)
-		{
-			labels[i].setVisibility(View.VISIBLE);
-			labels[i].setAlpha(0.0f);
-			labels[i].setY(labels[i].getY() + 50);
-			labels[i].animate().alpha(1.0f).yBy(-50)
-					.setInterpolator(new DecelerateInterpolator())
-					.setDuration(Res.ANIMATION_FAST)
-					.setStartDelay(delay);
 		}
 	}
 
@@ -358,5 +355,6 @@ public class MainFragment extends Fragment
 
 	private FloatingActionButton mActionBtns[] = new FloatingActionButton[3];
 	private FloatingActionButton mRestartBtns[] = new FloatingActionButton[3];
+	private View mRestartLabels[] = new View[3];
 	private RevealView mReveal;
 }
