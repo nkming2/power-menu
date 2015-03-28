@@ -170,8 +170,10 @@ public class MainFragment extends Fragment
 		int y = location[1] - revealLocation[1] + btnRadius;
 		mReveal.setCenter(x, y);
 
-		float radius = (float)Math.sqrt(Math.pow(mReveal.getHeight(), 2)
-				+ Math.pow(mReveal.getWidth(), 2));
+		int longerW = Math.max(mReveal.getWidth() - x, x);
+		int longerH = Math.max(mReveal.getHeight() - y, y);
+		float radius = (float)Math.sqrt(Math.pow(longerW, 2) + Math.pow(
+				longerH, 2));
 		ObjectAnimator anim = ObjectAnimator.ofFloat(mReveal, "radius",
 				btnRadius, radius);
 		anim.setInterpolator(new AccelerateInterpolator());
