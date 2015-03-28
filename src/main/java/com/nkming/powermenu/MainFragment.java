@@ -169,6 +169,7 @@ public class MainFragment extends Fragment
 		});
 
 		mActionBtns[SHUTDOWN_ID].setShadow(false);
+		disableButton(mActionBtns[SHUTDOWN_ID]);
 		dismissOtherButtons(mActionBtns, mActionBtns[SHUTDOWN_ID]);
 	}
 
@@ -195,6 +196,7 @@ public class MainFragment extends Fragment
 		});
 
 		mActionBtns[SLEEP_ID].setShadow(false);
+		disableButton(mActionBtns[SLEEP_ID]);
 		dismissOtherButtons(mActionBtns, mActionBtns[SLEEP_ID]);
 	}
 
@@ -249,6 +251,7 @@ public class MainFragment extends Fragment
 		});
 
 		mRestartBtns[id].setShadow(false);
+		disableButton(mRestartBtns[id]);
 		dismissOtherButtons(mRestartBtns, mRestartBtns[id]);
 		dismissOtherViews(mRestartLabels, null);
 	}
