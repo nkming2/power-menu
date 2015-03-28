@@ -8,12 +8,16 @@
 
 package com.nkming.powermenu;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ public class MainFragment extends Fragment
 		View root = inflater.inflate(R.layout.frag_main, container, false);
 		initRoot(root);
 		initButton(root);
+		initReveal(root);
 		return root;
 	}
 
@@ -38,6 +43,11 @@ public class MainFragment extends Fragment
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."
 			+ MainFragment.class.getSimpleName();
+
+	private static interface PostRevealCallback
+	{
+		public void run();
+	}
 
 	private void initRoot(View root)
 	{
@@ -73,6 +83,11 @@ public class MainFragment extends Fragment
 		}
 	}
 
+	private void initReveal(View root)
+	{
+		mReveal = (RevealView)root.findViewById(R.id.reveal);
+	}
+
 	private void onActionBtnClick(int id)
 	{
 		switch (id)
@@ -97,27 +112,95 @@ public class MainFragment extends Fragment
 
 	private void onShutdownClick()
 	{
-		if (!SystemHelper.shutdown(getActivity()))
+		startReveal(SHUTDOWN_ID, new PostRevealCallback()
 		{
-			Toast.makeText(getActivity(), R.string.shutdown_fail,
-					Toast.LENGTH_LONG).show();
-			getActivity().finish();
-		}
+			@Override
+			public void run()
+			{
+				if (!SystemHelper.shutdown(getActivity()))
+				{
+					Toast.makeText(getActivity(), R.string.shutdown_fail,
+							Toast.LENGTH_LONG).show();
+					getActivity().finish();
+				}
+			}
+		});
 	}
 
 	private void onSleepClick()
 	{
-		if (!SystemHelper.sleep(getActivity()))
+		startReveal(SLEEP_ID, new PostRevealCallback()
 		{
-			Toast.makeText(getActivity(), R.string.sleep_fail,
-					Toast.LENGTH_LONG).show();
-		}
-		getActivity().finish();
+			@Override
+			public void run()
+			{
+				if (!SystemHelper.sleep(getActivity()))
+				{
+					Toast.makeText(getActivity(), R.string.sleep_fail,
+							Toast.LENGTH_LONG).show();
+				}
+				getActivity().finish();
+			}
+		});
 	}
 
 	private void onRestartClick()
 	{
+		startReveal(RESTART_ID, new PostRevealCallback()
+		{
+			@Override
+			public void run()
+			{
+				getActivity().finish();
+			}
+		});
+	}
 
+	private void startReveal(int btnId, final PostRevealCallback callback)
+	{
+		mReveal.setColor(getResources().getColor(getColorId(btnId)));
+
+		int location[] = new int[2];
+		mActionBtns[btnId].getLocationInWindow(location);
+		int revealLocation[] = new int[2];
+		mReveal.getLocationInWindow(revealLocation);
+		int btnRadius = mActionBtns[btnId].getWidth() / 2;
+		int x = location[0] - revealLocation[0] + btnRadius;
+		int y = location[1] - revealLocation[1] + btnRadius;
+		mReveal.setCenter(x, y);
+
+		float radius = (float)Math.sqrt(Math.pow(mReveal.getHeight(), 2)
+				+ Math.pow(mReveal.getWidth(), 2));
+		ObjectAnimator anim = ObjectAnimator.ofFloat(mReveal, "radius",
+				btnRadius, radius);
+		anim.setInterpolator(new AccelerateInterpolator());
+		anim.setDuration(250);
+		if (callback != null)
+		{
+			anim.addListener(new AnimatorListenerAdapter()
+			{
+				@Override
+				public void onAnimationEnd(Animator animation)
+				{
+					callback.run();
+				}
+			});
+		}
+		anim.start();
+
+		for (int i = 0; i < 3; ++i)
+		{
+			if (i == btnId)
+			{
+				mActionBtns[i].setShadow(false);
+			}
+			else
+			{
+				mActionBtns[i].animate().alpha(0.0f)
+						.setInterpolator(new AccelerateInterpolator())
+						.setDuration(150).setStartDelay(0);
+			}
+		}
 	}
 
 	private int getViewId(int btnId)
@@ -137,5 +220,23 @@ public class MainFragment extends Fragment
 		}
 	}
 
+	private int getColorId(int btnId)
+	{
+		switch (btnId)
+		{
+		default:
+			Log.e(LOG_TAG + ".getColorId", "Unknown id");
+		case SHUTDOWN_ID:
+			return R.color.shutdown_bg;
+
+		case SLEEP_ID:
+			return R.color.sleep_bg;
+
+		case RESTART_ID:
+			return R.color.restart_bg;
+		}
+	}
+
 	private FloatingActionButton mActionBtns[] = new FloatingActionButton[3];
+	private RevealView mReveal;
 }
