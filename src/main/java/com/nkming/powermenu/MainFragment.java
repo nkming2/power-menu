@@ -356,23 +356,6 @@ public class MainFragment extends Fragment
 		}
 	}
 
-	private int getColorId(int btnId)
-	{
-		switch (btnId)
-		{
-		default:
-			Log.e(LOG_TAG + ".getColorId", "Unknown id");
-		case SHUTDOWN_ID:
-			return R.color.shutdown_bg;
-
-		case SLEEP_ID:
-			return R.color.sleep_bg;
-
-		case RESTART_ID:
-			return R.color.restart_bg;
-		}
-	}
-
 	private FloatingActionButton mActionBtns[] = new FloatingActionButton[3];
 	private FloatingActionButton mRestartBtns[] = new FloatingActionButton[3];
 	private RevealView mReveal;
