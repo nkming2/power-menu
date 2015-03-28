@@ -250,7 +250,7 @@ public class MainFragment extends Fragment
 
 		mRestartBtns[id].setShadow(false);
 		dismissOtherButtons(mRestartBtns, mRestartBtns[id]);
-		dismissOtherButtons(mRestartLabels, null);
+		dismissOtherViews(mRestartLabels, null);
 	}
 
 	private void startReveal(View atView, int colorId,
@@ -289,17 +289,28 @@ public class MainFragment extends Fragment
 		anim.start();
 	}
 
-	private void dismissOtherButtons(View btns[], View keepBtn)
+	private void dismissOtherViews(View views[], View keep)
 	{
-		for (View v : btns)
+		for (View v : views)
 		{
-			if (v != keepBtn)
+			if (v != keep)
 			{
 				v.animate().alpha(0.0f)
 						.setInterpolator(new AccelerateInterpolator())
 						.setDuration(Res.ANIMATION_FAST).setStartDelay(0);
 			}
-			disableButton(v);
+		}
+	}
+
+	private void dismissOtherButtons(View btns[], View keepBtn)
+	{
+		dismissOtherViews(btns, keepBtn);
+		for (View v : btns)
+		{
+			if (v != keepBtn)
+			{
+				disableButton(v);
+			}
 		}
 	}
 
