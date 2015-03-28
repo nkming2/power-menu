@@ -48,5 +48,76 @@
 			android:src="@drawable/ic_action_restart"
 			app:floatingActionButtonColor="@color/restart_bg"
 			app:floatingActionButtonSize="normal"/>
+
+		<TextView
+			android:id="@+id/restart_normal_label"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_marginRight="8dp"
+			android:layout_toLeftOf="@id/restart_btn"
+			android:layout_alignTop="@id/restart_btn"
+			android:layout_alignBottom="@id/restart_btn"
+			android:gravity="center_vertical"
+			android:visibility="invisible"
+			android:clickable="false"
+			android:focusable="false"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+			android:text="@string/restart_mode_normal"/>
+
+		<com.shamanland.fab.FloatingActionButton
+			android:id="@+id/restart_recovery_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:layout_marginRight="8dp"
+			android:layout_above="@id/restart_btn"
+			android:layout_alignRight="@id/restart_btn"
+			android:visibility="invisible"
+			android:src="@drawable/ic_action_restart_recovery"
+			app:floatingActionButtonColor="@color/restart_bg"
+			app:floatingActionButtonSize="mini"/>
+
+		<TextView
+			android:id="@+id/restart_recovery_label"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_toLeftOf="@id/restart_recovery_btn"
+			android:layout_alignTop="@id/restart_recovery_btn"
+			android:layout_alignBottom="@id/restart_recovery_btn"
+			android:layout_alignRight="@id/restart_normal_label"
+			android:gravity="center_vertical"
+			android:visibility="invisible"
+			android:clickable="false"
+			android:focusable="false"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+			android:text="@string/restart_mode_recovery"/>
+
+		<com.shamanland.fab.FloatingActionButton
+			android:id="@+id/restart_bootloader_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:layout_marginRight="8dp"
+			android:layout_above="@id/restart_recovery_btn"
+			android:layout_alignRight="@id/restart_btn"
+			android:visibility="invisible"
+			android:src="@drawable/ic_action_restart_bootloader"
+			app:floatingActionButtonColor="@color/restart_bg"
+			app:floatingActionButtonSize="mini"/>
+
+		<TextView
+			android:id="@+id/restart_bootloader_label"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_toLeftOf="@id/restart_bootloader_btn"
+			android:layout_alignTop="@id/restart_bootloader_btn"
+			android:layout_alignBottom="@id/restart_bootloader_btn"
+			android:layout_alignRight="@id/restart_normal_label"
+			android:gravity="center_vertical"
+			android:visibility="invisible"
+			android:clickable="false"
+			android:focusable="false"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+			android:text="@string/restart_mode_bootloader"/>
 	</RelativeLayout>
 </FrameLayout>
