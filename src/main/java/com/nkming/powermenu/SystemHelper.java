@@ -79,25 +79,34 @@ public class SystemHelper
 
 	public static boolean reboot(RebootMode mode, Context context)
 	{
-		PowerManager pm = (PowerManager)context.getSystemService(
-				Context.POWER_SERVICE);
-		switch (mode)
+		try
 		{
-		default:
-			Log.e(LOG_TAG + ".reboot", "Unknown mode");
+			PowerManager pm = (PowerManager)context.getSystemService(
+					Context.POWER_SERVICE);
+			switch (mode)
+			{
+			default:
+				Log.e(LOG_TAG + ".reboot", "Unknown mode");
+				return false;
+
+			case NORMAL:
+				pm.reboot(null);
+				return true;
+
+			case RECOVERY:
+				pm.reboot("recovery");
+				return true;
+
+			case BOOTLOADER:
+				pm.reboot("bootloader");
+				return true;
+			}
+		}
+		catch (Exception e)
+		{
+			Log.e(LOG_TAG + ".reboot", "Error while invoking reboot",
+					e);
 			return false;
-
-		case NORMAL:
-			pm.reboot(null);
-			return true;
-
-		case RECOVERY:
-			pm.reboot("recovery");
-			return true;
-
-		case BOOTLOADER:
-			pm.reboot("bootloader");
-			return true;
 		}
 	}
 
