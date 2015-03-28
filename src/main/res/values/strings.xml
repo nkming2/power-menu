@@ -3,7 +3,7 @@
 
 	<string name="shutdown_fail">Failed shutting down, not installed as system app?</string>
 	<string name="sleep_fail">Failed putting to sleep, not activated as device admin?</string>
-	<string name="restart_fail">Failed rebooting</string>
+	<string name="restart_fail">Failed rebooting, not installed as system app?</string>
 
 	<string name="restart_mode_normal">Reboot</string>
 	<string name="restart_mode_recovery">Recovery</string>
