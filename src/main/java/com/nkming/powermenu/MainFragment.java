@@ -181,6 +181,7 @@ public class MainFragment extends Fragment
 				.setInterpolator(new AccelerateDecelerateInterpolator())
 				.setDuration(Res.ANIMATION_MID)
 				.setStartDelay(0);
+		mActionBtns[RESTART_ID].setOnClickListener(null);
 		showRestartMenu(Res.ANIMATION_MID - Res.ANIMATION_FAST);
 	}
 
