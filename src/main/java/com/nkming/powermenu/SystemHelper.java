@@ -12,11 +12,19 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.PowerManager;
 
 import java.lang.reflect.Field;
 
 public class SystemHelper
 {
+	public static enum RebootMode
+	{
+		NORMAL,
+		RECOVERY,
+		BOOTLOADER
+	}
+
 	public static boolean shutdown(Context context)
 	{
 		try
@@ -64,6 +72,39 @@ public class SystemHelper
 		catch (Exception e)
 		{
 			Log.e(LOG_TAG + ".sleep", "Error while invoking DevicePolicyManager",
+					e);
+			return false;
+		}
+	}
+
+	public static boolean reboot(RebootMode mode, Context context)
+	{
+		try
+		{
+			PowerManager pm = (PowerManager)context.getSystemService(
+					Context.POWER_SERVICE);
+			switch (mode)
+			{
+			default:
+				Log.e(LOG_TAG + ".reboot", "Unknown mode");
+				return false;
+
+			case NORMAL:
+				pm.reboot(null);
+				return true;
+
+			case RECOVERY:
+				pm.reboot("recovery");
+				return true;
+
+			case BOOTLOADER:
+				pm.reboot("bootloader");
+				return true;
+			}
+		}
+		catch (Exception e)
+		{
+			Log.e(LOG_TAG + ".reboot", "Error while invoking reboot",
 					e);
 			return false;
 		}

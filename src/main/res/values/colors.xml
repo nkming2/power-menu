@@ -8,11 +8,8 @@
 	<color name="app_bg">#80000000</color>
 	<color name="shutdown_primary">@color/md_red_500</color>
 	<color name="shutdown_primary_dark">@color/md_red_700</color>
-	<color name="shutdown_accent">@color/md_amber_A100</color>
 	<color name="restart_primary">@color/md_blue_500</color>
 	<color name="restart_primary_dark">@color/md_blue_700</color>
-	<color name="restart_accent">@color/md_pink_A400</color>
 	<color name="sleep_primary">@color/md_green_500</color>
 	<color name="sleep_primary_dark">@color/md_green_700</color>
-	<color name="sleep_accent">@color/md_light_blue_A400</color>
 </resources>
