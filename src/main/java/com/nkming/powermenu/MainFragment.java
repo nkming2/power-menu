@@ -14,16 +14,13 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
-import com.nkming.utils.unit.DimensionUtils;
 import com.shamanland.fab.FloatingActionButton;
 
 public class MainFragment extends Fragment
@@ -159,22 +156,7 @@ public class MainFragment extends Fragment
 
 	private void onRestartClick()
 	{
-		startReveal(RESTART_ID, new PostRevealCallback()
-		{
-			@Override
-			public void run()
-			{
-				// App probably closed
-				if (getActivity() == null)
-				{
-					return;
-				}
-				FragmentTransaction ft = getChildFragmentManager()
-						.beginTransaction();
-				ft.add(R.id.details, RestartDetailFragment.create());
-				ft.commit();
-			}
-		});
+
 	}
 
 	private void startReveal(int btnId, final PostRevealCallback callback)
