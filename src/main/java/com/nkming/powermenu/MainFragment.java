@@ -78,7 +78,7 @@ public class MainFragment extends Fragment
 			mActionBtns[i].setScaleY(0.0f);
 			mActionBtns[i].animate().scaleX(1.0f).scaleY(1.0f)
 					.setInterpolator(new DecelerateInterpolator())
-					.setDuration(250).setStartDelay(100 * i);
+					.setDuration(Res.ANIMATION_MID).setStartDelay(100 * i);
 		}
 	}
 
@@ -173,7 +173,7 @@ public class MainFragment extends Fragment
 		ObjectAnimator anim = ObjectAnimator.ofFloat(mReveal, "radius",
 				btnRadius, radius);
 		anim.setInterpolator(new AccelerateInterpolator());
-		anim.setDuration(250);
+		anim.setDuration(Res.ANIMATION_MID);
 		if (callback != null)
 		{
 			anim.addListener(new AnimatorListenerAdapter()
@@ -197,7 +197,7 @@ public class MainFragment extends Fragment
 			{
 				mActionBtns[i].animate().alpha(0.0f)
 						.setInterpolator(new AccelerateInterpolator())
-						.setDuration(150).setStartDelay(0);
+						.setDuration(Res.ANIMATION_FAST).setStartDelay(0);
 			}
 		}
 	}
