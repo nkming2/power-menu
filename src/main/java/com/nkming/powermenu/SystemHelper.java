@@ -13,8 +13,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.nkming.utils.Res;
-
 import java.lang.reflect.Field;
 
 public class SystemHelper

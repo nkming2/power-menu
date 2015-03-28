@@ -21,7 +21,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
-import com.nkming.utils.Res;
 import com.shamanland.fab.FloatingActionButton;
 
 public class MainFragment extends Fragment
