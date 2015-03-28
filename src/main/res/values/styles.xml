@@ -1,7 +1,7 @@
 <resources>
 
 	<!-- Base application theme. -->
-	<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+	<style name="AppThemeBase" parent="Theme.AppCompat.NoActionBar">
 		<!-- Customize your theme here. -->
 		<item name="android:windowIsTranslucent">true</item>
 		<item name="android:windowBackground">@color/app_bg</item>
@@ -17,5 +17,8 @@
 	<style name="AppTheme.Animation" parent="android:style/Animation.Activity">
 		<item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
 		<item name="android:windowEnterAnimation">@anim/activity_open_enter</item>
+	</style>
+
+	<style name="AppTheme" parent="AppThemeBase">
 	</style>
 </resources>
