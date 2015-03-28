@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
@@ -156,7 +157,20 @@ public class MainFragment extends Fragment
 
 	private void onRestartClick()
 	{
+		int ids[] = {SHUTDOWN_ID, SLEEP_ID};
+		for (int i = 0; i < ids.length; ++i)
+		{
+			mActionBtns[ids[i]].animate().xBy(100).alpha(0.0f)
+					.setInterpolator(new AccelerateInterpolator())
+					.setDuration(Res.ANIMATION_FAST)
+					.setStartDelay(50 * i);
+			disableButton(ids[i]);
+		}
 
+		mActionBtns[RESTART_ID].animate().rotationBy(360)
+				.setInterpolator(new AccelerateDecelerateInterpolator())
+				.setDuration(Res.ANIMATION_MID)
+				.setStartDelay(0);
 	}
 
 	private void startReveal(int btnId, final PostRevealCallback callback)
@@ -198,10 +212,6 @@ public class MainFragment extends Fragment
 			if (i == btnId)
 			{
 				mActionBtns[i].setShadow(false);
-				mActionBtns[i].animate().x(mReveal.getWidth() / 2 - btnRadius)
-						.y(DimensionUtils.dpToPx(getActivity(), 64))
-						.setInterpolator(new AccelerateDecelerateInterpolator())
-						.setDuration(Res.ANIMATION_MID).setStartDelay(0);
 			}
 			else
 			{
@@ -209,11 +219,16 @@ public class MainFragment extends Fragment
 						.setInterpolator(new AccelerateInterpolator())
 						.setDuration(Res.ANIMATION_FAST).setStartDelay(0);
 			}
-			mActionBtns[i].setOnClickListener(null);
-			mActionBtns[i].setFocusable(false);
-			mActionBtns[i].setClickable(false);
-			mActionBtns[i].setEnabled(false);
+			disableButton(i);
 		}
+	}
+
+	private void disableButton(int btnId)
+	{
+		mActionBtns[btnId].setOnClickListener(null);
+		mActionBtns[btnId].setFocusable(false);
+		mActionBtns[btnId].setClickable(false);
+		mActionBtns[btnId].setEnabled(false);
 	}
 
 	private int getViewId(int btnId)
