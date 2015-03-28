@@ -118,6 +118,11 @@ public class MainFragment extends Fragment
 			@Override
 			public void run()
 			{
+				// App probably closed
+				if (getActivity() == null)
+				{
+					return;
+				}
 				if (!SystemHelper.shutdown(getActivity()))
 				{
 					Toast.makeText(getActivity(), R.string.shutdown_fail,
@@ -135,6 +140,11 @@ public class MainFragment extends Fragment
 			@Override
 			public void run()
 			{
+				// App probably closed
+				if (getActivity() == null)
+				{
+					return;
+				}
 				if (!SystemHelper.sleep(getActivity()))
 				{
 					Toast.makeText(getActivity(), R.string.sleep_fail,
