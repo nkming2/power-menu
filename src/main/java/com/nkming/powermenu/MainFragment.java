@@ -99,6 +99,25 @@ public class MainFragment extends Fragment
 		mReveal = (RevealView)root.findViewById(R.id.reveal);
 	}
 
+	private void initRestartBtns()
+	{
+		int ids[] = {RESTART_NORMAL_ID, RESTART_RECOVERY_ID,
+				RESTART_BOOTLOADER_ID};
+		for (int i = 0; i < ids.length; ++i)
+		{
+			final int id = ids[i];
+			mRestartBtns[id].setOnClickListener(
+					new View.OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							onRestartMenuClick(id);
+						}
+					});
+		}
+	}
+
 	private void onActionBtnClick(int id)
 	{
 		switch (id)
@@ -182,7 +201,20 @@ public class MainFragment extends Fragment
 				.setDuration(Res.ANIMATION_MID)
 				.setStartDelay(0);
 		mActionBtns[RESTART_ID].setOnClickListener(null);
-		showRestartMenu(Res.ANIMATION_MID - Res.ANIMATION_FAST);
+		showRestartMenu(Res.ANIMATION_MID - Res.ANIMATION_FAST,
+				new PostAnimationCallback()
+				{
+					@Override
+					public void run()
+					{
+						initRestartBtns();
+					}
+				});
+	}
+
+	private void onRestartMenuClick(int id)
+	{
+
 	}
 
 	private void startReveal(int btnId, final PostAnimationCallback callback)
@@ -247,8 +279,9 @@ public class MainFragment extends Fragment
 	 * Show the restart menu
 	 *
 	 * @param delay Delay the show animation
+	 * @param callback Call after the animation finished
 	 */
-	private void showRestartMenu(int delay)
+	private void showRestartMenu(int delay, final PostAnimationCallback callback)
 	{
 		int ids[] = {RESTART_RECOVERY_ID, RESTART_BOOTLOADER_ID};
 		for (int i = 0; i < ids.length; ++i)
@@ -269,6 +302,19 @@ public class MainFragment extends Fragment
 				.setInterpolator(new DecelerateInterpolator())
 				.setDuration(Res.ANIMATION_FAST)
 				.setStartDelay(delay);
+		// All animations start and end at the same time, so we only need to set
+		// once here
+		if (callback != null)
+		{
+			normalLabel.animate().setListener(new AnimatorListenerAdapter()
+			{
+				@Override
+				public void onAnimationEnd(Animator animation)
+				{
+					callback.run();
+				}
+			});
+		}
 
 		View labels[] = new View[2];
 		labels[0] = getView().findViewById(R.id.restart_recovery_label);
