@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
@@ -193,6 +194,10 @@ public class MainFragment extends Fragment
 			if (i == btnId)
 			{
 				mActionBtns[i].setShadow(false);
+				mActionBtns[i].animate().x(mReveal.getWidth() / 2 - btnRadius)
+						.y(mReveal.getHeight() / 2 - btnRadius - 100)
+						.setInterpolator(new AccelerateDecelerateInterpolator())
+						.setDuration(Res.ANIMATION_MID).setStartDelay(0);
 			}
 			else
 			{
