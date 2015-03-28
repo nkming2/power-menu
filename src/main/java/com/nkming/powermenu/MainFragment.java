@@ -37,7 +37,7 @@ public class MainFragment extends Fragment
 		return root;
 	}
 
-	private static interface PostRevealCallback
+	private static interface PostAnimationCallback
 	{
 		public void run();
 	}
@@ -123,7 +123,7 @@ public class MainFragment extends Fragment
 
 	private void onShutdownClick()
 	{
-		startReveal(SHUTDOWN_ID, new PostRevealCallback()
+		startReveal(SHUTDOWN_ID, new PostAnimationCallback()
 		{
 			@Override
 			public void run()
@@ -145,7 +145,7 @@ public class MainFragment extends Fragment
 
 	private void onSleepClick()
 	{
-		startReveal(SLEEP_ID, new PostRevealCallback()
+		startReveal(SLEEP_ID, new PostAnimationCallback()
 		{
 			@Override
 			public void run()
@@ -185,7 +185,7 @@ public class MainFragment extends Fragment
 		showRestartMenu(Res.ANIMATION_MID - Res.ANIMATION_FAST);
 	}
 
-	private void startReveal(int btnId, final PostRevealCallback callback)
+	private void startReveal(int btnId, final PostAnimationCallback callback)
 	{
 		mReveal.setColor(getResources().getColor(getColorId(btnId)));
 
