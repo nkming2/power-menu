@@ -37,6 +37,11 @@ public class MainFragment extends Fragment
 		return root;
 	}
 
+	private static interface PostRevealCallback
+	{
+		public void run();
+	}
+
 	private static final int SHUTDOWN_ID = 0;
 	private static final int SLEEP_ID = 1;
 	private static final int RESTART_ID = 2;
@@ -47,11 +52,6 @@ public class MainFragment extends Fragment
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."
 			+ MainFragment.class.getSimpleName();
-
-	private static interface PostRevealCallback
-	{
-		public void run();
-	}
 
 	private void initRoot(View root)
 	{
