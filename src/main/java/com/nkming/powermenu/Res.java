@@ -13,6 +13,6 @@ public class Res extends com.nkming.utils.Res
 	public static final String PACKAGE = "com.nkming.powermenu";
 	public static final String LOG_TAG = PACKAGE;
 
-	public static final int ANIMATION_FAST = 100;
-	public static final int ANIMATION_MID = 200;
+	public static final int ANIMATION_FAST = 150;
+	public static final int ANIMATION_MID = 250;
 }

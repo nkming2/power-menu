@@ -78,7 +78,8 @@ public class MainFragment extends Fragment
 			mActionBtns[i].setScaleY(0.0f);
 			mActionBtns[i].animate().scaleX(1.0f).scaleY(1.0f)
 					.setInterpolator(new DecelerateInterpolator())
-					.setDuration(Res.ANIMATION_MID).setStartDelay(100 * i);
+					.setDuration(Res.ANIMATION_FAST)
+					.setStartDelay(Res.ANIMATION_FAST / 2 * i);
 		}
 	}
 
