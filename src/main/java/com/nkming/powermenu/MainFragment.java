@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
+import com.nkming.utils.Res;
 import com.shamanland.fab.FloatingActionButton;
 
 public class MainFragment extends Fragment
@@ -30,6 +31,13 @@ public class MainFragment extends Fragment
 		initButton(root);
 		return root;
 	}
+
+	private static final int SHUTDOWN_ID = 0;
+	private static final int SLEEP_ID = 1;
+	private static final int RESTART_ID = 2;
+
+	private static final String LOG_TAG = Res.LOG_TAG + "."
+			+ MainFragment.class.getSimpleName();
 
 	private void initRoot(View root)
 	{
@@ -45,51 +53,46 @@ public class MainFragment extends Fragment
 
 	private void initButton(View root)
 	{
-		mShutdownBtn = (FloatingActionButton)root.findViewById(R.id.shutdown_id);
-		mShutdownBtn.setOnClickListener(new View.OnClickListener()
+		for (int i = 0; i < mActionBtns.length; ++i)
 		{
-			@Override
-			public void onClick(View v)
+			mActionBtns[i] = (FloatingActionButton)root.findViewById(getViewId(i));
+			final int id = i;
+			mActionBtns[i].setOnClickListener(new View.OnClickListener()
 			{
-				onShutdownClick();
-			}
-		});
-		mShutdownBtn.setScaleX(0.0f);
-		mShutdownBtn.setScaleY(0.0f);
-		mShutdownBtn.animate().scaleX(1.0f).scaleY(1.0f)
-				.setInterpolator(new DecelerateInterpolator())
-				.setDuration(250);
+				@Override
+				public void onClick(View v)
+				{
+					onActionBtnClick(id);
+				}
+			});
+			mActionBtns[i].setScaleX(0.0f);
+			mActionBtns[i].setScaleY(0.0f);
+			mActionBtns[i].animate().scaleX(1.0f).scaleY(1.0f)
+					.setInterpolator(new DecelerateInterpolator())
+					.setDuration(250).setStartDelay(100 * i);
+		}
+	}
 
-		mSleepBtn = (FloatingActionButton)root.findViewById(R.id.sleep_btn);
-		mSleepBtn.setOnClickListener(new View.OnClickListener()
+	private void onActionBtnClick(int id)
+	{
+		switch (id)
 		{
-			@Override
-			public void onClick(View v)
-			{
-				onSleepClick();
-			}
-		});
-		mSleepBtn.setScaleX(0.0f);
-		mSleepBtn.setScaleY(0.0f);
-		mSleepBtn.animate().scaleX(1.0f).scaleY(1.0f)
-				.setInterpolator(new DecelerateInterpolator())
-				.setDuration(250).setStartDelay(100);
+		default:
+			Log.e(LOG_TAG + ".onActionBtnClick", "Unknown id");
+			return;
 
+		case SHUTDOWN_ID:
+			onShutdownClick();
+			return;
 
-		mRestartBtn = (FloatingActionButton)root.findViewById(R.id.restart_btn);
-		mRestartBtn.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				onRestartClick();
-			}
-		});
-		mRestartBtn.setScaleX(0.0f);
-		mRestartBtn.setScaleY(0.0f);
-		mRestartBtn.animate().scaleX(1.0f).scaleY(1.0f)
-				.setInterpolator(new DecelerateInterpolator())
-				.setDuration(250).setStartDelay(200);
+		case SLEEP_ID:
+			onSleepClick();
+			return;
+
+		case RESTART_ID:
+			onRestartClick();
+			return;
+		}
 	}
 
 	private void onShutdownClick()
@@ -117,7 +120,22 @@ public class MainFragment extends Fragment
 
 	}
 
-	private FloatingActionButton mShutdownBtn;
-	private FloatingActionButton mSleepBtn;
-	private FloatingActionButton mRestartBtn;
+	private int getViewId(int btnId)
+	{
+		switch (btnId)
+		{
+		default:
+			Log.e(LOG_TAG + ".getViewId", "Unknown id");
+		case SHUTDOWN_ID:
+			return R.id.shutdown_id;
+
+		case SLEEP_ID:
+			return R.id.sleep_btn;
+
+		case RESTART_ID:
+			return R.id.restart_btn;
+		}
+	}
+
+	private FloatingActionButton mActionBtns[] = new FloatingActionButton[3];
 }
