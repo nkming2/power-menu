@@ -24,6 +24,9 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class InstallHelper
 {
+	/**
+	 * An AsyncTask that work with the SU shell to install this app to /system
+	 */
 	public static class InstallTask extends AsyncTask<Context, Void, Boolean>
 	{
 		@Override
@@ -98,6 +101,13 @@ public class InstallHelper
 	private static final String LOG_TAG = Res.LOG_TAG + "."
 			+ InstallHelper.class.getSimpleName();
 
+	/**
+	 * Return whether privileged flag is set in @a appFlags. since this involve
+	 * reflection, a separate method is better
+	 *
+	 * @param appFlags
+	 * @return
+	 */
 	private static boolean isPrivileged(int appFlags)
 	{
 		try

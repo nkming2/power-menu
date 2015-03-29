@@ -21,6 +21,9 @@ public class InstallConfirmFragment extends DialogFragment
 {
 	public static interface Listener
 	{
+		/**
+		 * Call when user confirmed the installation
+		 */
 		public void onInstallConfirmed();
 	}
 
