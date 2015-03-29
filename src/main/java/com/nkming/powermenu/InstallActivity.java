@@ -13,7 +13,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 public class InstallActivity extends ActionBarActivity
+		implements  InstallConfirmFragment.Listener
 {
+	@Override
+	public void onInstallConfirmed()
+	{
+		
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
