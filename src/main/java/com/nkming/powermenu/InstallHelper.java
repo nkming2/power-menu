@@ -17,6 +17,12 @@ import java.lang.reflect.Field;
 
 public class InstallHelper
 {
+	/**
+	 * Return if this app is installed as privileged (KK+) system app
+	 *
+	 * @param context
+	 * @return
+	 */
 	public static boolean isSystemApp(Context context)
 	{
 		try
