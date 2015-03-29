@@ -22,6 +22,17 @@
 			</intent-filter>
 		</activity>
 
+		<activity
+			android:name=".InstallActivity"
+			android:excludeFromRecents="true"
+			android:exported="false">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
 		<receiver android:name=".DeviceAdminReceiver"
 			android:label="@string/device_admin_label"
 			android:description="@string/device_admin_description"

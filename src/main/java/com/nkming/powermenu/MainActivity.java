@@ -8,7 +8,7 @@
 
 package com.nkming.powermenu;
 
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -28,12 +28,9 @@ public class MainActivity extends ActionBarActivity
 		}
 		else if (!InstallHelper.isSystemApp(this))
 		{
-			getWindow().setBackgroundDrawable(new ColorDrawable(0));
-			if (savedInstanceState == null)
-			{
-				InstallConfirmFragment f = InstallConfirmFragment.create();
-				f.show(getSupportFragmentManager(), "install_confirm");
-			}
+			// We don't want the animation here
+			super.finish();
+			startActivity(new Intent(this, InstallActivity.class));
 		}
 		else
 		{
