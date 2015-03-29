@@ -277,9 +277,12 @@ public class MainFragment extends Fragment
 		atView.getLocationInWindow(location);
 		int revealLocation[] = new int[2];
 		mReveal.getLocationInWindow(revealLocation);
-		int viewRadius = atView.getWidth() / 2;
-		int x = location[0] - revealLocation[0] + viewRadius;
-		int y = location[1] - revealLocation[1] + viewRadius;
+		int x = location[0] - revealLocation[0];
+		int y = location[1] - revealLocation[1];
+		double viewRadius = Math.sqrt(Math.pow(atView.getWidth() / 2, 2) * 2);
+		double viewRotationRadian = Math.toRadians(atView.getRotation() + 135);
+		x -= viewRadius * Math.cos(viewRotationRadian);
+		y -= -(viewRadius * Math.sin(viewRotationRadian));
 		mReveal.setCenter(x, y);
 
 		int longerW = Math.max(mReveal.getWidth() - x, x);
@@ -287,7 +290,7 @@ public class MainFragment extends Fragment
 		float revealRadius = (float)Math.sqrt(Math.pow(longerW, 2) + Math.pow(
 				longerH, 2));
 		ObjectAnimator anim = ObjectAnimator.ofFloat(mReveal, "radius",
-				viewRadius, revealRadius);
+				(float)viewRadius, revealRadius);
 		anim.setInterpolator(new AccelerateInterpolator());
 		anim.setDuration(Res.ANIMATION_MID);
 		if (callback != null)
