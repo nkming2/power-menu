@@ -8,6 +8,7 @@
 
 package com.nkming.powermenu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -25,16 +26,24 @@ public class MainActivity extends ActionBarActivity
 			mIsAnimateClose = false;
 			return;
 		}
-
-		// Disable the standard activity launch animation
-		overridePendingTransition(0, 0);
-		setContentView(R.layout.activity_main);
-		if (savedInstanceState == null)
+		else if (!InstallHelper.isSystemApp(this))
 		{
-			mFrag = new MainFragment();
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, mFrag)
-					.commit();
+			// We don't want the animation here
+			super.finish();
+			startActivity(new Intent(this, InstallActivity.class));
+		}
+		else
+		{
+			// Disable the standard activity launch animation
+			overridePendingTransition(0, 0);
+			setContentView(R.layout.activity_main);
+			if (savedInstanceState == null)
+			{
+				mFrag = new MainFragment();
+				getSupportFragmentManager().beginTransaction()
+						.add(R.id.container, mFrag)
+						.commit();
+			}
 		}
 	}
 

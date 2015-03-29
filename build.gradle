@@ -26,4 +26,6 @@ dependencies {
 	compile 'com.android.support:appcompat-v7:22.0.0'
 	compile 'com.android.support:support-v4:22.0.0'
 	compile 'com.shamanland:fab:0.0.8'
+	compile 'com.afollestad:material-dialogs:0.6.6.3'
+	compile 'eu.chainfire:libsuperuser:1.0.0.+'
 }
