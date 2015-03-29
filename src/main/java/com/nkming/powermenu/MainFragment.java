@@ -37,11 +37,6 @@ public class MainFragment extends Fragment
 		return root;
 	}
 
-	private static interface PostAnimationCallback
-	{
-		public void run();
-	}
-
 	private static final int SHUTDOWN_ID = 0;
 	private static final int SLEEP_ID = 1;
 	private static final int RESTART_ID = 2;
@@ -149,7 +144,7 @@ public class MainFragment extends Fragment
 	private void onShutdownClick()
 	{
 		startReveal(mActionBtns[SHUTDOWN_ID], R.color.shutdown_bg,
-				new PostAnimationCallback()
+				new Runnable()
 		{
 			@Override
 			public void run()
@@ -176,7 +171,7 @@ public class MainFragment extends Fragment
 	private void onSleepClick()
 	{
 		startReveal(mActionBtns[SLEEP_ID], R.color.sleep_bg,
-				new PostAnimationCallback()
+				new Runnable()
 		{
 			@Override
 			public void run()
@@ -218,20 +213,20 @@ public class MainFragment extends Fragment
 				.setStartDelay(0);
 		mActionBtns[RESTART_ID].setOnClickListener(null);
 		showRestartMenu(Res.ANIMATION_MID - Res.ANIMATION_FAST,
-				new PostAnimationCallback()
-				{
-					@Override
-					public void run()
-					{
-						initRestartBtns();
-					}
-				});
+				new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				initRestartBtns();
+			}
+		});
 	}
 
 	private void onRestartMenuClick(final int id)
 	{
 		startReveal(mRestartBtns[id], R.color.restart_bg,
-				new PostAnimationCallback()
+				new Runnable()
 		{
 			@Override
 			public void run()
@@ -256,8 +251,7 @@ public class MainFragment extends Fragment
 		dismissOtherViews(mRestartLabels, null);
 	}
 
-	private void startReveal(View atView, int colorId,
-			final PostAnimationCallback callback)
+	private void startReveal(View atView, int colorId, final Runnable callback)
 	{
 		mReveal.setColor(getResources().getColor(colorId));
 
@@ -331,7 +325,7 @@ public class MainFragment extends Fragment
 	 * @param delay Delay the show animation
 	 * @param callback Call after the animation finished
 	 */
-	private void showRestartMenu(int delay, final PostAnimationCallback callback)
+	private void showRestartMenu(int delay, final Runnable callback)
 	{
 		int ids[] = {RESTART_RECOVERY_ID, RESTART_BOOTLOADER_ID};
 		for (int i = 0; i < ids.length; ++i)
