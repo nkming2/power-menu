@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity
 			getWindow().setBackgroundDrawable(new ColorDrawable(0));
 			if (savedInstanceState == null)
 			{
-				InstallFragment f = InstallFragment.create();
+				InstallConfirmFragment f = InstallConfirmFragment.create();
 				f.show(getSupportFragmentManager(), "install");
 			}
 		}

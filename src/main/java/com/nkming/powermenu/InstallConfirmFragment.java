@@ -16,11 +16,11 @@ import android.support.v4.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-public class InstallFragment extends DialogFragment
+public class InstallConfirmFragment extends DialogFragment
 {
-	public static InstallFragment create()
+	public static InstallConfirmFragment create()
 	{
-		return new InstallFragment();
+		return new InstallConfirmFragment();
 	}
 
 	@NonNull
