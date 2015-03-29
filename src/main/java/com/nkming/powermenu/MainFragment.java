@@ -215,7 +215,7 @@ public class MainFragment extends Fragment
 			disableButton(mActionBtns[ids[i]]);
 		}
 
-		mActionBtns[RESTART_ID].animate().rotationBy(360)
+		mActionBtns[RESTART_ID].animate().rotationBy(180)
 				.setInterpolator(new AccelerateDecelerateInterpolator())
 				.setDuration(Res.ANIMATION_MID)
 				.setStartDelay(0);
