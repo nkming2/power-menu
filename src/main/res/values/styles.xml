@@ -14,11 +14,19 @@
 		<item name="colorAccent">@color/color_accent</item>
 	</style>
 
+	<style name="AppThemeDialogBase" parent="Theme.AppCompat.Light.Dialog">
+		<item name="android:windowNoTitle">true</item>
+		<item name="windowActionBar">false</item>
+	</style>
+
 	<style name="AppTheme.Animation" parent="android:style/Animation.Activity">
 		<item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
 		<item name="android:windowEnterAnimation">@anim/activity_open_enter</item>
 	</style>
 
 	<style name="AppTheme" parent="AppThemeBase">
+	</style>
+
+	<style name="AppThemeDialog" parent="AppThemeDialogBase">
 	</style>
 </resources>
