@@ -8,6 +8,7 @@
 
 package com.nkming.powermenu;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -25,16 +26,27 @@ public class MainActivity extends ActionBarActivity
 			mIsAnimateClose = false;
 			return;
 		}
-
-		// Disable the standard activity launch animation
-		overridePendingTransition(0, 0);
-		setContentView(R.layout.activity_main);
-		if (savedInstanceState == null)
+		else if (!InstallHelper.isSystemApp(this))
 		{
-			mFrag = new MainFragment();
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, mFrag)
-					.commit();
+			getWindow().setBackgroundDrawable(new ColorDrawable(0));
+			if (savedInstanceState == null)
+			{
+				InstallFragment f = InstallFragment.create();
+				f.show(getSupportFragmentManager(), "install");
+			}
+		}
+		else
+		{
+			// Disable the standard activity launch animation
+			overridePendingTransition(0, 0);
+			setContentView(R.layout.activity_main);
+			if (savedInstanceState == null)
+			{
+				mFrag = new MainFragment();
+				getSupportFragmentManager().beginTransaction()
+						.add(R.id.container, mFrag)
+						.commit();
+			}
 		}
 	}
 
