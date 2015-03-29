@@ -18,7 +18,8 @@ public class InstallActivity extends ActionBarActivity
 	@Override
 	public void onInstallConfirmed()
 	{
-		
+		InstallFragment f = InstallFragment.create();
+		f.show(getSupportFragmentManager(), "install");
 	}
 
 	@Override
