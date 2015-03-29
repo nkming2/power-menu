@@ -12,6 +12,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,13 @@ import com.shamanland.fab.FloatingActionButton;
 
 public class MainFragment extends Fragment
 {
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		mHandler = new Handler();
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -143,7 +151,7 @@ public class MainFragment extends Fragment
 
 	private void onShutdownClick()
 	{
-		startReveal(mActionBtns[SHUTDOWN_ID], R.color.shutdown_bg,
+		startReveal(mActionBtns[SHUTDOWN_ID], R.color.shutdown_bg, true,
 				new Runnable()
 		{
 			@Override
@@ -170,7 +178,7 @@ public class MainFragment extends Fragment
 
 	private void onSleepClick()
 	{
-		startReveal(mActionBtns[SLEEP_ID], R.color.sleep_bg,
+		startReveal(mActionBtns[SLEEP_ID], R.color.sleep_bg, true,
 				new Runnable()
 		{
 			@Override
@@ -225,7 +233,7 @@ public class MainFragment extends Fragment
 
 	private void onRestartMenuClick(final int id)
 	{
-		startReveal(mRestartBtns[id], R.color.restart_bg,
+		startReveal(mRestartBtns[id], R.color.restart_bg, true,
 				new Runnable()
 		{
 			@Override
@@ -251,7 +259,17 @@ public class MainFragment extends Fragment
 		dismissOtherViews(mRestartLabels, null);
 	}
 
-	private void startReveal(View atView, int colorId, final Runnable callback)
+	/**
+	 * Start the reveal animation
+	 *
+	 * @param atView Center the effect at the location of this view
+	 * @param colorId The color resource of the effect
+	 * @param isDelayCallback Whether to delay the callback after the animation
+	 * finished
+	 * @param callback The callback to be run after the animation
+	 */
+	private void startReveal(View atView, int colorId,
+			final boolean isDelayCallback, final Runnable callback)
 	{
 		mReveal.setColor(getResources().getColor(colorId));
 
@@ -279,7 +297,14 @@ public class MainFragment extends Fragment
 				@Override
 				public void onAnimationEnd(Animator animation)
 				{
-					callback.run();
+					if (isDelayCallback)
+					{
+						mHandler.postDelayed(callback, 20);
+					}
+					else
+					{
+						callback.run();
+					}
 				}
 			});
 		}
@@ -400,6 +425,7 @@ public class MainFragment extends Fragment
 		}
 	}
 
+	private Handler mHandler;
 	private FloatingActionButton mActionBtns[] = new FloatingActionButton[3];
 	private FloatingActionButton mRestartBtns[] = new FloatingActionButton[3];
 	private View mRestartLabels[] = new View[3];
