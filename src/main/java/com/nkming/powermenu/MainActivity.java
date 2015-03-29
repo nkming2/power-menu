@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity
 			if (savedInstanceState == null)
 			{
 				InstallConfirmFragment f = InstallConfirmFragment.create();
-				f.show(getSupportFragmentManager(), "install");
+				f.show(getSupportFragmentManager(), "install_confirm");
 			}
 		}
 		else
