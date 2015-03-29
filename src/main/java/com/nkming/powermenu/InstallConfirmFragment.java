@@ -28,9 +28,9 @@ public class InstallConfirmFragment extends DialogFragment
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		return new MaterialDialog.Builder(getActivity())
-				.title(R.string.install_title)
-				.content(R.string.install_content)
-				.positiveText(R.string.install_positive)
+				.title(R.string.install_confirm_title)
+				.content(R.string.install_confirm_content)
+				.positiveText(R.string.install_confirm_positive)
 				.negativeText(android.R.string.cancel)
 				.callback(new ButtonCallback())
 				.build();
