@@ -141,6 +141,20 @@ public class SystemHelper
 		context.startActivity(intent);
 	}
 
+	/**
+	 * Remove device admin rights from us
+	 *
+	 * @param context
+	 */
+	public static void disableDeviceAdmin(Context context)
+	{
+		DevicePolicyManager dpm = (DevicePolicyManager)context
+				.getSystemService(Context.DEVICE_POLICY_SERVICE);
+		ComponentName receiverCom = new ComponentName(context,
+				DeviceAdminReceiver.class);
+		dpm.removeActiveAdmin(receiverCom);
+	}
+
 	private static final String LOG_TAG = Res.LOG_TAG + "."
 			+ SystemHelper.class.getSimpleName();
 }

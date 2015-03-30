@@ -70,6 +70,50 @@ public class InstallHelper
 	}
 
 	/**
+	 * An AsyncTask that work with the SU shell to uninstall this app from /system
+	 */
+	public static class UninstallTask extends AsyncTask<Context, Void, Boolean>
+	{
+		@Override
+		protected Boolean doInBackground(Context... params)
+		{
+			if (params.length == 0)
+			{
+				Log.e(LOG_TAG + ".UninstallTask", "Missing argument");
+				return false;
+			}
+			Context context = params[0];
+
+			String scripts[] = new String[]
+					{
+							"mount -o remount,rw /system",
+							"rm " + getInstallPath(),
+							"error=$?",
+							"mount -o remount,ro /system",
+							"if [ ${error}==\"0\" ]",
+							"then",
+							"  echo \"good:)\"",
+							"  reboot",
+							"fi"
+					};
+			Log.i(LOG_TAG , "Run:\n" + StrUtils.Implode("\n",
+					Arrays.asList(scripts)));
+			List<String> out = Shell.SU.run(scripts);
+			if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
+			{
+				Log.e(LOG_TAG + ".UninstallTask", "su failed:\n"
+						+ ((out == null) ? "null" : StrUtils.Implode("\n", out)));
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+	}
+
+	/**
 	 * Return if this app is installed as privileged (KK+) system app
 	 *
 	 * @param context
