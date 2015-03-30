@@ -29,4 +29,7 @@
 
 	<style name="AppThemeDialog" parent="AppThemeDialogBase">
 	</style>
+
+	<style name="AppThemePreference" parent="android:Theme.DeviceDefault.Light.DarkActionBar">
+	</style>
 </resources>

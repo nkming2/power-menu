@@ -35,6 +35,17 @@
 			</intent-filter>
 		</activity>
 
+		<activity
+			android:name=".PreferenceActivity"
+			android:theme="@style/AppThemePreference"
+			android:label="@string/app_pref_name">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
 		<receiver android:name=".DeviceAdminReceiver"
 			android:label="@string/device_admin_label"
 			android:description="@string/device_admin_description"

@@ -1,5 +1,6 @@
 <resources>
 	<string name="app_name">Power Menu</string>
+	<string name="app_pref_name">Power Menu Config</string>
 
 	<string name="shutdown_fail">Failed shutting down, not installed as system app?</string>
 	<string name="sleep_fail">Failed putting to sleep, not activated as device admin?</string>
