@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceScreen
+		android:title="@string/pref_uninstall_title"
+		android:summary="@string/pref_uninstall_summary">
+
+		<intent
+			android:targetPackage="com.nkming.powermenu"
+			android:targetClass="com.nkming.powermenu.InstallActivity"
+			android:data="@string/data_uninstall"/>
+	</PreferenceScreen>
 </PreferenceScreen>

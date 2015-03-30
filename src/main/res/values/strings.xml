@@ -20,4 +20,13 @@
 	<string name="install_title">Installing...</string>
 	<string name="install_content">Do not do anything. You device will reboot automatically if successful</string>
 	<string name="install_failed">Failed installing, not rooted?</string>
+
+	<string name="uninstall_title">Uninstalling...</string>
+	<string name="uninstall_content">Do not do anything. You device will reboot automatically if successful</string>
+	<string name="uninstall_failed">Failed uninstalling, not rooted?</string>
+
+	<string name="pref_uninstall_title">Pre-uninstall</string>
+	<string name="pref_uninstall_summary">Ready the app for uninstalling. Save your work before proceeding, as your device will reboot during the process</string>
+
+	<string name="data_uninstall" translatable="false">uninstall</string>
 </resources>

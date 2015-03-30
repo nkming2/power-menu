@@ -25,10 +25,31 @@ public class InstallActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		if (getIntent().getDataString().equals(getString(R.string.data_uninstall)))
+		{
+			onCreateUninstall(savedInstanceState);
+		}
+		else
+		{
+			onCreateInstall(savedInstanceState);
+		}
+	}
+
+	private void onCreateInstall(Bundle savedInstanceState)
+	{
 		if (savedInstanceState == null)
 		{
 			InstallConfirmFragment f = InstallConfirmFragment.create();
 			f.show(getSupportFragmentManager(), "install_confirm");
+		}
+	}
+
+	private void onCreateUninstall(Bundle savedInstanceState)
+	{
+		if (savedInstanceState == null)
+		{
+			UninstallFragment f = UninstallFragment.create();
+			f.show(getSupportFragmentManager(), "uninstall");
 		}
 	}
 }
