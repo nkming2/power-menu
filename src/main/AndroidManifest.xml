@@ -15,7 +15,8 @@
 		<activity
 			android:name=".MainActivity"
 			android:noHistory="true"
-			android:theme="@style/AppTheme">
+			android:theme="@style/AppTheme"
+			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -38,7 +39,8 @@
 		<activity
 			android:name=".PreferenceActivity"
 			android:theme="@style/AppThemePreference"
-			android:label="@string/app_pref_name">
+			android:label="@string/app_pref_name"
+			android:taskAffinity="@string/affinity_pref">
 
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

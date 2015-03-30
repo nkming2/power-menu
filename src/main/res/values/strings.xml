@@ -29,4 +29,7 @@
 	<string name="pref_uninstall_summary">Ready the app for uninstalling. Save your work before proceeding, as your device will reboot during the process</string>
 
 	<string name="data_uninstall" translatable="false">uninstall</string>
+	<string name="affinity_main" translatable="false">com.nkming.powermenu.MAIN</string>
+	<string name="affinity_install" translatable="false">com.nkming.powermenu.INSTALL</string>
+	<string name="affinity_pref" translatable="false">com.nkming.powermenu.PREF</string>
 </resources>
