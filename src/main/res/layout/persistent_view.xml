@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- layout_width and layout_height will always be overridden to 48dp -->
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="48dp"
+	android:layout_height="48dp"
+	android:src="@mipmap/ic_launcher"/>

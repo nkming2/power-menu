@@ -6,6 +6,8 @@
 	<uses-permission android:name="android.permission.REBOOT" />
 	<uses-permission android:name="android.permission.RECOVERY" />
 	<uses-permission android:name="android.permission.SHUTDOWN" />
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
 
 	<application
 		android:allowBackup="true"
@@ -24,6 +26,10 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
+		<service
+			android:name=".PersistentService"
+			android:exported="false"/>
 
 		<activity
 			android:name=".InstallActivity"
