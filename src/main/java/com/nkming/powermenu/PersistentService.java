@@ -10,16 +10,8 @@ package com.nkming.powermenu;
 
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-
-import com.nkming.utils.sys.DeviceInfo;
-import com.nkming.utils.type.Size;
-import com.nkming.utils.unit.DimensionUtils;
 
 /**
  * Service to display the persistent view
@@ -59,7 +51,7 @@ public class PersistentService extends Service
 		{
 			uninitView();
 		}
-		mView = LayoutInflater.from(this).inflate(R.layout.persistent_view, null);
+		mView = PersistentView.create(this, R.layout.persistent_view);
 		mView.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -68,28 +60,14 @@ public class PersistentService extends Service
 				onViewClick();
 			}
 		});
-
-		Size screenSize = DeviceInfo.GetScreenPx(this);
-		final float dp48 = DimensionUtils.dpToPx(this, 48);
-		final int x = (int)(screenSize.w() - dp48 * 0.75f);
-		final int y = (int)(screenSize.h() * 0.15f);
-		WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
-		WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-				(int)dp48, (int)dp48, x, y,
-				WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-						| WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-				PixelFormat.TRANSLUCENT);
-		params.gravity = Gravity.TOP | Gravity.LEFT;
-		wm.addView(mView, params);
 	}
 
 	private void uninitView()
 	{
 		if (mView != null)
 		{
-			WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
-			wm.removeView(mView);
+			PersistentView.destroy(this, mView);
+			mView = null;
 		}
 	}
 
@@ -100,5 +78,5 @@ public class PersistentService extends Service
 		startActivity(intent);
 	}
 
-	private View mView;
+	private PersistentView mView;
 }
