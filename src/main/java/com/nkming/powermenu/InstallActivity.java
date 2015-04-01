@@ -25,7 +25,8 @@ public class InstallActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		if (getIntent().getDataString().equals(getString(R.string.data_uninstall)))
+		if (getIntent().getDataString() != null
+				&& getIntent().getDataString().equals(getString(R.string.data_uninstall)))
 		{
 			onCreateUninstall(savedInstanceState);
 		}
