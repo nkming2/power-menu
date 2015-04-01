@@ -189,11 +189,7 @@ public class MainFragment extends Fragment
 				{
 					return;
 				}
-				if (!SystemHelper.sleep(getActivity()))
-				{
-					Toast.makeText(getActivity(), R.string.sleep_fail,
-							Toast.LENGTH_LONG).show();
-				}
+				SystemHelper.sleep(getActivity().getApplicationContext());
 				getActivity().finish();
 			}
 		});
