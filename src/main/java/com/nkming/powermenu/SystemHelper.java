@@ -8,8 +8,6 @@
 
 package com.nkming.powermenu;
 
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -142,51 +140,6 @@ public class SystemHelper
 					e);
 			return false;
 		}
-	}
-
-	/**
-	 * Return if this app is activated as device admin
-	 *
-	 * @param context
-	 * @return
-	 */
-	public static boolean isDeviceAdmin(Context context)
-	{
-		DevicePolicyManager dpm = (DevicePolicyManager)context
-				.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		ComponentName receiverCom = new ComponentName(context,
-				DeviceAdminReceiver.class);
-		return dpm.isAdminActive(receiverCom);
-	}
-
-	/**
-	 * Start the device admin activation activity, to ask for user's permission
-	 *
-	 * @param context
-	 */
-	public static void enableDeviceAdmin(Context context)
-	{
-		Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-		ComponentName receiverCom = new ComponentName(context,
-				DeviceAdminReceiver.class);
-		intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, receiverCom);
-		intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-				context.getString(R.string.device_admin_description));
-		context.startActivity(intent);
-	}
-
-	/**
-	 * Remove device admin rights from us
-	 *
-	 * @param context
-	 */
-	public static void disableDeviceAdmin(Context context)
-	{
-		DevicePolicyManager dpm = (DevicePolicyManager)context
-				.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		ComponentName receiverCom = new ComponentName(context,
-				DeviceAdminReceiver.class);
-		dpm.removeActiveAdmin(receiverCom);
 	}
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."

@@ -10,9 +10,6 @@
 	<string name="restart_mode_recovery">Recovery</string>
 	<string name="restart_mode_bootloader">Bootloader</string>
 
-	<string name="device_admin_label">Power Menu</string>
-	<string name="device_admin_description">Allow Power Menu to put device to sleep</string>
-
 	<string name="install_confirm_title">Install as System App</string>
 	<string name="install_confirm_content">Some features require the app to be installed as system app.\n\nSave your work before proceeding, as your device will reboot during the process.</string>
 	<string name="install_confirm_positive">Install</string>
