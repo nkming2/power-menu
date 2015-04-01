@@ -1,5 +1,5 @@
 # Power Menu
-Android app that provides an alternative power menu in a sort of material way. **Require root and device admin right**
+Android app that provides an alternative power menu in a sort of material way. **Require root**
 
 ## Screenshot
 [![Screenshot1](https://lh4.googleusercontent.com/-pOc4azJvdOI/VRl0v91rXHI/AAAAAAAABpI/qGRwe4SljQQ/s400/100_jb_0.jpeg)](https://lh4.googleusercontent.com/-pOc4azJvdOI/VRl0v91rXHI/AAAAAAAABpI/qGRwe4SljQQ/s0/100_jb_0.jpeg)
@@ -7,9 +7,6 @@ Android app that provides an alternative power menu in a sort of material way. *
 [![Screenshot3](https://lh5.googleusercontent.com/-vKoEIc2tAjY/VRl0v9BYrnI/AAAAAAAABpI/jasIODUajnY/s400/100_jb_2.jpeg)](https://lh5.googleusercontent.com/-vKoEIc2tAjY/VRl0v9BYrnI/AAAAAAAABpI/jasIODUajnY/s0/100_jb_2.jpeg)
 [![Screenshot4](https://lh4.googleusercontent.com/-m2_RTJPG_bE/VRl0whuweXI/AAAAAAAABpI/_fvRClpbEn4/s400/100_jb_3.jpeg)](https://lh4.googleusercontent.com/-m2_RTJPG_bE/VRl0whuweXI/AAAAAAAABpI/_fvRClpbEn4/s0/100_jb_3.jpeg)
 [![Screenshot5](https://lh4.googleusercontent.com/-513Qymc0QHg/VRl0wx5DVQI/AAAAAAAABpI/isC42Eeo8dQ/s400/100_l_0.jpeg)](https://lh4.googleusercontent.com/-513Qymc0QHg/VRl0wx5DVQI/AAAAAAAABpI/isC42Eeo8dQ/s0/100_l_0.jpeg)
-
-## Known issue
-- Locking through the app will disable Smart Lock on L
 
 ## Build dependency
 - floating-action-button (https://github.com/shamanland/floating-action-button)
