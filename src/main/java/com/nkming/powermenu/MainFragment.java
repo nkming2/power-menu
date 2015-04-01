@@ -189,14 +189,13 @@ public class MainFragment extends Fragment
 				{
 					return;
 				}
-				if (!SystemHelper.sleep(getActivity()))
-				{
-					Toast.makeText(getActivity(), R.string.sleep_fail,
-							Toast.LENGTH_LONG).show();
-				}
 				getActivity().finish();
 			}
 		});
+
+		// Sleep will run on a new thread and involve su, that takes quite some
+		// time so do it at once
+		SystemHelper.sleep(getActivity().getApplicationContext());
 
 		mActionBtns[SLEEP_ID].setShadow(false);
 		disableButton(mActionBtns[SLEEP_ID]);

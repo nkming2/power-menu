@@ -19,14 +19,7 @@ public class MainActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 
-		if (!ensureDeviceAdmin())
-		{
-			// We don't want the animation here
-			super.finish();
-			mIsAnimateClose = false;
-			return;
-		}
-		else if (!InstallHelper.isSystemApp(this))
+		if (!InstallHelper.isSystemApp(this))
 		{
 			// We don't want the animation here
 			super.finish();
@@ -64,23 +57,6 @@ public class MainActivity extends ActionBarActivity
 		if (mIsAnimateClose)
 		{
 			overridePendingTransition(0, R.anim.activity_close_exit);
-		}
-	}
-
-	/**
-	 * Ensure device admin rights are granted to this app. If not, the app would
-	 * be finished and direct user to the device admin settings instead
-	 */
-	private boolean ensureDeviceAdmin()
-	{
-		if (!SystemHelper.isDeviceAdmin(this))
-		{
-			SystemHelper.enableDeviceAdmin(this);
-			return false;
-		}
-		else
-		{
-			return true;
 		}
 	}
 

@@ -3,15 +3,12 @@
 	<string name="app_pref_name">Power Menu Config</string>
 
 	<string name="shutdown_fail">Failed shutting down, not installed as system app?</string>
-	<string name="sleep_fail">Failed putting to sleep, not activated as device admin?</string>
+	<string name="sleep_fail">Failed putting to sleep, not rooted?</string>
 	<string name="restart_fail">Failed rebooting, not installed as system app?</string>
 
 	<string name="restart_mode_normal">Reboot</string>
 	<string name="restart_mode_recovery">Recovery</string>
 	<string name="restart_mode_bootloader">Bootloader</string>
-
-	<string name="device_admin_label">Power Menu</string>
-	<string name="device_admin_description">Allow Power Menu to put device to sleep</string>
 
 	<string name="install_confirm_title">Install as System App</string>
 	<string name="install_confirm_content">Some features require the app to be installed as system app.\n\nSave your work before proceeding, as your device will reboot during the process.</string>

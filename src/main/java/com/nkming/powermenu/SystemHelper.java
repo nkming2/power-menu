@@ -8,13 +8,18 @@
 
 package com.nkming.powermenu;
 
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.PowerManager;
+import android.widget.Toast;
+
+import com.nkming.utils.str.StrUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
+
+import eu.chainfire.libsuperuser.Shell;
 
 public class SystemHelper
 {
@@ -55,26 +60,53 @@ public class SystemHelper
 	}
 
 	/**
-	 * Put the device to sleep
+	 * Put the device to sleep. Since we have no way to know for sure the device
+	 * has gone into sleep mode, true is always returned
 	 *
-	 * @param context
+	 * @param context The application context. Activity context is discouraged
+	 * as the context is passed to an AsyncTask and might be used after the
+	 * activity finished
 	 * @return
 	 */
-	public static boolean sleep(Context context)
+	public static boolean sleep(final Context context)
 	{
-		try
+		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
 		{
-			DevicePolicyManager dpm = (DevicePolicyManager)context
-					.getSystemService(Context.DEVICE_POLICY_SERVICE);
-			dpm.lockNow();
-			return true;
-		}
-		catch (Exception e)
-		{
-			Log.e(LOG_TAG + ".sleep", "Error while invoking DevicePolicyManager",
-					e);
-			return false;
-		}
+			@Override
+			protected Boolean doInBackground(Void... params)
+			{
+				// KEYCODE_POWER == 26
+				String scripts[] = new String[]
+						{
+							"input keyevent 26",
+							"echo \"good:)\""
+						};
+				List<String> out = Shell.SU.run(scripts);
+				if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
+				{
+					Log.e(LOG_TAG + ".sleep", "su failed:\n"
+							+ ((out == null) ? "null"
+									: StrUtils.Implode("\n", out)));
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean result)
+			{
+				if (!result)
+				{
+					Toast.makeText(context, R.string.sleep_fail,
+							Toast.LENGTH_LONG).show();
+				}
+			}
+		};
+		task.execute();
+		return true;
 	}
 
 	public static boolean reboot(RebootMode mode, Context context)
@@ -108,51 +140,6 @@ public class SystemHelper
 					e);
 			return false;
 		}
-	}
-
-	/**
-	 * Return if this app is activated as device admin
-	 *
-	 * @param context
-	 * @return
-	 */
-	public static boolean isDeviceAdmin(Context context)
-	{
-		DevicePolicyManager dpm = (DevicePolicyManager)context
-				.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		ComponentName receiverCom = new ComponentName(context,
-				DeviceAdminReceiver.class);
-		return dpm.isAdminActive(receiverCom);
-	}
-
-	/**
-	 * Start the device admin activation activity, to ask for user's permission
-	 *
-	 * @param context
-	 */
-	public static void enableDeviceAdmin(Context context)
-	{
-		Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-		ComponentName receiverCom = new ComponentName(context,
-				DeviceAdminReceiver.class);
-		intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, receiverCom);
-		intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-				context.getString(R.string.device_admin_description));
-		context.startActivity(intent);
-	}
-
-	/**
-	 * Remove device admin rights from us
-	 *
-	 * @param context
-	 */
-	public static void disableDeviceAdmin(Context context)
-	{
-		DevicePolicyManager dpm = (DevicePolicyManager)context
-				.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		ComponentName receiverCom = new ComponentName(context,
-				DeviceAdminReceiver.class);
-		dpm.removeActiveAdmin(receiverCom);
 	}
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."

@@ -9,7 +9,6 @@
 package com.nkming.powermenu;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -88,13 +87,6 @@ public class UninstallFragment extends DialogFragment
 	{
 		new InstallHelper.UninstallTask()
 		{
-			@Override
-			protected Boolean doInBackground(Context... params)
-			{
-				SystemHelper.disableDeviceAdmin(getActivity());
-				return super.doInBackground(params);
-			}
-
 			@Override
 			protected void onPostExecute(Boolean result)
 			{
