@@ -29,6 +29,7 @@
 			android:name=".InstallActivity"
 			android:excludeFromRecents="true"
 			android:exported="false"
+			android:icon="@mipmap/ic_launcher_config"
 			android:theme="@style/AppThemeDialog">
 
 			<intent-filter>
@@ -40,6 +41,7 @@
 		<activity
 			android:name=".PreferenceActivity"
 			android:theme="@style/AppThemePreference"
+			android:icon="@mipmap/ic_launcher_config"
 			android:label="@string/app_pref_name"
 			android:taskAffinity="@string/affinity_pref">
 
