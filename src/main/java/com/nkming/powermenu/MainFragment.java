@@ -73,8 +73,9 @@ public class MainFragment extends Fragment
 		for (int i = 0; i < mActionBtns.length; ++i)
 		{
 			mActionBtns[i] = (FloatingActionButton)root.findViewById(getViewId(i));
+			mActionBtnBounds[i] = root.findViewById(getViewBoundId(i));
 			final int id = i;
-			mActionBtns[i].setOnClickListener(new View.OnClickListener()
+			mActionBtnBounds[i].setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
@@ -91,14 +92,21 @@ public class MainFragment extends Fragment
 		}
 
 		mRestartBtns[RESTART_NORMAL_ID] = mActionBtns[RESTART_ID];
+		mRestartBtnBounds[RESTART_NORMAL_ID] = mActionBtnBounds[RESTART_ID];
 		mRestartLabels[RESTART_NORMAL_ID] = root.findViewById(
 				R.id.restart_normal_label);
+
 		mRestartBtns[RESTART_RECOVERY_ID] = (FloatingActionButton)root
 				.findViewById(R.id.restart_recovery_btn);
+		mRestartBtnBounds[RESTART_RECOVERY_ID] = root
+				.findViewById(R.id.restart_recovery_btn_bound);
 		mRestartLabels[RESTART_RECOVERY_ID] = root.findViewById(
 				R.id.restart_recovery_label);
+
 		mRestartBtns[RESTART_BOOTLOADER_ID] = (FloatingActionButton)root
 				.findViewById(R.id.restart_bootloader_btn);
+		mRestartBtnBounds[RESTART_BOOTLOADER_ID] = root
+				.findViewById(R.id.restart_bootloader_btn_bound);
 		mRestartLabels[RESTART_BOOTLOADER_ID] = root.findViewById(
 				R.id.restart_bootloader_label);
 	}
@@ -115,7 +123,7 @@ public class MainFragment extends Fragment
 		for (int i = 0; i < ids.length; ++i)
 		{
 			final int id = ids[i];
-			mRestartBtns[id].setOnClickListener(
+			mRestartBtnBounds[id].setOnClickListener(
 					new View.OnClickListener()
 					{
 						@Override
@@ -172,8 +180,9 @@ public class MainFragment extends Fragment
 		});
 
 		mActionBtns[SHUTDOWN_ID].setShadow(false);
-		disableButton(mActionBtns[SHUTDOWN_ID]);
-		dismissOtherButtons(mActionBtns, mActionBtns[SHUTDOWN_ID]);
+		dismissOtherViews(mActionBtns, mActionBtns[SHUTDOWN_ID]);
+		// Disable all click bounds
+		disableOtherButtonBounds(mActionBtnBounds, null);
 	}
 
 	private void onSleepClick()
@@ -198,9 +207,8 @@ public class MainFragment extends Fragment
 		SystemHelper.sleep(getActivity().getApplicationContext());
 
 		mActionBtns[SLEEP_ID].setShadow(false);
-		disableButton(mActionBtns[SLEEP_ID]);
 		dismissOtherViews(mActionBtns, mActionBtns[SLEEP_ID]);
-		disableOtherButtons(mActionBtns, mActionBtns[SLEEP_ID]);
+		disableOtherButtonBounds(mActionBtnBounds, null);
 	}
 
 	private void onRestartClick()
@@ -212,14 +220,14 @@ public class MainFragment extends Fragment
 					.setInterpolator(new AccelerateInterpolator())
 					.setDuration(Res.ANIMATION_FAST)
 					.setStartDelay(50 * i);
-			disableButton(mActionBtns[ids[i]]);
+			disableButtonBound(mActionBtnBounds[ids[i]]);
 		}
 
 		mActionBtns[RESTART_ID].animate().rotationBy(180)
 				.setInterpolator(new AccelerateDecelerateInterpolator())
 				.setDuration(Res.ANIMATION_MID)
 				.setStartDelay(0);
-		mActionBtns[RESTART_ID].setOnClickListener(null);
+		mActionBtnBounds[RESTART_ID].setOnClickListener(null);
 		showRestartMenu(Res.ANIMATION_MID - Res.ANIMATION_FAST,
 				new Runnable()
 		{
@@ -254,10 +262,9 @@ public class MainFragment extends Fragment
 		});
 
 		mRestartBtns[id].setShadow(false);
-		disableButton(mRestartBtns[id]);
 		dismissOtherViews(mRestartBtns, mRestartBtns[id]);
-		disableOtherButtons(mRestartBtns, mRestartBtns[id]);
 		dismissOtherViews(mRestartLabels, null);
+		disableOtherButtonBounds(mRestartBtnBounds, null);
 	}
 
 	/**
@@ -328,18 +335,18 @@ public class MainFragment extends Fragment
 		}
 	}
 
-	private void disableOtherButtons(View btns[], View keepBtn)
+	private void disableOtherButtonBounds(View btns[], View keepBtn)
 	{
 		for (View v : btns)
 		{
 			if (v != keepBtn)
 			{
-				disableButton(v);
+				disableButtonBound(v);
 			}
 		}
 	}
 
-	private void disableButton(View btn)
+	private void disableButtonBound(View btn)
 	{
 		btn.setOnClickListener(null);
 		btn.setFocusable(false);
@@ -394,6 +401,23 @@ public class MainFragment extends Fragment
 		}
 	}
 
+	private int getViewBoundId(int btnId)
+	{
+		switch (btnId)
+		{
+		default:
+			Log.e(LOG_TAG + ".getViewId", "Unknown id");
+		case SHUTDOWN_ID:
+			return R.id.shutdown_btn_bound;
+
+		case SLEEP_ID:
+			return R.id.sleep_btn_bound;
+
+		case RESTART_ID:
+			return R.id.restart_btn_bound;
+		}
+	}
+
 	private int getViewId(int btnId)
 	{
 		switch (btnId)
@@ -429,7 +453,9 @@ public class MainFragment extends Fragment
 	}
 
 	private Handler mHandler;
+	private View mActionBtnBounds[] = new View[3];
 	private FloatingActionButton mActionBtns[] = new FloatingActionButton[3];
+	private View mRestartBtnBounds[] = new View[3];
 	private FloatingActionButton mRestartBtns[] = new FloatingActionButton[3];
 	private View mRestartLabels[] = new View[3];
 	private RevealView mReveal;

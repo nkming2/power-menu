@@ -14,49 +14,79 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<com.shamanland.fab.FloatingActionButton
-			android:id="@+id/sleep_btn"
+		<FrameLayout
+			android:id="@+id/sleep_btn_bound"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
 			android:layout_centerInParent="true"
-			android:src="@drawable/ic_action_sleep"
-			app:floatingActionButtonColor="@color/sleep_bg"
-			app:floatingActionButtonSize="normal"/>
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp">
 
-		<com.shamanland.fab.FloatingActionButton
-			android:id="@+id/shutdown_id"
+			<com.shamanland.fab.FloatingActionButton
+				android:id="@+id/sleep_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ic_action_sleep"
+				android:clickable="false"
+				android:focusable="false"
+				app:floatingActionButtonColor="@color/sleep_bg"
+				app:floatingActionButtonSize="normal"/>
+		</FrameLayout>
+
+		<FrameLayout
+			android:id="@+id/shutdown_btn_bound"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_toLeftOf="@id/sleep_btn"
-			android:layout_alignTop="@id/sleep_btn"
-			android:src="@drawable/ic_action_shutdown"
-			app:floatingActionButtonColor="@color/shutdown_bg"
-			app:floatingActionButtonSize="normal"/>
+			android:layout_toLeftOf="@id/sleep_btn_bound"
+			android:layout_alignTop="@id/sleep_btn_bound"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp">
 
-		<com.shamanland.fab.FloatingActionButton
-			android:id="@+id/restart_btn"
+			<com.shamanland.fab.FloatingActionButton
+				android:id="@+id/shutdown_id"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ic_action_shutdown"
+				android:clickable="false"
+				android:focusable="false"
+				app:floatingActionButtonColor="@color/shutdown_bg"
+				app:floatingActionButtonSize="normal"/>
+		</FrameLayout>
+
+		<FrameLayout
+			android:id="@+id/restart_btn_bound"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_toRightOf="@id/sleep_btn"
-			android:layout_alignTop="@id/sleep_btn"
-			android:src="@drawable/ic_action_restart"
-			app:floatingActionButtonColor="@color/restart_bg"
-			app:floatingActionButtonSize="normal"/>
+			android:layout_toRightOf="@id/sleep_btn_bound"
+			android:layout_alignTop="@id/sleep_btn_bound"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp">
+
+			<com.shamanland.fab.FloatingActionButton
+				android:id="@+id/restart_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ic_action_restart"
+				android:clickable="false"
+				android:focusable="false"
+				app:floatingActionButtonColor="@color/restart_bg"
+				app:floatingActionButtonSize="normal"/>
+		</FrameLayout>
 
 		<TextView
 			android:id="@+id/restart_normal_label"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
 			android:layout_marginRight="8dp"
-			android:layout_toLeftOf="@id/restart_btn"
-			android:layout_alignTop="@id/restart_btn"
-			android:layout_alignBottom="@id/restart_btn"
+			android:layout_toLeftOf="@id/restart_btn_bound"
+			android:layout_alignTop="@id/restart_btn_bound"
+			android:layout_alignBottom="@id/restart_btn_bound"
 			android:gravity="center_vertical"
 			android:visibility="invisible"
 			android:clickable="false"
@@ -64,27 +94,38 @@
 			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 			android:text="@string/restart_mode_normal"/>
 
-		<com.shamanland.fab.FloatingActionButton
-			android:id="@+id/restart_recovery_btn"
+		<FrameLayout
+			android:id="@+id/restart_recovery_btn_bound"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="16dp"
-			android:layout_marginRight="8dp"
-			android:layout_above="@id/restart_btn"
-			android:layout_alignRight="@id/restart_btn"
-			android:padding="0dp"
-			android:visibility="invisible"
-			android:src="@drawable/ic_action_restart_recovery"
-			app:floatingActionButtonColor="@color/restart_bg"
-			app:floatingActionButtonSize="mini"/>
+			android:layout_above="@id/restart_btn_bound"
+			android:layout_alignRight="@id/restart_btn_bound"
+			android:layout_marginRight="16dp"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:paddingLeft="8dp"
+			android:paddingRight="8dp">
+
+			<com.shamanland.fab.FloatingActionButton
+				android:id="@+id/restart_recovery_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="0dp"
+				android:visibility="invisible"
+				android:clickable="false"
+				android:focusable="false"
+				android:src="@drawable/ic_action_restart_recovery"
+				app:floatingActionButtonColor="@color/restart_bg"
+				app:floatingActionButtonSize="mini"/>
+		</FrameLayout>
 
 		<TextView
 			android:id="@+id/restart_recovery_label"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
-			android:layout_toLeftOf="@id/restart_recovery_btn"
-			android:layout_alignTop="@id/restart_recovery_btn"
-			android:layout_alignBottom="@id/restart_recovery_btn"
+			android:layout_toLeftOf="@id/restart_recovery_btn_bound"
+			android:layout_alignTop="@id/restart_recovery_btn_bound"
+			android:layout_alignBottom="@id/restart_recovery_btn_bound"
 			android:layout_alignRight="@id/restart_normal_label"
 			android:gravity="center_vertical"
 			android:visibility="invisible"
@@ -93,27 +134,37 @@
 			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 			android:text="@string/restart_mode_recovery"/>
 
-		<com.shamanland.fab.FloatingActionButton
-			android:id="@+id/restart_bootloader_btn"
+		<FrameLayout
+			android:id="@+id/restart_bootloader_btn_bound"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="16dp"
-			android:layout_marginRight="8dp"
-			android:layout_above="@id/restart_recovery_btn"
-			android:layout_alignRight="@id/restart_btn"
-			android:padding="0dp"
-			android:visibility="invisible"
-			android:src="@drawable/ic_action_restart_bootloader"
-			app:floatingActionButtonColor="@color/restart_bg"
-			app:floatingActionButtonSize="mini"/>
+			android:layout_above="@id/restart_recovery_btn_bound"
+			android:layout_alignRight="@id/restart_recovery_btn_bound"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:paddingLeft="8dp"
+			android:paddingRight="8dp">
+
+			<com.shamanland.fab.FloatingActionButton
+				android:id="@+id/restart_bootloader_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="0dp"
+				android:visibility="invisible"
+				android:clickable="false"
+				android:focusable="false"
+				android:src="@drawable/ic_action_restart_bootloader"
+				app:floatingActionButtonColor="@color/restart_bg"
+				app:floatingActionButtonSize="mini"/>
+		</FrameLayout>
 
 		<TextView
 			android:id="@+id/restart_bootloader_label"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
-			android:layout_toLeftOf="@id/restart_bootloader_btn"
-			android:layout_alignTop="@id/restart_bootloader_btn"
-			android:layout_alignBottom="@id/restart_bootloader_btn"
+			android:layout_toLeftOf="@id/restart_bootloader_btn_bound"
+			android:layout_alignTop="@id/restart_bootloader_btn_bound"
+			android:layout_alignBottom="@id/restart_bootloader_btn_bound"
 			android:layout_alignRight="@id/restart_normal_label"
 			android:gravity="center_vertical"
 			android:visibility="invisible"
