@@ -199,7 +199,8 @@ public class MainFragment extends Fragment
 
 		mActionBtns[SLEEP_ID].setShadow(false);
 		disableButton(mActionBtns[SLEEP_ID]);
-		dismissOtherButtons(mActionBtns, mActionBtns[SLEEP_ID]);
+		dismissOtherViews(mActionBtns, mActionBtns[SLEEP_ID]);
+		disableOtherButtons(mActionBtns, mActionBtns[SLEEP_ID]);
 	}
 
 	private void onRestartClick()
@@ -254,7 +255,8 @@ public class MainFragment extends Fragment
 
 		mRestartBtns[id].setShadow(false);
 		disableButton(mRestartBtns[id]);
-		dismissOtherButtons(mRestartBtns, mRestartBtns[id]);
+		dismissOtherViews(mRestartBtns, mRestartBtns[id]);
+		disableOtherButtons(mRestartBtns, mRestartBtns[id]);
 		dismissOtherViews(mRestartLabels, null);
 	}
 
@@ -324,12 +326,6 @@ public class MainFragment extends Fragment
 						.setDuration(Res.ANIMATION_FAST).setStartDelay(0);
 			}
 		}
-	}
-
-	private void dismissOtherButtons(View btns[], View keepBtn)
-	{
-		dismissOtherViews(btns, keepBtn);
-		disableOtherButtons(btns, keepBtn);
 	}
 
 	private void disableOtherButtons(View btns[], View keepBtn)
