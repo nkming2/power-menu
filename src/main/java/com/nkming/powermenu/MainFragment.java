@@ -329,6 +329,11 @@ public class MainFragment extends Fragment
 	private void dismissOtherButtons(View btns[], View keepBtn)
 	{
 		dismissOtherViews(btns, keepBtn);
+		disableOtherButtons(btns, keepBtn);
+	}
+
+	private void disableOtherButtons(View btns[], View keepBtn)
+	{
 		for (View v : btns)
 		{
 			if (v != keepBtn)
