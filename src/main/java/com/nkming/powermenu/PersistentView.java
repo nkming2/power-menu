@@ -28,8 +28,7 @@ public class PersistentView
 	{
 		mContext = context;
 		mContainer = new ContainerView(context);
-		mChild = LayoutInflater.from(context).inflate(resId, null);
-		mContainer.addView(mChild);
+		mChild = LayoutInflater.from(context).inflate(resId, mContainer, true);
 
 		mScreenSize = DeviceInfo.GetScreenPx(context);
 		mWindowManager = (WindowManager)context.getSystemService(
