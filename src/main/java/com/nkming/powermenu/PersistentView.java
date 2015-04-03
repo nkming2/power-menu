@@ -46,7 +46,9 @@ public class PersistentView
 		mLayoutParams.gravity = Gravity.TOP | Gravity.LEFT;
 		mWindowManager.addView(mContainer, mLayoutParams);
 
-		reset();
+		mPrimaryId = -1;
+		mInitialPos = new PointF();
+		mIsMoving = false;
 	}
 
 	public void destroy()
