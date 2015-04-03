@@ -262,7 +262,7 @@ public class PersistentView
 
 	private void evaluateMoving(MotionEvent event)
 	{
-		float threshold = DimensionUtils.dpToPx(mContext, 48);
+		float threshold = DimensionUtils.dpToPx(mContext, 24);
 		if (Math.abs(event.getRawX() - mInitialPos.x) >= threshold
 				|| Math.abs(event.getRawY() - mInitialPos.y) >= threshold)
 		{
