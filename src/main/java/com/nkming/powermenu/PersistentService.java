@@ -91,7 +91,7 @@ public class PersistentService extends Service
 	private void onViewClick()
 	{
 		Log.d(LOG_TAG, "onViewClick");
-		//SystemHelper.sleep(getApplicationContext());
+		SystemHelper.sleep(getApplicationContext());
 	}
 
 	private void onViewLongClick()
