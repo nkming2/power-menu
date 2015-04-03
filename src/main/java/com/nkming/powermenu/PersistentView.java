@@ -8,6 +8,8 @@
 
 package com.nkming.powermenu;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -107,10 +109,7 @@ public class PersistentView
 			switch (event.getActionMasked())
 			{
 			case MotionEvent.ACTION_DOWN:
-				mPrimaryId = event.getActionIndex();
-				mInitialPos = new PointF(event.getRawX(), event.getRawY());
-				mHandler.postDelayed(mLongPressRunnable,
-						ViewConfiguration.get(mContext).getLongPressTimeout());
+				onActionDown(event);
 				break;
 
 			case MotionEvent.ACTION_POINTER_UP:
@@ -158,6 +157,23 @@ public class PersistentView
 				int x = (int)(mScreenSize.w() - getWidth() * (1.0f - mHiddenW));
 				int y = (int)(mScreenSize.h() * 0.15f);
 				updatePosition(x, y);
+			}
+		}
+	}
+
+	private void onActionDown(MotionEvent event)
+	{
+		mPrimaryId = event.getActionIndex();
+		mInitialPos = new PointF(event.getRawX(), event.getRawY());
+		mHandler.postDelayed(mLongPressRunnable,
+				ViewConfiguration.get(mContext).getLongPressTimeout());
+
+		for (int i = 0; i < mSnapAnimators.length; ++i)
+		{
+			if (mSnapAnimators[i] != null)
+			{
+				mSnapAnimators[i].cancel();
+				mSnapAnimators[i] = null;
 			}
 		}
 	}
@@ -244,19 +260,38 @@ public class PersistentView
 				x);
 		animX.setInterpolator(new AccelerateDecelerateInterpolator());
 		animX.setDuration(Res.ANIMATION_FAST);
+		animX.addListener(new AnimatorListenerAdapter()
+		{
+			@Override
+			public void onAnimationEnd(Animator animation)
+			{
+				mSnapAnimators[0] = null;
+			}
+		});
 		animX.start();
+		mSnapAnimators[0] = animX;
 
 		ObjectAnimator animY = ObjectAnimator.ofInt(this, "y", mLayoutParams.y,
 				y);
 		animY.setInterpolator(new AccelerateDecelerateInterpolator());
 		animY.setDuration(Res.ANIMATION_FAST);
+		animY.addListener(new AnimatorListenerAdapter()
+		{
+			@Override
+			public void onAnimationEnd(Animator animation)
+			{
+				mSnapAnimators[1] = null;
+			}
+		});
 		animY.start();
+		mSnapAnimators[1] = animY;
 	}
 
 	private int mPrimaryId;
 	private PointF mInitialPos;
 	private boolean mIsMoving;
 	private boolean mHasLayout = false;
+	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
 
 	/// Percentage of width that is beyond the edge of the screen
 	private float mHiddenW = 0.15f;
