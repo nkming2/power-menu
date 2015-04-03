@@ -31,7 +31,7 @@ public class PersistentService extends Service
 	@Override
 	public void onCreate()
 	{
-		Log.d(LOG_TAG, "onDestroy");
+		Log.d(LOG_TAG, "onCreate");
 		super.onCreate();
 		initView();
 	}
