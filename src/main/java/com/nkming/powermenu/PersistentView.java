@@ -235,7 +235,8 @@ public class PersistentView
 	{
 		int y = mLayoutParams.y;
 		int x;
-		if (mLayoutParams.x < mScreenSize.w() / 2)
+		// Take center
+		if ((mLayoutParams.x + mChild.getWidth() / 2) < mScreenSize.w() / 2)
 		{
 			x = (int)(0 - mChild.getWidth() * mHiddenW);
 		}
