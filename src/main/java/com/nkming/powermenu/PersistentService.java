@@ -63,7 +63,12 @@ public class PersistentService extends Service
 		{
 			uninitView();
 		}
-		mView = new PersistentView(new Handler(), this, R.layout.persistent_view);
+		
+		PersistentView.Config conf = new PersistentView.Config();
+		conf.handler = new Handler();
+		conf.context = this;
+		conf.resId = R.layout.persistent_view;
+		mView = new PersistentView(conf);
 		mView.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

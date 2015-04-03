@@ -30,15 +30,24 @@ import com.nkming.utils.unit.DimensionUtils;
 
 public class PersistentView
 {
-	public PersistentView(Handler handler, Context context, int resId)
+	public static class Config
 	{
-		mHandler = handler;
-		mContext = context;
-		mContainer = new ContainerView(context);
-		mChild = LayoutInflater.from(context).inflate(resId, mContainer, true);
+		public Handler handler;
+		public Context context;
+		/// Resource id for the content view
+		public int resId;
+	}
 
-		mScreenSize = DeviceInfo.GetScreenPx(context);
-		mWindowManager = (WindowManager)context.getSystemService(
+	public PersistentView(Config config)
+	{
+		mHandler = config.handler;
+		mContext = config.context;
+		mContainer = new ContainerView(mContext);
+		mChild = LayoutInflater.from(mContext).inflate(config.resId, mContainer,
+				true);
+
+		mScreenSize = DeviceInfo.GetScreenPx(mContext);
+		mWindowManager = (WindowManager)mContext.getSystemService(
 				Context.WINDOW_SERVICE);
 
 		mLayoutParams = new WindowManager.LayoutParams(
