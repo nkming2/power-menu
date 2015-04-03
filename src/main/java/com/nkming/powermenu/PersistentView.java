@@ -12,6 +12,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.os.Handler;
@@ -54,6 +55,8 @@ public class PersistentView
 		mContainer.addView(mChild);
 
 		mScreenSize = DeviceInfo.GetScreenPx(mContext);
+		mIsPortrait = (mContext.getResources().getConfiguration().orientation
+				== Configuration.ORIENTATION_PORTRAIT);
 		mWindowManager = (WindowManager)mContext.getSystemService(
 				Context.WINDOW_SERVICE);
 
@@ -87,6 +90,15 @@ public class PersistentView
 	public void destroy()
 	{
 		mWindowManager.removeView(mContainer);
+	}
+
+	public void onOrientationChange(boolean isPortrait)
+	{
+		if (isPortrait != mIsPortrait)
+		{
+			mIsPortrait = isPortrait;
+			mScreenSize = DeviceInfo.GetScreenPx(mContext);
+		}
 	}
 
 	public void setOnClickListener(View.OnClickListener l)
@@ -319,6 +331,7 @@ public class PersistentView
 	private boolean mIsMoving;
 	private boolean mHasLayout = false;
 	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
+	private boolean mIsPortrait;
 
 	private float mAlpha;
 	private float mHiddenW;
