@@ -140,13 +140,10 @@ public class PersistentView
 	private void onActionMove(MotionEvent event)
 	{
 		evaluateMoving(event);
-		if (mIsMoving)
-		{
-			// Take center
-			int y = (int)event.getRawY() - mChild.getHeight() / 2;
-			int x = (int)event.getRawX() - mChild.getWidth() / 2;
-			updatePosition(x, y);
-		}
+		// Take center
+		int y = (int)event.getRawY() - mChild.getHeight() / 2;
+		int x = (int)event.getRawX() - mChild.getWidth() / 2;
+		updatePosition(x, y);
 	}
 
 	private void snap()
