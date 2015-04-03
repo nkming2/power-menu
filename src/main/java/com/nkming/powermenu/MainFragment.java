@@ -82,9 +82,9 @@ public class MainFragment extends Fragment
 					onActionBtnClick(id);
 				}
 			});
-			mActionBtns[i].setScaleX(0.0f);
-			mActionBtns[i].setScaleY(0.0f);
-			mActionBtns[i].animate().scaleX(1.0f).scaleY(1.0f)
+			mActionBtnBounds[i].setScaleX(0.0f);
+			mActionBtnBounds[i].setScaleY(0.0f);
+			mActionBtnBounds[i].animate().scaleX(1.0f).scaleY(1.0f)
 					.setInterpolator(new DecelerateInterpolator())
 					.setDuration(Res.ANIMATION_FAST)
 					.setStartDelay(Res.ANIMATION_FAST / 2 * i);
@@ -179,7 +179,7 @@ public class MainFragment extends Fragment
 		});
 
 		mActionBtns[SHUTDOWN_ID].setShadow(false);
-		dismissOtherViews(mActionBtns, mActionBtns[SHUTDOWN_ID]);
+		dismissOtherViews(mActionBtnBounds, mActionBtnBounds[SHUTDOWN_ID]);
 		// Disable all click bounds
 		disableOtherButtonBounds(mActionBtnBounds, null);
 	}
@@ -206,7 +206,7 @@ public class MainFragment extends Fragment
 		SystemHelper.sleep(getActivity().getApplicationContext());
 
 		mActionBtns[SLEEP_ID].setShadow(false);
-		dismissOtherViews(mActionBtns, mActionBtns[SLEEP_ID]);
+		dismissOtherViews(mActionBtnBounds, mActionBtnBounds[SLEEP_ID]);
 		disableOtherButtonBounds(mActionBtnBounds, null);
 	}
 
@@ -215,7 +215,7 @@ public class MainFragment extends Fragment
 		int ids[] = {SHUTDOWN_ID, SLEEP_ID};
 		for (int i = 0; i < ids.length; ++i)
 		{
-			mActionBtns[ids[i]].animate().xBy(100).alpha(0.0f)
+			mActionBtnBounds[ids[i]].animate().xBy(100).alpha(0.0f)
 					.setInterpolator(new AccelerateInterpolator())
 					.setDuration(Res.ANIMATION_FAST)
 					.setStartDelay(50 * i);
@@ -261,7 +261,7 @@ public class MainFragment extends Fragment
 		});
 
 		mRestartBtns[id].setShadow(false);
-		dismissOtherViews(mRestartBtns, mRestartBtns[id]);
+		dismissOtherViews(mRestartBtnBounds, mRestartBtnBounds[id]);
 		dismissOtherViews(mRestartLabels, null);
 		disableOtherButtonBounds(mRestartBtnBounds, null);
 	}
@@ -358,7 +358,7 @@ public class MainFragment extends Fragment
 		for (int i = 0; i < ids.length; ++i)
 		{
 			final int id = ids[i];
-			View views[] = {mRestartBtns[id], mRestartLabels[id]};
+			View views[] = {mRestartBtnBounds[id], mRestartLabels[id]};
 			for (View v : views)
 			{
 				v.setVisibility(View.VISIBLE);
