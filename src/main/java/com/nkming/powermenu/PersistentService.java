@@ -54,7 +54,7 @@ public class PersistentService extends Service
 		{
 			uninitView();
 		}
-		mView = PersistentView.create(this, R.layout.persistent_view);
+		mView = new PersistentView(this, R.layout.persistent_view);
 		mView.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -78,14 +78,15 @@ public class PersistentService extends Service
 	{
 		if (mView != null)
 		{
-			PersistentView.destroy(this, mView);
+			mView.destroy();
 			mView = null;
 		}
 	}
 
 	private void onViewClick()
 	{
-		SystemHelper.sleep(getApplicationContext());
+		Log.i("", "onViewClick");
+		//SystemHelper.sleep(getApplicationContext());
 	}
 
 	private void onViewLongClick()
