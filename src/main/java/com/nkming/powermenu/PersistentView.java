@@ -47,8 +47,9 @@ public class PersistentView
 		mHandler = config.handler;
 		mContext = config.context;
 		mContainer = new ContainerView(mContext);
+		/// Setting attachToRoot to true works differently which we don't want
 		mChild = LayoutInflater.from(mContext).inflate(config.resId, mContainer,
-				true);
+				false);
 		mChild.setAlpha(config.alpha);
 		mContainer.addView(mChild);
 
