@@ -36,6 +36,10 @@ public class PersistentView
 		public Context context;
 		/// Resource id for the content view
 		public int resId;
+		/// Alpha value for the view when idle
+		public float alpha = 1.0f;
+		/// Percentage of width that is beyond the edge of the screen
+		public float hiddenW = 0.15f;
 	}
 
 	public PersistentView(Config config)
@@ -45,6 +49,8 @@ public class PersistentView
 		mContainer = new ContainerView(mContext);
 		mChild = LayoutInflater.from(mContext).inflate(config.resId, mContainer,
 				true);
+		mChild.setAlpha(config.alpha);
+		mContainer.addView(mChild);
 
 		mScreenSize = DeviceInfo.GetScreenPx(mContext);
 		mWindowManager = (WindowManager)mContext.getSystemService(
@@ -64,6 +70,8 @@ public class PersistentView
 		mPrimaryId = -1;
 		mInitialPos = new PointF();
 		mIsMoving = false;
+		mAlpha = config.alpha;
+		mHiddenW = config.hiddenW;
 
 		mLongPressRunnable = new Runnable()
 		{
@@ -209,6 +217,10 @@ public class PersistentView
 	{
 		Log.d(LOG_TAG, "onTransitMoveMode()");
 		mHandler.removeCallbacks(mLongPressRunnable);
+
+		mChild.animate().alpha(1.0f)
+				.setInterpolator(new AccelerateDecelerateInterpolator())
+				.setDuration(Res.ANIMATION_FAST);
 	}
 
 	private void onLongPress()
@@ -294,6 +306,10 @@ public class PersistentView
 		});
 		animY.start();
 		mSnapAnimators[1] = animY;
+
+		mChild.animate().alpha(mAlpha)
+				.setInterpolator(new AccelerateDecelerateInterpolator())
+				.setDuration(Res.ANIMATION_FAST);
 	}
 
 	private int mPrimaryId;
@@ -302,8 +318,8 @@ public class PersistentView
 	private boolean mHasLayout = false;
 	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
 
-	/// Percentage of width that is beyond the edge of the screen
-	private float mHiddenW = 0.15f;
+	private float mAlpha;
+	private float mHiddenW;
 
 	private Context mContext;
 	private Handler mHandler;
