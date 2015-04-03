@@ -11,6 +11,7 @@ package com.nkming.powermenu;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.IBinder;
 import android.view.View;
 
@@ -54,7 +55,7 @@ public class PersistentService extends Service
 		{
 			uninitView();
 		}
-		mView = new PersistentView(this, R.layout.persistent_view);
+		mView = new PersistentView(new Handler(), this, R.layout.persistent_view);
 		mView.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

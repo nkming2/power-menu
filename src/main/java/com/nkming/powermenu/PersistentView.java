@@ -12,10 +12,12 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.PointF;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
@@ -26,8 +28,9 @@ import com.nkming.utils.unit.DimensionUtils;
 
 public class PersistentView
 {
-	public PersistentView(Context context, int resId)
+	public PersistentView(Handler handler, Context context, int resId)
 	{
+		mHandler = handler;
 		mContext = context;
 		mContainer = new ContainerView(context);
 		mChild = LayoutInflater.from(context).inflate(resId, mContainer, true);
@@ -50,6 +53,15 @@ public class PersistentView
 		mPrimaryId = -1;
 		mInitialPos = new PointF();
 		mIsMoving = false;
+
+		mLongPressRunnable = new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				onLongPress();
+			}
+		};
 	}
 
 	public void destroy()
@@ -97,17 +109,30 @@ public class PersistentView
 			case MotionEvent.ACTION_DOWN:
 				mPrimaryId = event.getActionIndex();
 				mInitialPos = new PointF(event.getRawX(), event.getRawY());
+				mHandler.postDelayed(mLongPressRunnable,
+						ViewConfiguration.get(mContext).getLongPressTimeout());
 				break;
 
 			case MotionEvent.ACTION_POINTER_UP:
 				if (event.getActionIndex() == mPrimaryId)
 				{
+					if (mPrimaryId != -1 && !mIsMoving)
+					{
+						performClick();
+					}
 					reset();
 				}
 				break;
 
-			case MotionEvent.ACTION_CANCEL:
 			case MotionEvent.ACTION_UP:
+				if (mPrimaryId != -1 && !mIsMoving)
+				{
+					performClick();
+				}
+				reset();
+				break;
+
+			case MotionEvent.ACTION_CANCEL:
 				reset();
 				break;
 
@@ -118,7 +143,7 @@ public class PersistentView
 				}
 				break;
 			}
-			return super.onTouchEvent(event);
+			return true;
 		}
 
 		@Override
@@ -139,11 +164,33 @@ public class PersistentView
 
 	private void onActionMove(MotionEvent event)
 	{
+		boolean wasMoving = mIsMoving;
 		evaluateMoving(event);
+		if (mIsMoving != wasMoving)
+		{
+			onTransitMoveMode();
+		}
+
 		// Take center
 		int y = (int)event.getRawY() - mChild.getHeight() / 2;
 		int x = (int)event.getRawX() - mChild.getWidth() / 2;
 		updatePosition(x, y);
+	}
+
+	/**
+	 * User has moved enough distance that we can safely recognize as a move
+	 */
+	private void onTransitMoveMode()
+	{
+		Log.d(LOG_TAG, "onTransitMoveMode()");
+		mHandler.removeCallbacks(mLongPressRunnable);
+	}
+
+	private void onLongPress()
+	{
+		Log.d(LOG_TAG, "onLongPress()");
+		mContainer.performLongClick();
+		reset();
 	}
 
 	private void snap()
@@ -170,6 +217,7 @@ public class PersistentView
 			mPrimaryId = -1;
 			mInitialPos = new PointF();
 			mIsMoving = false;
+			mHandler.removeCallbacks(mLongPressRunnable);
 		}
 	}
 
@@ -214,6 +262,8 @@ public class PersistentView
 	private float mHiddenW = 0.15f;
 
 	private Context mContext;
+	private Handler mHandler;
+	private Runnable mLongPressRunnable;
 	private ContainerView mContainer;
 	private View mChild;
 	private Size mScreenSize;
