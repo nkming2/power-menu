@@ -8,11 +8,13 @@
 
 package com.nkming.powermenu;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.view.View;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -34,6 +36,7 @@ public class PersistentService extends Service
 		Log.d(LOG_TAG, "onCreate");
 		super.onCreate();
 		initView();
+		initForeground();
 	}
 
 	@Override
@@ -41,6 +44,7 @@ public class PersistentService extends Service
 	{
 		Log.d(LOG_TAG, "onDestroy");
 		super.onDestroy();
+		uninitForeground();
 		uninitView();
 	}
 
@@ -79,6 +83,27 @@ public class PersistentService extends Service
 		});
 	}
 
+	private void initForeground()
+	{
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+		builder.setContentTitle(getString(R.string.notification_title))
+				.setContentText(getString(R.string.notification_text))
+				.setLocalOnly(true)
+				.setOnlyAlertOnce(true)
+				.setPriority(NotificationCompat.PRIORITY_MIN)
+				.setSmallIcon(R.drawable.ic_action_shutdown)
+				.setTicker(getString(R.string.notification_ticker));
+
+		Intent activity = new Intent(this, PreferenceActivity.class);
+		activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		PendingIntent pi = PendingIntent.getActivity(this, 0, activity,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		builder.setContentIntent(pi);
+
+		startForeground(1, builder.build());
+	}
+
 	private void uninitView()
 	{
 		if (mView != null)
@@ -86,6 +111,11 @@ public class PersistentService extends Service
 			mView.destroy();
 			mView = null;
 		}
+	}
+
+	private void uninitForeground()
+	{
+		stopForeground(true);
 	}
 
 	private void onViewClick()
