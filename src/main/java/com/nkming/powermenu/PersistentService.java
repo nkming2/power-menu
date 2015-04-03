@@ -74,6 +74,8 @@ public class PersistentService extends Service
 		conf.handler = new Handler();
 		conf.context = this;
 		conf.resId = R.layout.persistent_view;
+		conf.alpha = 0.5f;
+		conf.hiddenW = 0.35f;
 		mView = new PersistentView(conf);
 		mView.setOnClickListener(new View.OnClickListener()
 		{
