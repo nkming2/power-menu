@@ -87,8 +87,7 @@ public class PersistentView extends FrameLayout
 		{
 		case MotionEvent.ACTION_DOWN:
 			mPrimaryId = event.getActionIndex();
-			mInitialPos = new PointF(event.getX(mPrimaryId),
-					event.getY(mPrimaryId));
+			mInitialPos = new PointF(event.getRawX(), event.getRawY());
 			break;
 
 		case MotionEvent.ACTION_POINTER_UP:
