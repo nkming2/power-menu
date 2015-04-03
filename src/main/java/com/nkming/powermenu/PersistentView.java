@@ -245,7 +245,9 @@ public class PersistentView
 
 	private void snap()
 	{
-		int y = mLayoutParams.y;
+		// Bound the top and bottom
+		int y = Math.max(Math.min(mLayoutParams.y,
+				mScreenSize.h() - mChild.getHeight()), 0);
 		int x;
 		// Take center
 		if ((mLayoutParams.x + mChild.getWidth() / 2) < mScreenSize.w() / 2)
