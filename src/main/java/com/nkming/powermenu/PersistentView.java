@@ -163,11 +163,14 @@ public class PersistentView
 
 	private void reset()
 	{
-		snap();
+		if (mPrimaryId != -1)
+		{
+			snap();
 
-		mPrimaryId = -1;
-		mInitialPos = new PointF();
-		mIsMoving = false;
+			mPrimaryId = -1;
+			mInitialPos = new PointF();
+			mIsMoving = false;
+		}
 	}
 
 	private void evaluateMoving(MotionEvent event)
