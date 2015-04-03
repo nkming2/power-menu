@@ -37,6 +37,8 @@ public class MainActivity extends ActionBarActivity
 						.add(R.id.container, mFrag)
 						.commit();
 			}
+
+			PersistentViewHelper.startIfNecessary(this);
 		}
 	}
 
