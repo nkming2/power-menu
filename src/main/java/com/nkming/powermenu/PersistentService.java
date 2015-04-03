@@ -63,6 +63,15 @@ public class PersistentService extends Service
 				onViewClick();
 			}
 		});
+		mView.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				onViewLongClick();
+				return true;
+			}
+		});
 	}
 
 	private void uninitView()
@@ -75,6 +84,11 @@ public class PersistentService extends Service
 	}
 
 	private void onViewClick()
+	{
+		SystemHelper.sleep(getApplicationContext());
+	}
+
+	private void onViewLongClick()
 	{
 		new AsyncTask<Void, Void, Void>()
 		{
