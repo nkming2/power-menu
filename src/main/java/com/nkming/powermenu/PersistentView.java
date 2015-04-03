@@ -131,21 +131,30 @@ public class PersistentView
 		{
 			// Take center
 			int y = (int)event.getRawY() - mChild.getHeight() / 2;
-			int x;
-			if (event.getRawX() < mScreenSize.w() / 2)
-			{
-				x = (int)(0 - mChild.getWidth() * mHiddenW);
-			}
-			else
-			{
-				x = (int)(mScreenSize.w() - mChild.getWidth() * (1.0f - mHiddenW));
-			}
+			int x = (int)event.getRawX() - mChild.getWidth() / 2;
 			updatePosition(x, y);
 		}
 	}
 
+	private void snap()
+	{
+		int y = mLayoutParams.y;
+		int x;
+		if (mLayoutParams.x < mScreenSize.w() / 2)
+		{
+			x = (int)(0 - mChild.getWidth() * mHiddenW);
+		}
+		else
+		{
+			x = (int)(mScreenSize.w() - mChild.getWidth() * (1.0f - mHiddenW));
+		}
+		updatePosition(x, y);
+	}
+
 	private void reset()
 	{
+		snap();
+
 		mPrimaryId = -1;
 		mInitialPos = new PointF();
 		mIsMoving = false;
