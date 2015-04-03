@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 
 import com.nkming.utils.sys.DeviceInfo;
 import com.nkming.utils.type.Size;
+import com.nkming.utils.unit.DimensionUtils;
 
 public class PersistentView extends FrameLayout
 {
@@ -164,8 +165,9 @@ public class PersistentView extends FrameLayout
 
 	private void evaluateMoving(MotionEvent event)
 	{
-		if (Math.abs(event.getRawX() - mInitialPos.x) >= 100
-				|| Math.abs(event.getRawY() - mInitialPos.y) >= 100)
+		float threshold = DimensionUtils.dpToPx(getContext(), 48);
+		if (Math.abs(event.getRawX() - mInitialPos.x) >= threshold
+				|| Math.abs(event.getRawY() - mInitialPos.y) >= threshold)
 		{
 			mIsMoving = true;
 		}
