@@ -8,6 +8,8 @@
 
 package com.nkming.powermenu;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -15,6 +17,7 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 
 public class RevealView extends View
 {
@@ -63,6 +66,23 @@ public class RevealView extends View
 	{
 		mX = x;
 		mY = y;
+	}
+
+	public void reveal(int duration, Animator.AnimatorListener listener)
+	{
+		float longerW = Math.max(getWidth() - mX, mX);
+		float longerH = Math.max(getHeight() - mY, mY);
+		float revealRadius = (float)Math.sqrt(Math.pow(longerW, 2) + Math.pow(
+				longerH, 2));
+		ObjectAnimator anim = ObjectAnimator.ofFloat(this, "radius", 0,
+				revealRadius);
+		anim.setInterpolator(new AccelerateInterpolator());
+		anim.setDuration(duration);
+		if (listener != null)
+		{
+			anim.addListener(listener);
+		}
+		anim.start();
 	}
 
 	@Override

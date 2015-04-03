@@ -10,7 +10,6 @@ package com.nkming.powermenu;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -293,17 +292,10 @@ public class MainFragment extends Fragment
 		y -= -(viewRadius * Math.sin(viewRotationRadian));
 		mReveal.setCenter(x, y);
 
-		int longerW = Math.max(mReveal.getWidth() - x, x);
-		int longerH = Math.max(mReveal.getHeight() - y, y);
-		float revealRadius = (float)Math.sqrt(Math.pow(longerW, 2) + Math.pow(
-				longerH, 2));
-		ObjectAnimator anim = ObjectAnimator.ofFloat(mReveal, "radius",
-				(float)viewRadius, revealRadius);
-		anim.setInterpolator(new AccelerateInterpolator());
-		anim.setDuration(Res.ANIMATION_MID);
+		Animator.AnimatorListener listener = null;
 		if (callback != null)
 		{
-			anim.addListener(new AnimatorListenerAdapter()
+			listener = new AnimatorListenerAdapter()
 			{
 				@Override
 				public void onAnimationEnd(Animator animation)
@@ -317,9 +309,9 @@ public class MainFragment extends Fragment
 						callback.run();
 					}
 				}
-			});
+			};
 		}
-		anim.start();
+		mReveal.reveal(Res.ANIMATION_MID, listener);
 	}
 
 	private void dismissOtherViews(View views[], View keep)
