@@ -98,6 +98,7 @@ public class PersistentView
 		{
 			mIsPortrait = isPortrait;
 			mScreenSize = DeviceInfo.GetScreenPx(mContext);
+			snap(false);
 		}
 	}
 
@@ -243,7 +244,7 @@ public class PersistentView
 		reset();
 	}
 
-	private void snap()
+	private void snap(boolean isAnimate)
 	{
 		// Bound the top and bottom
 		int y = Math.max(Math.min(mLayoutParams.y,
@@ -258,14 +259,22 @@ public class PersistentView
 		{
 			x = (int)(mScreenSize.w() - mChild.getWidth() * (1.0f - mHiddenW));
 		}
-		updatePositionAnimated(x, y);
+
+		if (isAnimate)
+		{
+			updatePositionAnimated(x, y);
+		}
+		else
+		{
+			updatePosition(x, y);
+		}
 	}
 
 	private void reset()
 	{
 		if (mPrimaryId != -1)
 		{
-			snap();
+			snap(true);
 			mChild.animate().alpha(mAlpha)
 					.setInterpolator(new AccelerateDecelerateInterpolator())
 					.setDuration(Res.ANIMATION_FAST);
