@@ -8,6 +8,7 @@
 
 package com.nkming.powermenu;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.PointF;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.nkming.utils.sys.DeviceInfo;
@@ -63,6 +65,18 @@ public class PersistentView
 	public void setOnLongClickListener(View.OnLongClickListener l)
 	{
 		mContainer.setOnLongClickListener(l);
+	}
+
+	public void setX(int x)
+	{
+		mLayoutParams.x = x;
+		mWindowManager.updateViewLayout(mContainer, mLayoutParams);
+	}
+
+	public void setY(int y)
+	{
+		mLayoutParams.y = y;
+		mWindowManager.updateViewLayout(mContainer, mLayoutParams);
 	}
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."
@@ -147,7 +161,7 @@ public class PersistentView
 		{
 			x = (int)(mScreenSize.w() - mChild.getWidth() * (1.0f - mHiddenW));
 		}
-		updatePosition(x, y);
+		updatePositionAnimated(x, y);
 	}
 
 	private void reset()
@@ -174,6 +188,21 @@ public class PersistentView
 		mLayoutParams.x = x;
 		mLayoutParams.y = y;
 		mWindowManager.updateViewLayout(mContainer, mLayoutParams);
+	}
+
+	private void updatePositionAnimated(int x, int y)
+	{
+		ObjectAnimator animX = ObjectAnimator.ofInt(this, "x", mLayoutParams.x,
+				x);
+		animX.setInterpolator(new AccelerateDecelerateInterpolator());
+		animX.setDuration(Res.ANIMATION_FAST);
+		animX.start();
+
+		ObjectAnimator animY = ObjectAnimator.ofInt(this, "y", mLayoutParams.y,
+				y);
+		animY.setInterpolator(new AccelerateDecelerateInterpolator());
+		animY.setDuration(Res.ANIMATION_FAST);
+		animY.start();
 	}
 
 	private int mPrimaryId;
