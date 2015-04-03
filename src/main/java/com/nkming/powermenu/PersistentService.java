@@ -31,6 +31,7 @@ public class PersistentService extends Service
 	@Override
 	public void onCreate()
 	{
+		Log.d(LOG_TAG, "onDestroy");
 		super.onCreate();
 		initView();
 	}
@@ -38,7 +39,7 @@ public class PersistentService extends Service
 	@Override
 	public void onDestroy()
 	{
-		Log.i(Res.LOG_TAG, "onDestroy");
+		Log.d(LOG_TAG, "onDestroy");
 		super.onDestroy();
 		uninitView();
 	}
@@ -48,6 +49,9 @@ public class PersistentService extends Service
 	{
 		return START_STICKY;
 	}
+
+	private static final String LOG_TAG =
+			PersistentService.class.getCanonicalName();
 
 	private void initView()
 	{
@@ -86,12 +90,13 @@ public class PersistentService extends Service
 
 	private void onViewClick()
 	{
-		Log.i("", "onViewClick");
+		Log.d(LOG_TAG, "onViewClick");
 		//SystemHelper.sleep(getApplicationContext());
 	}
 
 	private void onViewLongClick()
 	{
+		Log.d(LOG_TAG, "onViewLongClick");
 		new AsyncTask<Void, Void, Void>()
 		{
 			@Override
