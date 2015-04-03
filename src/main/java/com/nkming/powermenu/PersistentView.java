@@ -264,6 +264,9 @@ public class PersistentView
 		if (mPrimaryId != -1)
 		{
 			snap();
+			mChild.animate().alpha(mAlpha)
+					.setInterpolator(new AccelerateDecelerateInterpolator())
+					.setDuration(Res.ANIMATION_FAST);
 
 			mPrimaryId = -1;
 			mInitialPos = new PointF();
@@ -320,10 +323,6 @@ public class PersistentView
 		});
 		animY.start();
 		mSnapAnimators[1] = animY;
-
-		mChild.animate().alpha(mAlpha)
-				.setInterpolator(new AccelerateDecelerateInterpolator())
-				.setDuration(Res.ANIMATION_FAST);
 	}
 
 	private int mPrimaryId;
