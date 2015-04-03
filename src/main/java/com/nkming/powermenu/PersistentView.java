@@ -137,7 +137,6 @@ public class PersistentView extends FrameLayout
 
 	private void onActionMove(MotionEvent event)
 	{
-		Log.i("", event.getRawX() + "," + event.getRawY());
 		evaluateMoving(event);
 		if (mIsMoving)
 		{
