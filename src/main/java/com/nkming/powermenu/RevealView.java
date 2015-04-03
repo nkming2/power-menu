@@ -68,14 +68,19 @@ public class RevealView extends View
 		mY = y;
 	}
 
+	public void setInitialRadius(float val)
+	{
+		mInitialRadius = val;
+	}
+
 	public void reveal(int duration, Animator.AnimatorListener listener)
 	{
 		float longerW = Math.max(getWidth() - mX, mX);
 		float longerH = Math.max(getHeight() - mY, mY);
 		float revealRadius = (float)Math.sqrt(Math.pow(longerW, 2) + Math.pow(
 				longerH, 2));
-		ObjectAnimator anim = ObjectAnimator.ofFloat(this, "radius", 0,
-				revealRadius);
+		ObjectAnimator anim = ObjectAnimator.ofFloat(this, "radius",
+				mInitialRadius, revealRadius);
 		anim.setInterpolator(new AccelerateInterpolator());
 		anim.setDuration(duration);
 		if (listener != null)
@@ -97,12 +102,14 @@ public class RevealView extends View
 		mPaint.setStyle(Paint.Style.FILL);
 		mPaint.setColor(0xFFFFFFFF);
 		mRadius = 0.0f;
+		mInitialRadius = 0.0f;
 		mX = 0.0f;
 		mY = 0.0f;
 	}
 
 	private Paint mPaint;
 	private float mRadius;
+	private float mInitialRadius;
 	private float mX;
 	private float mY;
 }
