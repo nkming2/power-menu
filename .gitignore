@@ -4,5 +4,4 @@
 
 # Ignore additional files in root dir
 *.iml
-proguard-rules.pro
 *.apk
