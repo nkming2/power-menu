@@ -25,5 +25,7 @@ public class PreferenceActivity extends Activity
 			getFragmentManager().beginTransaction().add(R.id.container, f)
 					.commit();
 		}
+
+		PersistentViewHelper.startIfNecessary(this);
 	}
 }
