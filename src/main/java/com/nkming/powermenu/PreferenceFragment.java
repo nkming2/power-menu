@@ -11,7 +11,6 @@ package com.nkming.powermenu;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 public class PreferenceFragment extends android.preference.PreferenceFragment
 		implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -25,6 +24,8 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		getPreferenceManager().setSharedPreferencesName(getString(
+				R.string.pref_file));
 		addPreferencesFromResource(R.xml.preference);
 	}
 
@@ -32,7 +33,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 	public void onResume()
 	{
 		super.onResume();
-		PreferenceManager.getDefaultSharedPreferences(getActivity())
+		getPreferenceManager().getSharedPreferences()
 				.registerOnSharedPreferenceChangeListener(this);
 	}
 
@@ -40,7 +41,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 	public void onPause()
 	{
 		super.onPause();
-		PreferenceManager.getDefaultSharedPreferences(getActivity())
+		getPreferenceManager().getSharedPreferences()
 				.unregisterOnSharedPreferenceChangeListener(this);
 	}
 
