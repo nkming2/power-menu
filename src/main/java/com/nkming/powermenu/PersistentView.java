@@ -78,7 +78,7 @@ public class PersistentView
 		show(null);
 
 		mPrimaryId = -1;
-		mInitialPos = new PointF();
+		mInitialTouchPos = new PointF();
 		mIsMoving = false;
 		mAlpha = config.alpha;
 		mHiddenW = config.hiddenW;
@@ -238,7 +238,7 @@ public class PersistentView
 	private void onActionDown(MotionEvent event)
 	{
 		mPrimaryId = event.getActionIndex();
-		mInitialPos = new PointF(event.getRawX(), event.getRawY());
+		mInitialTouchPos = new PointF(event.getRawX(), event.getRawY());
 		mHandler.postDelayed(mLongPressRunnable,
 				ViewConfiguration.get(mContext).getLongPressTimeout());
 
@@ -323,7 +323,7 @@ public class PersistentView
 					.setDuration(Res.ANIMATION_FAST);
 
 			mPrimaryId = -1;
-			mInitialPos = new PointF();
+			mInitialTouchPos = new PointF();
 			mIsMoving = false;
 			mHandler.removeCallbacks(mLongPressRunnable);
 		}
@@ -332,8 +332,8 @@ public class PersistentView
 	private void evaluateMoving(MotionEvent event)
 	{
 		float threshold = DimensionUtils.dpToPx(mContext, 24);
-		if (Math.abs(event.getRawX() - mInitialPos.x) >= threshold
-				|| Math.abs(event.getRawY() - mInitialPos.y) >= threshold)
+		if (Math.abs(event.getRawX() - mInitialTouchPos.x) >= threshold
+				|| Math.abs(event.getRawY() - mInitialTouchPos.y) >= threshold)
 		{
 			mIsMoving = true;
 		}
@@ -380,7 +380,7 @@ public class PersistentView
 	}
 
 	private int mPrimaryId;
-	private PointF mInitialPos;
+	private PointF mInitialTouchPos;
 	private boolean mIsMoving;
 	private boolean mHasLayout = false;
 	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
