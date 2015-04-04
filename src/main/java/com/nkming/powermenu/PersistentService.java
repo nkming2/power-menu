@@ -94,16 +94,14 @@ public class PersistentService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
-		if (intent.getAction() != null && intent.getAction().equals(ACTION_STOP))
+		if (intent.getAction() != null)
 		{
-			mView.hide(new AnimatorListenerAdapter()
+			switch (intent.getAction())
 			{
-				@Override
-				public void onAnimationEnd(Animator animation)
-				{
-					stopSelf();
-				}
-			});
+			case ACTION_STOP:
+				stop();
+				break;
+			}
 		}
 		return START_STICKY;
 	}
@@ -229,6 +227,18 @@ public class PersistentService extends Service
 				return null;
 			}
 		}.execute();
+	}
+
+	private void stop()
+	{
+		mView.hide(new AnimatorListenerAdapter()
+		{
+			@Override
+			public void onAnimationEnd(Animator animation)
+			{
+				stopSelf();
+			}
+		});
 	}
 
 	private PersistentView mView;
