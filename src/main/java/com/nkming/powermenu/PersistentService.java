@@ -54,6 +54,34 @@ public class PersistentService extends Service
 	}
 
 	/**
+	 * Show the persistent view managed by this service. The view will be shown
+	 * automatically during the start of this service so you only need to call
+	 * this after hideView()
+	 *
+	 * @param context
+	 * @see PersistentService#hideView(android.content.Context)
+	 */
+	public static void showView(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		intent.setAction(ACTION_SHOW);
+		context.startService(intent);
+	}
+
+	/**
+	 * Temporarily hide the persistent view
+	 *
+	 * @param context
+	 * @see PersistentService#showView(android.content.Context)
+	 */
+	public static void hideView(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		intent.setAction(ACTION_HIDE);
+		context.startService(intent);
+	}
+
+	/**
 	 * Return if the service is running or not
 	 *
 	 * @return
@@ -101,6 +129,14 @@ public class PersistentService extends Service
 			case ACTION_STOP:
 				stop();
 				break;
+
+			case ACTION_SHOW:
+				show();
+				break;
+
+			case ACTION_HIDE:
+				hide();
+				break;
 			}
 		}
 		return START_STICKY;
@@ -109,6 +145,8 @@ public class PersistentService extends Service
 	private static final String LOG_TAG =
 			PersistentService.class.getCanonicalName();
 	private static final String ACTION_STOP = "stop";
+	private static final String ACTION_SHOW = "show";
+	private static final String ACTION_HIDE = "hide";
 
 	private void initView()
 	{
@@ -239,6 +277,16 @@ public class PersistentService extends Service
 				stopSelf();
 			}
 		});
+	}
+
+	private void show()
+	{
+		mView.show(null);
+	}
+
+	private void hide()
+	{
+		mView.hide(null);
 	}
 
 	private PersistentView mView;
