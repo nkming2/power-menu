@@ -73,6 +73,10 @@ public class PersistentView
 		mLayoutParams.gravity = Gravity.TOP | Gravity.LEFT;
 		mWindowManager.addView(mContainer, mLayoutParams);
 
+		mChild.setScaleX(0);
+		mChild.setScaleY(0);
+		show(null);
+
 		mPrimaryId = -1;
 		mInitialPos = new PointF();
 		mIsMoving = false;
