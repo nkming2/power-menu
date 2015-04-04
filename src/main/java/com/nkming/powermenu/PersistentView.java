@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.nkming.utils.sys.DeviceInfo;
@@ -85,6 +87,30 @@ public class PersistentView
 				onLongPress();
 			}
 		};
+	}
+
+	public void show(Animator.AnimatorListener listener)
+	{
+		Log.d(LOG_TAG, "show(...)");
+		mContainer.setTouchable(true);
+
+		mChild.animate().scaleX(1.0f).scaleY(1.0f)
+				.setInterpolator(new DecelerateInterpolator())
+				.setDuration(Res.ANIMATION_FAST)
+				.setListener(listener);
+	}
+
+	public void hide(Animator.AnimatorListener listener)
+	{
+		Log.d(LOG_TAG, "hide(...)");
+		reset();
+		// A hidden view should not be responding to touch
+		mContainer.setTouchable(false);
+
+		mChild.animate().scaleX(0.0f).scaleY(0.0f)
+				.setInterpolator(new AccelerateInterpolator())
+				.setDuration(Res.ANIMATION_FAST)
+				.setListener(listener);
 	}
 
 	public void destroy()
