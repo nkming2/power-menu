@@ -119,6 +119,7 @@ public class PersistentView
 
 	public void destroy()
 	{
+		Log.d(LOG_TAG, "destroy()");
 		mWindowManager.removeView(mContainer);
 	}
 
