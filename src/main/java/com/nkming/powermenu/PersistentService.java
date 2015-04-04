@@ -8,6 +8,8 @@
 
 package com.nkming.powermenu;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -47,7 +49,8 @@ public class PersistentService extends Service
 	public static void stop(Context context)
 	{
 		Intent intent = new Intent(context, PersistentService.class);
-		context.stopService(intent);
+		intent.setAction(ACTION_STOP);
+		context.startService(intent);
 	}
 
 	@Override
@@ -79,11 +82,23 @@ public class PersistentService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
+		if (intent.getAction() != null && intent.getAction().equals(ACTION_STOP))
+		{
+			mView.hide(new AnimatorListenerAdapter()
+			{
+				@Override
+				public void onAnimationEnd(Animator animation)
+				{
+					stopSelf();
+				}
+			});
+		}
 		return START_STICKY;
 	}
 
 	private static final String LOG_TAG =
 			PersistentService.class.getCanonicalName();
+	private static final String ACTION_STOP = "stop";
 
 	private void initView()
 	{
