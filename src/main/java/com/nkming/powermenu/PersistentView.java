@@ -137,6 +137,11 @@ public class PersistentView
 		@Override
 		public boolean onTouchEvent(MotionEvent event)
 		{
+			if (!mIsTouchable)
+			{
+				return false;
+			}
+
 			switch (event.getActionMasked())
 			{
 			case MotionEvent.ACTION_DOWN:
@@ -176,6 +181,11 @@ public class PersistentView
 			return true;
 		}
 
+		public void setTouchable(boolean flag)
+		{
+			mIsTouchable = flag;
+		}
+
 		@Override
 		protected void onLayout(boolean changed, int left, int top, int right,
 				int bottom)
@@ -190,6 +200,8 @@ public class PersistentView
 				updatePosition(x, y);
 			}
 		}
+
+		private boolean mIsTouchable = true;
 	}
 
 	private void onActionDown(MotionEvent event)
