@@ -53,6 +53,16 @@ public class PersistentService extends Service
 		context.startService(intent);
 	}
 
+	/**
+	 * Return if the service is running or not
+	 *
+	 * @return
+	 */
+	public static boolean isRunning()
+	{
+		return mIsRunning;
+	}
+
 	@Override
 	public IBinder onBind(Intent intent)
 	{
@@ -63,6 +73,7 @@ public class PersistentService extends Service
 	public void onCreate()
 	{
 		Log.d(LOG_TAG, "onCreate");
+		mIsRunning = true;
 		super.onCreate();
 		initView();
 		initForeground();
@@ -73,6 +84,7 @@ public class PersistentService extends Service
 	public void onDestroy()
 	{
 		Log.d(LOG_TAG, "onDestroy");
+		mIsRunning = false;
 		super.onDestroy();
 		uninitOrientationReceiver();
 		uninitForeground();
@@ -221,4 +233,6 @@ public class PersistentService extends Service
 
 	private PersistentView mView;
 	private BroadcastReceiver mConfigurationReceiver;
+
+	private static boolean mIsRunning = false;
 }
