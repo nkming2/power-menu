@@ -14,6 +14,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Handler;
 import android.view.Gravity;
@@ -79,6 +80,7 @@ public class PersistentView
 
 		mPrimaryId = -1;
 		mInitialTouchPos = new PointF();
+		mViewPos = new Point();
 		mIsMoving = false;
 		mAlpha = config.alpha;
 		mHiddenW = config.hiddenW;
@@ -107,7 +109,7 @@ public class PersistentView
 	public void hide(Animator.AnimatorListener listener)
 	{
 		Log.d(LOG_TAG, "hide(...)");
-		reset();
+		reset(true);
 		// A hidden view should not be responding to touch
 		mContainer.setTouchable(false);
 
@@ -184,22 +186,28 @@ public class PersistentView
 				{
 					if (mPrimaryId != -1 && !mIsMoving)
 					{
-						performClick();
+						onClick();
 					}
-					reset();
+					else
+					{
+						reset(false);
+					}
 				}
 				break;
 
 			case MotionEvent.ACTION_UP:
 				if (mPrimaryId != -1 && !mIsMoving)
 				{
-					performClick();
+					onClick();
 				}
-				reset();
+				else
+				{
+					reset(false);
+				}
 				break;
 
 			case MotionEvent.ACTION_CANCEL:
-				reset();
+				reset(false);
 				break;
 
 			case MotionEvent.ACTION_MOVE:
@@ -228,6 +236,7 @@ public class PersistentView
 				mHasLayout = true;
 				int x = (int)(mScreenSize.w() - getWidth() * (1.0f - mHiddenW));
 				int y = (int)(mScreenSize.h() * 0.15f);
+				mViewPos.set(x, y);
 				updatePosition(x, y);
 			}
 		}
@@ -280,11 +289,18 @@ public class PersistentView
 				.setDuration(Res.ANIMATION_FAST);
 	}
 
+	private void onClick()
+	{
+		Log.d(LOG_TAG, "onClick()");
+		mContainer.performClick();
+		reset(true);
+	}
+
 	private void onLongPress()
 	{
 		Log.d(LOG_TAG, "onLongPress()");
 		mContainer.performLongClick();
-		reset();
+		reset(true);
 	}
 
 	private void snap(boolean isAnimate)
@@ -302,6 +318,7 @@ public class PersistentView
 		{
 			x = (int)(mScreenSize.w() - mChild.getWidth() * (1.0f - mHiddenW));
 		}
+		mViewPos.set(x, y);
 
 		if (isAnimate)
 		{
@@ -313,11 +330,37 @@ public class PersistentView
 		}
 	}
 
-	private void reset()
+	private void backInitial(boolean isAnimate)
+	{
+		if (isAnimate)
+		{
+			updatePositionAnimated(mViewPos.x, mViewPos.y);
+		}
+		else
+		{
+			updatePosition(mViewPos.x, mViewPos.y);
+		}
+	}
+
+	/**
+	 * Reset the view's state. If the view is moving, it would be either snapped
+	 * to the closest border or back to its initial position, depending on
+	 * @a isBackInitial
+	 *
+	 * @param isBackInitial
+	 */
+	private void reset(boolean isBackInitial)
 	{
 		if (mPrimaryId != -1)
 		{
-			snap(true);
+			if (isBackInitial)
+			{
+				backInitial(true);
+			}
+			else
+			{
+				snap(true);
+			}
 			mChild.animate().alpha(mAlpha)
 					.setInterpolator(new AccelerateDecelerateInterpolator())
 					.setDuration(Res.ANIMATION_FAST);
@@ -381,6 +424,9 @@ public class PersistentView
 
 	private int mPrimaryId;
 	private PointF mInitialTouchPos;
+	// The position where the view should be, it could be different with the
+	// actual position during animation
+	private Point mViewPos;
 	private boolean mIsMoving;
 	private boolean mHasLayout = false;
 	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
