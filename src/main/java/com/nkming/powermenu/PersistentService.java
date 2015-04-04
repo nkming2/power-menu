@@ -28,6 +28,18 @@ import eu.chainfire.libsuperuser.Shell;
  */
 public class PersistentService extends Service
 {
+	public static void start(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(intent);
+	}
+
+	public static void stop(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.stopService(intent);
+	}
+
 	@Override
 	public IBinder onBind(Intent intent)
 	{

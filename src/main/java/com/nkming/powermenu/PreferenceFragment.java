@@ -8,7 +8,6 @@
 
 package com.nkming.powermenu;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -56,14 +55,13 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 
 	private void onPersistentViewChange(SharedPreferences pref, String key)
 	{
-		Intent intent = new Intent(getActivity(), PersistentService.class);
 		if (pref.getBoolean(key, false))
 		{
-			getActivity().startService(intent);
+			PersistentService.start(getActivity());
 		}
 		else
 		{
-			getActivity().stopService(intent);
+			PersistentService.stop(getActivity());
 		}
 	}
 }

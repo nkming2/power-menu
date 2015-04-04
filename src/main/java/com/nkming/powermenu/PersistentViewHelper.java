@@ -9,7 +9,6 @@
 package com.nkming.powermenu;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 public class PersistentViewHelper
@@ -22,7 +21,7 @@ public class PersistentViewHelper
 				false))
 		{
 			Log.d(LOG_TAG + ".startIfNecessary", "Starting service");
-			context.startService(new Intent(context, PersistentService.class));
+			PersistentService.start(context);
 		}
 	}
 
