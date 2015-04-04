@@ -28,12 +28,22 @@ import eu.chainfire.libsuperuser.Shell;
  */
 public class PersistentService extends Service
 {
+	/**
+	 * Start the service
+	 *
+	 * @param context
+	 */
 	public static void start(Context context)
 	{
 		Intent intent = new Intent(context, PersistentService.class);
 		context.startService(intent);
 	}
 
+	/**
+	 * Stop the service
+	 *
+	 * @param context
+	 */
 	public static void stop(Context context)
 	{
 		Intent intent = new Intent(context, PersistentService.class);
