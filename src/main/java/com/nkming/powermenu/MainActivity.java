@@ -37,7 +37,29 @@ public class MainActivity extends ActionBarActivity
 						.add(R.id.container, mFrag)
 						.commit();
 			}
+		}
+	}
 
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		if (PersistentService.isRunning())
+		{
+			PersistentService.hideView(this);
+		}
+	}
+
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		if (PersistentService.isRunning())
+		{
+			PersistentService.showView(this);
+		}
+		else
+		{
 			PersistentViewHelper.startIfNecessary(this);
 		}
 	}
