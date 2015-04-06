@@ -111,16 +111,6 @@ public class PersistentView
 		mWindowManager.removeView(mDummyView);
 	}
 
-	public void onOrientationChange(boolean isPortrait)
-	{
-		if (isPortrait != mIsPortrait)
-		{
-			mIsPortrait = isPortrait;
-			updateScreenSize();
-			snap(false);
-		}
-	}
-
 	public void setOnClickListener(View.OnClickListener l)
 	{
 		mContainer.setOnClickListener(l);
