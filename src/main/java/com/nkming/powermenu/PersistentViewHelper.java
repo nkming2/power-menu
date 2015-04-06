@@ -22,6 +22,10 @@ public class PersistentViewHelper
 		{
 			Log.d(LOG_TAG + ".startIfNecessary", "Starting service");
 			PersistentService.start(context);
+
+			boolean isAutohide = pref.getBoolean(context.getString(
+					R.string.pref_autohide_persistent_view_key), false);
+			PersistentService.setAutohideView(context, isAutohide);
 		}
 	}
 
