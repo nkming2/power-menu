@@ -69,6 +69,7 @@ public class PersistentView
 		mIsMoving = false;
 		mAlpha = config.alpha;
 		mHiddenW = config.hiddenW;
+		mIsAutohide = false;
 
 		mLongPressRunnable = new Runnable()
 		{
@@ -119,6 +120,16 @@ public class PersistentView
 	public void setOnLongClickListener(View.OnLongClickListener l)
 	{
 		mContainer.setOnLongClickListener(l);
+	}
+
+	/**
+	 * To hide the persistent view when running a fullscreen app
+	 *
+	 * @param flag
+	 */
+	public void setAutohide(boolean flag)
+	{
+		mIsAutohide = flag;
 	}
 
 	public void setX(int x)
@@ -357,11 +368,19 @@ public class PersistentView
 	private void onIntoFullscreen()
 	{
 		Log.d(LOG_TAG, "onIntoFullscreen()");
+		if (mIsAutohide)
+		{
+			hide(null);
+		}
 	}
 
 	private void onOutOfFullscreen()
 	{
 		Log.d(LOG_TAG, "onOutOfFullscreen()");
+		if (mIsAutohide)
+		{
+			show(null);
+		}
 	}
 
 	private void snap(boolean isAnimate)
@@ -517,6 +536,7 @@ public class PersistentView
 
 	private float mAlpha;
 	private float mHiddenW;
+	private boolean mIsAutohide;
 
 	private Context mContext;
 	private Handler mHandler;
