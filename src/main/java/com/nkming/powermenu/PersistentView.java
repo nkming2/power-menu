@@ -50,29 +50,12 @@ public class PersistentView
 	{
 		mHandler = config.handler;
 		mContext = config.context;
-		mContainer = new ContainerView(mContext);
-		/// Setting attachToRoot to true works differently which we don't want
-		mChild = LayoutInflater.from(mContext).inflate(config.resId, mContainer,
-				false);
-		mChild.setAlpha(config.alpha);
-		mContainer.addView(mChild);
+		initView(config);
 
-		mScreenSize = DeviceInfo.GetScreenPx(mContext);
 		mIsPortrait = (mContext.getResources().getConfiguration().orientation
 				== Configuration.ORIENTATION_PORTRAIT);
-		mWindowManager = (WindowManager)mContext.getSystemService(
-				Context.WINDOW_SERVICE);
-
-		mLayoutParams = new WindowManager.LayoutParams(
-				WindowManager.LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.WRAP_CONTENT,
-				WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-						| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-						| WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-				PixelFormat.TRANSLUCENT);
-		mLayoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-		mWindowManager.addView(mContainer, mLayoutParams);
+		updateScreenSize();
+		initWindowManager();
 
 		mChild.setScaleX(0);
 		mChild.setScaleY(0);
@@ -242,6 +225,38 @@ public class PersistentView
 		}
 
 		private boolean mIsTouchable = true;
+	}
+
+	private void initView(Config config)
+	{
+		mContainer = new ContainerView(mContext);
+		/// Setting attachToRoot to true works differently which we don't want
+		mChild = LayoutInflater.from(mContext).inflate(config.resId, mContainer,
+				false);
+		mChild.setAlpha(config.alpha);
+		mContainer.addView(mChild);
+	}
+
+	private void initWindowManager()
+	{
+		mWindowManager = (WindowManager)mContext.getSystemService(
+				Context.WINDOW_SERVICE);
+
+		mLayoutParams = new WindowManager.LayoutParams(
+				WindowManager.LayoutParams.WRAP_CONTENT,
+				WindowManager.LayoutParams.WRAP_CONTENT,
+				WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+						| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+						| WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+				PixelFormat.TRANSLUCENT);
+		mLayoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+		mWindowManager.addView(mContainer, mLayoutParams);
+	}
+
+	private void updateScreenSize()
+	{
+		mScreenSize = DeviceInfo.GetScreenPx(mContext);
 	}
 
 	private void onActionDown(MotionEvent event)
