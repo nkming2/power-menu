@@ -56,6 +56,7 @@ public class PersistentView
 				== Configuration.ORIENTATION_PORTRAIT);
 		updateScreenSize();
 		initWindowManager();
+		initDummyView();
 
 		mChild.setScaleX(0);
 		mChild.setScaleY(0);
@@ -106,6 +107,7 @@ public class PersistentView
 	{
 		Log.d(LOG_TAG, "destroy()");
 		mWindowManager.removeView(mContainer);
+		mWindowManager.removeView(mDummyView);
 	}
 
 	public void onOrientationChange(boolean isPortrait)
@@ -113,7 +115,7 @@ public class PersistentView
 		if (isPortrait != mIsPortrait)
 		{
 			mIsPortrait = isPortrait;
-			mScreenSize = DeviceInfo.GetScreenPx(mContext);
+			updateScreenSize();
 			snap(false);
 		}
 	}
@@ -254,9 +256,44 @@ public class PersistentView
 		mWindowManager.addView(mContainer, mLayoutParams);
 	}
 
-	private void updateScreenSize()
+	private void initDummyView()
 	{
-		mScreenSize = DeviceInfo.GetScreenPx(mContext);
+		mDummyView = new View(mContext);
+
+		WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+				WindowManager.LayoutParams.MATCH_PARENT,
+				WindowManager.LayoutParams.MATCH_PARENT,
+				WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+						| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+						| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+				PixelFormat.TRANSLUCENT);
+		params.gravity = Gravity.TOP | Gravity.LEFT;
+		mWindowManager.addView(mDummyView, params);
+
+		mDummyView.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
+		{
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right,
+					int bottom, int oldLeft, int oldTop, int oldRight,
+					int oldBottom)
+			{
+				Size fullScreen = DeviceInfo.GetFullScreenPx(mContext);
+				if (right - left == fullScreen.w()
+						&& bottom - top == fullScreen.h())
+				{
+					Log.d(LOG_TAG + ".OnLayoutChangeListener", "Hiding nav bar");
+					mHasNavigationBar = false;
+				}
+				else
+				{
+					Log.d(LOG_TAG + ".OnLayoutChangeListener", "Showing nav bar");
+					mHasNavigationBar = true;
+				}
+				updateScreenSize();
+				snap(false);
+			}
+		});
 	}
 
 	private void onActionDown(MotionEvent event)
@@ -316,6 +353,18 @@ public class PersistentView
 		Log.d(LOG_TAG, "onLongPress()");
 		mContainer.performLongClick();
 		reset(true);
+	}
+
+	private void updateScreenSize()
+	{
+		if (mHasNavigationBar)
+		{
+			mScreenSize = DeviceInfo.GetScreenPx(mContext);
+		}
+		else
+		{
+			mScreenSize = DeviceInfo.GetFullScreenPx(mContext);
+		}
 	}
 
 	private void snap(boolean isAnimate)
@@ -446,6 +495,7 @@ public class PersistentView
 	private boolean mHasLayout = false;
 	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
 	private boolean mIsPortrait;
+	private boolean mHasNavigationBar = true;
 
 	private float mAlpha;
 	private float mHiddenW;
@@ -458,4 +508,6 @@ public class PersistentView
 	private Size mScreenSize;
 	private WindowManager mWindowManager;
 	private WindowManager.LayoutParams mLayoutParams;
+	// Used to detect app hiding navigation bar
+	private View mDummyView;
 }
