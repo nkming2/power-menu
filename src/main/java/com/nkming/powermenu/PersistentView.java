@@ -463,12 +463,33 @@ public class PersistentView
 		mSnapAnimators[1] = animY;
 	}
 
+	private boolean isFullscreen(Rect rect)
+	{
+		if (mFullscreenSize == null)
+		{
+			mFullscreenSize = DeviceInfo.GetFullScreenPx(mContext);
+		}
+		// Check whether the orientation is the same
+		if ((rect.height() > rect.width())
+				== (mFullscreenSize.h() > mFullscreenSize.w()))
+		{
+			return (rect.width() == mFullscreenSize.w()
+					&& rect.height() == mFullscreenSize.h());
+		}
+		else
+		{
+			return (rect.height() == mFullscreenSize.w()
+					&& rect.width() == mFullscreenSize.h());
+		}
+	}
+
 	private int mPrimaryId;
 	private PointF mInitialTouchPos;
 	// The position where the view should be, it could be different with the
 	// actual position during animation
 	private Point mViewPos;
 	private Rect mScreenRect;
+	private Size mFullscreenSize;
 	private boolean mIsMoving;
 	private boolean mHasLayout = false;
 	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
