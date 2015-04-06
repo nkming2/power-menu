@@ -12,11 +12,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
@@ -82,6 +79,19 @@ public class PersistentService extends Service
 	}
 
 	/**
+	 * To hide the persistent view when running a fullscreen app
+	 *
+	 * @param flag
+	 */
+	public static void setAutohideView(Context context, boolean flag)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		intent.setAction(ACTION_AUTOHIDE);
+		intent.putExtra(EXTRA_AUTOHIDE, flag);
+		context.startService(intent);
+	}
+
+	/**
 	 * Return if the service is running or not
 	 *
 	 * @return
@@ -135,6 +145,10 @@ public class PersistentService extends Service
 			case ACTION_HIDE:
 				hide();
 				break;
+
+			case ACTION_AUTOHIDE:
+				mView.setAutohide(intent.getBooleanExtra(EXTRA_AUTOHIDE, false));
+				break;
 			}
 		}
 		return START_STICKY;
@@ -145,6 +159,8 @@ public class PersistentService extends Service
 	private static final String ACTION_STOP = "stop";
 	private static final String ACTION_SHOW = "show";
 	private static final String ACTION_HIDE = "hide";
+	private static final String ACTION_AUTOHIDE = "autohide";
+	private static final String EXTRA_AUTOHIDE = "autohide";
 
 	private void initView()
 	{
