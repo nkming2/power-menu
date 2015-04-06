@@ -204,6 +204,7 @@ public class PersistentService extends Service
 				.setOnlyAlertOnce(true)
 				.setPriority(NotificationCompat.PRIORITY_MIN)
 				.setSmallIcon(R.drawable.ic_action_shutdown)
+				.setColor(getResources().getColor(R.color.color_primary))
 				.setTicker(getString(R.string.notification_ticker));
 
 		Intent activity = new Intent(this, PreferenceActivity.class);
