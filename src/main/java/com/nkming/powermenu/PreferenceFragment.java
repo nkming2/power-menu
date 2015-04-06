@@ -62,7 +62,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 	{
 		if (pref.getBoolean(key, false))
 		{
-			PersistentService.start(getActivity());
+			PersistentViewHelper.startIfNecessary(getActivity());
 		}
 		else
 		{
