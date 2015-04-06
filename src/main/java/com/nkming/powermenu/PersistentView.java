@@ -276,6 +276,17 @@ public class PersistentView
 							+ right + "," + oldRight + "\n"
 							+ bottom + "," + oldBottom + "\n"
 							+ location[0] + "," + location[1]);
+
+					Rect rect = new Rect(left + location[0], top + location[1],
+							right + location[0], bottom + location[1]);
+					if (isFullscreen(rect) && !isFullscreen(mScreenRect))
+					{
+						onIntoFullscreen();
+					}
+					else if (!isFullscreen(rect) && isFullscreen(mScreenRect))
+					{
+						onOutOfFullscreen();
+					}
 					mScreenRect.set(left + location[0], top + location[1],
 							right + location[0], bottom + location[1]);
 					snap(true);
@@ -341,6 +352,16 @@ public class PersistentView
 		Log.d(LOG_TAG, "onLongPress()");
 		mContainer.performLongClick();
 		reset(true);
+	}
+
+	private void onIntoFullscreen()
+	{
+		Log.d(LOG_TAG, "onIntoFullscreen()");
+	}
+
+	private void onOutOfFullscreen()
+	{
+		Log.d(LOG_TAG, "onOutOfFullscreen()");
 	}
 
 	private void snap(boolean isAnimate)
