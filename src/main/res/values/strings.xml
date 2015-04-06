@@ -30,6 +30,10 @@
 	<string name="pref_persistent_view_summary">Persistent on-screen launcher for the app</string>
 	<string name="pref_persistent_view_key" translatable="false">persistent_view</string>
 
+	<string name="pref_autohide_persistent_view_title">Hide on fullscreen</string>
+	<string name="pref_autohide_persistent_view_summary">Hide the persistent view when a fullscreen app is running</string>
+	<string name="pref_autohide_persistent_view_key" translatable="false">autohide_persistent_view</string>
+
 	<string name="pref_others_category">Others</string>
 
 	<string name="pref_uninstall_title">Pre-uninstall</string>

@@ -8,6 +8,13 @@
 			android:title="@string/pref_persistent_view_title"
 			android:summary="@string/pref_persistent_view_summary"
 			android:defaultValue="false"/>
+
+		<CheckBoxPreference
+			android:key="@string/pref_autohide_persistent_view_key"
+			android:title="@string/pref_autohide_persistent_view_title"
+			android:summary="@string/pref_autohide_persistent_view_summary"
+			android:dependency="@string/pref_persistent_view_key"
+			android:defaultValue="false"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory

@@ -51,6 +51,11 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 		{
 			onPersistentViewChange(pref, key);
 		}
+		else if (key.equals(getString(R.string.pref_autohide_persistent_view_key)))
+		{
+			PersistentService.setAutohideView(getActivity(),
+					pref.getBoolean(key, false));
+		}
 	}
 
 	private void onPersistentViewChange(SharedPreferences pref, String key)
