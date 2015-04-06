@@ -18,7 +18,7 @@ public class PersistentViewHelper
 		SharedPreferences pref = context.getSharedPreferences(context.getString(
 				R.string.pref_file), Context.MODE_PRIVATE);
 		if (pref.getBoolean(context.getString(R.string.pref_persistent_view_key),
-				false))
+				false) && !PersistentService.isRunning())
 		{
 			Log.d(LOG_TAG + ".startIfNecessary", "Starting service");
 			PersistentService.start(context);
