@@ -8,8 +8,10 @@
 
 package com.nkming.powermenu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 
 public class MainActivity extends ActionBarActivity
@@ -18,6 +20,8 @@ public class MainActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		PreferenceManager.setDefaultValues(this, getString(R.string.pref_file),
+				Context.MODE_PRIVATE, R.xml.preference, false);
 
 		if (!InstallHelper.isSystemApp(this))
 		{
