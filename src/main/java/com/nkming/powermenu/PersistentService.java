@@ -105,7 +105,6 @@ public class PersistentService extends Service
 		super.onCreate();
 		initView();
 		initForeground();
-		initOrientationReceiver();
 	}
 
 	@Override
@@ -114,7 +113,6 @@ public class PersistentService extends Service
 		Log.d(LOG_TAG, "onDestroy");
 		mIsRunning = false;
 		super.onDestroy();
-		uninitOrientationReceiver();
 		uninitForeground();
 		uninitView();
 	}
@@ -202,30 +200,6 @@ public class PersistentService extends Service
 		startForeground(1, builder.build());
 	}
 
-	private void initOrientationReceiver()
-	{
-		mConfigurationReceiver = new BroadcastReceiver()
-		{
-			@Override
-			public void onReceive(Context context, Intent intent)
-			{
-				if (getResources().getConfiguration().orientation
-						== Configuration.ORIENTATION_LANDSCAPE)
-				{
-					mView.onOrientationChange(false);
-				}
-				else
-				{
-					mView.onOrientationChange(true);
-				}
-			}
-		};
-
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
-		registerReceiver(mConfigurationReceiver, filter);
-	}
-
 	private void uninitView()
 	{
 		if (mView != null)
@@ -238,11 +212,6 @@ public class PersistentService extends Service
 	private void uninitForeground()
 	{
 		stopForeground(true);
-	}
-
-	private void uninitOrientationReceiver()
-	{
-		unregisterReceiver(mConfigurationReceiver);
 	}
 
 	private void onViewClick()
@@ -290,7 +259,6 @@ public class PersistentService extends Service
 	}
 
 	private PersistentView mView;
-	private BroadcastReceiver mConfigurationReceiver;
 
 	private static boolean mIsRunning = false;
 }

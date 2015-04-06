@@ -274,19 +274,32 @@ public class PersistentView
 					int oldBottom)
 			{
 				Size fullScreen = DeviceInfo.GetFullScreenPx(mContext);
-				if (right - left == fullScreen.w()
-						&& bottom - top == fullScreen.h())
+				int w = right - left;
+				int h = bottom - top;
+				boolean hasNavigationBar;
+				if (w == fullScreen.w() && h == fullScreen.h())
 				{
 					Log.d(LOG_TAG + ".OnLayoutChangeListener", "Hiding nav bar");
-					mHasNavigationBar = false;
+					hasNavigationBar = false;
 				}
 				else
 				{
 					Log.d(LOG_TAG + ".OnLayoutChangeListener", "Showing nav bar");
-					mHasNavigationBar = true;
+					hasNavigationBar = true;
 				}
-				updateScreenSize();
-				snap(false);
+				boolean isPortrait = (h > w);
+				Log.d(LOG_TAG + ".OnLayoutChangeListener", "Portrait: "
+						+ isPortrait);
+
+				if (hasNavigationBar != mHasNavigationBar
+						|| isPortrait != mIsPortrait)
+				{
+					// Something's changed
+					mHasNavigationBar = hasNavigationBar;
+					mIsPortrait = isPortrait;
+					updateScreenSize();
+					snap(false);
+				}
 			}
 		});
 	}
