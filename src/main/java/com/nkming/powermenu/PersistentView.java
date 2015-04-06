@@ -298,7 +298,7 @@ public class PersistentView
 					mHasNavigationBar = hasNavigationBar;
 					mIsPortrait = isPortrait;
 					updateScreenSize();
-					snap(false);
+					snap(true);
 				}
 			}
 		});
