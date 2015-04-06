@@ -12,10 +12,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -53,9 +53,9 @@ public class PersistentView
 		mWindowManager = (WindowManager)mContext.getSystemService(
 				Context.WINDOW_SERVICE);
 
-		mIsPortrait = (mContext.getResources().getConfiguration().orientation
-				== Configuration.ORIENTATION_PORTRAIT);
-		updateScreenSize();
+		Size screenSz = DeviceInfo.GetScreenPx(mContext);
+		// Init with a good enough rect
+		mScreenRect = new Rect(0, 0, screenSz.w(), screenSz.h());
 		initView(config);
 		initDummyView();
 
@@ -210,8 +210,9 @@ public class PersistentView
 			if (!mHasLayout)
 			{
 				mHasLayout = true;
-				int x = (int)(mScreenSize.w() - getWidth() * (1.0f - mHiddenW));
-				int y = (int)(mScreenSize.h() * 0.15f);
+				int x = (int)(mScreenRect.width() - getWidth()
+						* (1.0f - mHiddenW));
+				int y = (int)(mScreenRect.height() * 0.15f);
 				mViewPos.set(x, y);
 				updatePosition(x, y);
 			}
@@ -248,10 +249,9 @@ public class PersistentView
 		WindowManager.LayoutParams params = new WindowManager.LayoutParams(
 				WindowManager.LayoutParams.MATCH_PARENT,
 				WindowManager.LayoutParams.MATCH_PARENT,
-				WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+				WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
 				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-						| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-						| WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+						| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
 				PixelFormat.TRANSLUCENT);
 		params.gravity = Gravity.TOP | Gravity.LEFT;
 		mWindowManager.addView(mDummyView, params);
@@ -263,31 +263,21 @@ public class PersistentView
 					int bottom, int oldLeft, int oldTop, int oldRight,
 					int oldBottom)
 			{
-				Size fullScreen = DeviceInfo.GetFullScreenPx(mContext);
-				int w = right - left;
-				int h = bottom - top;
-				boolean hasNavigationBar;
-				if (w == fullScreen.w() && h == fullScreen.h())
-				{
-					Log.d(LOG_TAG + ".OnLayoutChangeListener", "Hiding nav bar");
-					hasNavigationBar = false;
-				}
-				else
-				{
-					Log.d(LOG_TAG + ".OnLayoutChangeListener", "Showing nav bar");
-					hasNavigationBar = true;
-				}
-				boolean isPortrait = (h > w);
-				Log.d(LOG_TAG + ".OnLayoutChangeListener", "Portrait: "
-						+ isPortrait);
-
-				if (hasNavigationBar != mHasNavigationBar
-						|| isPortrait != mIsPortrait)
+				Log.d(LOG_TAG + ".OnLayoutChangeListener", "onLayoutChange");
+				if (left != oldLeft || top != oldTop || right != oldRight
+						|| bottom != oldBottom)
 				{
 					// Something's changed
-					mHasNavigationBar = hasNavigationBar;
-					mIsPortrait = isPortrait;
-					updateScreenSize();
+					int location[] = new int[2];
+					mDummyView.getLocationOnScreen(location);
+					Log.d(LOG_TAG + ".OnLayoutChangeListener",
+							left + "," + oldLeft + "\n"
+							+ top + "," + oldTop + "\n"
+							+ right + "," + oldRight + "\n"
+							+ bottom + "," + oldBottom + "\n"
+							+ location[0] + "," + location[1]);
+					mScreenRect.set(left + location[0], top + location[1],
+							right + location[0], bottom + location[1]);
 					snap(true);
 				}
 			}
@@ -353,32 +343,21 @@ public class PersistentView
 		reset(true);
 	}
 
-	private void updateScreenSize()
-	{
-		if (mHasNavigationBar)
-		{
-			mScreenSize = DeviceInfo.GetScreenPx(mContext);
-		}
-		else
-		{
-			mScreenSize = DeviceInfo.GetFullScreenPx(mContext);
-		}
-	}
-
 	private void snap(boolean isAnimate)
 	{
 		// Bound the top and bottom
 		int y = Math.max(Math.min(mLayoutParams.y,
-				mScreenSize.h() - mChild.getHeight()), 0);
+				mScreenRect.bottom - mChild.getHeight()), mScreenRect.top);
 		int x;
 		// Take center
-		if ((mLayoutParams.x + mChild.getWidth() / 2) < mScreenSize.w() / 2)
+		if ((mLayoutParams.x + mChild.getWidth() / 2)
+				< mScreenRect.width() / 2 + mScreenRect.left)
 		{
-			x = (int)(0 - mChild.getWidth() * mHiddenW);
+			x = (int)(mScreenRect.left - mChild.getWidth() * mHiddenW);
 		}
 		else
 		{
-			x = (int)(mScreenSize.w() - mChild.getWidth() * (1.0f - mHiddenW));
+			x = (int)(mScreenRect.right - mChild.getWidth() * (1.0f - mHiddenW));
 		}
 		mViewPos.set(x, y);
 
@@ -489,11 +468,10 @@ public class PersistentView
 	// The position where the view should be, it could be different with the
 	// actual position during animation
 	private Point mViewPos;
+	private Rect mScreenRect;
 	private boolean mIsMoving;
 	private boolean mHasLayout = false;
 	private ObjectAnimator mSnapAnimators[] = new ObjectAnimator[2];
-	private boolean mIsPortrait;
-	private boolean mHasNavigationBar = true;
 
 	private float mAlpha;
 	private float mHiddenW;
@@ -503,7 +481,6 @@ public class PersistentView
 	private Runnable mLongPressRunnable;
 	private ContainerView mContainer;
 	private View mChild;
-	private Size mScreenSize;
 	private WindowManager mWindowManager;
 	private WindowManager.LayoutParams mLayoutParams;
 	// Used to detect app hiding navigation bar
