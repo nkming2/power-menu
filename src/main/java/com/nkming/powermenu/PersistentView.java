@@ -50,12 +50,13 @@ public class PersistentView
 	{
 		mHandler = config.handler;
 		mContext = config.context;
-		initView(config);
+		mWindowManager = (WindowManager)mContext.getSystemService(
+				Context.WINDOW_SERVICE);
 
 		mIsPortrait = (mContext.getResources().getConfiguration().orientation
 				== Configuration.ORIENTATION_PORTRAIT);
 		updateScreenSize();
-		initWindowManager();
+		initView(config);
 		initDummyView();
 
 		mChild.setScaleX(0);
@@ -237,12 +238,6 @@ public class PersistentView
 				false);
 		mChild.setAlpha(config.alpha);
 		mContainer.addView(mChild);
-	}
-
-	private void initWindowManager()
-	{
-		mWindowManager = (WindowManager)mContext.getSystemService(
-				Context.WINDOW_SERVICE);
 
 		mLayoutParams = new WindowManager.LayoutParams(
 				WindowManager.LayoutParams.WRAP_CONTENT,
