@@ -255,8 +255,8 @@ public class MainFragment extends Fragment
 				{
 					Toast.makeText(getActivity(), R.string.restart_fail,
 							Toast.LENGTH_LONG).show();
+					getActivity().finish();
 				}
-				getActivity().finish();
 			}
 		});
 
