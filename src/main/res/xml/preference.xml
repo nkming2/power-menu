@@ -23,6 +23,7 @@
 		<CheckBoxPreference
 			android:key="@string/pref_hide_launcher_key"
 			android:title="@string/pref_hide_launcher_title"
+			android:summary="@string/pref_hide_launcher_summary"
 			android:defaultValue="false"/>
 
 		<PreferenceScreen
