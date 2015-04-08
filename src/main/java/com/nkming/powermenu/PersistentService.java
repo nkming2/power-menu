@@ -250,7 +250,20 @@ public class PersistentService extends Service
 	private void onViewLongClick()
 	{
 		Log.d(LOG_TAG, "onViewLongClick");
-		SystemHelper.startActivity(MainActivity.class, null);
+		SystemHelper.startActivity(MainActivity.class,
+				new SystemHelper.StartActivityResultListener()
+		{
+			@Override
+			public void onStartActivityResult(boolean isSuccessful)
+			{
+				if (!isSuccessful)
+				{
+					Toast.makeText(PersistentService.this,
+							R.string.start_activity_fail, Toast.LENGTH_LONG)
+							.show();
+				}
+			}
+		});
 	}
 
 	private void stop()
