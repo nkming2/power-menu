@@ -14,14 +14,11 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import android.widget.Toast;
-
-import eu.chainfire.libsuperuser.Shell;
 
 /**
  * Service to display the persistent view
@@ -253,17 +250,7 @@ public class PersistentService extends Service
 	private void onViewLongClick()
 	{
 		Log.d(LOG_TAG, "onViewLongClick");
-		new AsyncTask<Void, Void, Void>()
-		{
-			@Override
-			protected Void doInBackground(Void... params)
-			{
-				Shell.SU.run("am start -n "
-						+ MainActivity.class.getPackage().getName()
-						+ "/" + MainActivity.class.getCanonicalName());
-				return null;
-			}
-		}.execute();
+		SystemHelper.startActivity(MainActivity.class, null);
 	}
 
 	private void stop()

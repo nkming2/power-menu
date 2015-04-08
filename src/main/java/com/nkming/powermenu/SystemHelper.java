@@ -34,6 +34,11 @@ public class SystemHelper
 		public void onSleepResult(boolean isSuccessful);
 	}
 
+	public static interface StartActivityResultListener
+	{
+		public void onStartActivityResult(boolean isSuccessful);
+	}
+
 	public static boolean shutdown(Context context)
 	{
 		try
@@ -141,6 +146,53 @@ public class SystemHelper
 					e);
 			return false;
 		}
+	}
+
+	/**
+	 * Start an Activity specified by @a clz
+	 *
+	 * @param clz
+	 * @param l Listener that get called when the operation is finished
+	 */
+	public static void startActivity(final Class clz,
+			final StartActivityResultListener l)
+	{
+		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
+		{
+			@Override
+			protected Boolean doInBackground(Void... params)
+			{
+				// am always return 0 even if the op has failed :/
+				String scripts[] = new String[]
+						{
+							"am start -n " + clz.getPackage().getName() + "/"
+									+ clz.getCanonicalName(),
+							"echo \"good:)\""
+						};
+				List<String> out = Shell.SU.run(scripts);
+				if (out == null || out.isEmpty())
+				{
+					Log.e(LOG_TAG + ".startActivity", "su failed:\n"
+							+ ((out == null) ? "null"
+									: StrUtils.Implode("\n", out)));
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean result)
+			{
+				if (l != null)
+				{
+					l.onStartActivityResult(result);
+				}
+			}
+		};
+		task.execute();
 	}
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."
