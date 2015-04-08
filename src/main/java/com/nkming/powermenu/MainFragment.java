@@ -10,6 +10,10 @@ package com.nkming.powermenu;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -186,11 +190,13 @@ public class MainFragment extends Fragment
 
 	private void onSleepClick()
 	{
-		startReveal(mActionBtns[SLEEP_ID], R.color.sleep_bg, true,
-				new Runnable()
+		startReveal(mActionBtns[SLEEP_ID], R.color.sleep_bg, true, null);
+
+		// Finish activity on screen off
+		final BroadcastReceiver receiver = new BroadcastReceiver()
 		{
 			@Override
-			public void run()
+			public void onReceive(Context context, Intent intent)
 			{
 				// App probably closed
 				if (getActivity() == null)
@@ -198,8 +204,12 @@ public class MainFragment extends Fragment
 					return;
 				}
 				getActivity().finish();
+				getActivity().unregisterReceiver(this);
 			}
-		});
+		};
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Intent.ACTION_SCREEN_ON);
+		getActivity().registerReceiver(receiver, filter);
 
 		// Sleep will run on a new thread and involve su, that takes quite some
 		// time so do it at once
