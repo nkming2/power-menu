@@ -56,6 +56,11 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 			PersistentService.setAutohideView(getActivity(),
 					pref.getBoolean(key, false));
 		}
+		else if (key.equals(getString(R.string.pref_hide_launcher_key)))
+		{
+			SystemHelper.setEnableActivity(getActivity(), LauncherActivity.class,
+					!pref.getBoolean(key, false));
+		}
 	}
 
 	private void onPersistentViewChange(SharedPreferences pref, String key)
