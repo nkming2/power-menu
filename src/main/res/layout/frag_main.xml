@@ -22,7 +22,8 @@
 			android:paddingTop="8dp"
 			android:paddingBottom="8dp"
 			android:paddingLeft="16dp"
-			android:paddingRight="16dp">
+			android:paddingRight="16dp"
+			android:clipToPadding="false">
 
 			<com.shamanland.fab.FloatingActionButton
 				android:id="@+id/sleep_btn"
@@ -44,7 +45,8 @@
 			android:paddingTop="8dp"
 			android:paddingBottom="8dp"
 			android:paddingLeft="16dp"
-			android:paddingRight="16dp">
+			android:paddingRight="16dp"
+			android:clipToPadding="false">
 
 			<com.shamanland.fab.FloatingActionButton
 				android:id="@+id/shutdown_id"
@@ -66,7 +68,8 @@
 			android:paddingTop="8dp"
 			android:paddingBottom="8dp"
 			android:paddingLeft="16dp"
-			android:paddingRight="16dp">
+			android:paddingRight="16dp"
+			android:clipToPadding="false">
 
 			<com.shamanland.fab.FloatingActionButton
 				android:id="@+id/restart_btn"
@@ -105,7 +108,8 @@
 			android:paddingTop="8dp"
 			android:paddingBottom="8dp"
 			android:paddingLeft="8dp"
-			android:paddingRight="8dp">
+			android:paddingRight="8dp"
+			android:clipToPadding="false">
 
 			<com.shamanland.fab.FloatingActionButton
 				android:id="@+id/restart_recovery_btn"
@@ -144,7 +148,8 @@
 			android:paddingTop="8dp"
 			android:paddingBottom="8dp"
 			android:paddingLeft="8dp"
-			android:paddingRight="8dp">
+			android:paddingRight="8dp"
+			android:clipToPadding="false">
 
 			<com.shamanland.fab.FloatingActionButton
 				android:id="@+id/restart_bootloader_btn"
