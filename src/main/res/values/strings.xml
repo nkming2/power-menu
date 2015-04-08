@@ -37,6 +37,10 @@
 
 	<string name="pref_others_category">Others</string>
 
+	<string name="pref_hide_launcher_title">Hide launcher icon</string>
+	<string name="pref_hide_launcher_summary">The effect may only be visible after restarting your launcher app</string>
+	<string name="pref_hide_launcher_key" translatable="false">hide_launcher</string>
+
 	<string name="pref_uninstall_title">Pre-uninstall</string>
 	<string name="pref_uninstall_summary">Ready the app for uninstalling. Save your work before proceeding, as your device will reboot during the process</string>
 
