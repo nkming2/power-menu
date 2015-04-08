@@ -36,10 +36,8 @@ public class MainActivity extends ActionBarActivity
 			setContentView(R.layout.activity_main);
 			if (savedInstanceState == null)
 			{
-				mFrag = new MainFragment();
 				getSupportFragmentManager().beginTransaction()
-						.add(R.id.container, mFrag)
-						.commit();
+						.add(R.id.container, new MainFragment()).commit();
 			}
 		}
 	}
@@ -88,6 +86,5 @@ public class MainActivity extends ActionBarActivity
 		}
 	}
 
-	private MainFragment mFrag;
 	private boolean mIsAnimateClose = true;
 }
