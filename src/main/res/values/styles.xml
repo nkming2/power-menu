@@ -19,6 +19,12 @@
 		<item name="windowActionBar">false</item>
 	</style>
 
+	<style name="AppThemePreferenceBase" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorPrimary">@color/color_primary</item>
+		<item name="colorPrimaryDark">@color/color_primary_dark</item>
+		<item name="colorAccent">@color/color_accent</item>
+	</style>
+
 	<style name="AppTheme.Animation" parent="android:style/Animation.Activity">
 		<item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
 		<item name="android:windowEnterAnimation">@anim/activity_open_enter</item>
@@ -30,6 +36,6 @@
 	<style name="AppThemeDialog" parent="AppThemeDialogBase">
 	</style>
 
-	<style name="AppThemePreference" parent="android:Theme.DeviceDefault.Light.DarkActionBar">
+	<style name="AppThemePreference" parent="AppThemePreferenceBase">
 	</style>
 </resources>

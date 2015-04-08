@@ -8,13 +8,13 @@
 
 package com.nkming.powermenu;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 
-public class PreferenceActivity extends Activity
+public class PreferenceActivity extends ActionBarActivity
 {
 	@Override
 	public void onCreate(Bundle savedInstanceState)
