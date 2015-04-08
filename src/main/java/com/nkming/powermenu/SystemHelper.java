@@ -8,8 +8,10 @@
 
 package com.nkming.powermenu;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 
@@ -193,6 +195,25 @@ public class SystemHelper
 			}
 		};
 		task.execute();
+	}
+
+	/**
+	 * Enable/disable an Activity. As a side effect, to show/hide an activity
+	 * from launcher
+	 *
+	 * @param context
+	 * @param activityClz
+	 * @param isEnable
+	 */
+	public static void setEnableActivity(Context context, Class activityClz,
+			boolean isEnable)
+	{
+		PackageManager pm = context.getPackageManager();
+		ComponentName com = new ComponentName(context, activityClz);
+		int newState = isEnable ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+				: PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+		pm.setComponentEnabledSetting(com, newState,
+				PackageManager.DONT_KILL_APP);
 	}
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."
