@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="action_button_normal_vertical_extended_area">8dp</dimen>
+	<dimen name="action_button_normal_horizontal_extended_area">16dp</dimen>
+	<dimen name="action_button_mini_vertical_extended_area">8dp</dimen>
+	<dimen name="action_button_mini_horizontal_extended_area">8dp</dimen>
+</resources>
