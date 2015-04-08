@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.PowerManager;
-import android.widget.Toast;
 
 import com.nkming.utils.str.StrUtils;
 
@@ -28,6 +27,11 @@ public class SystemHelper
 		NORMAL,
 		RECOVERY,
 		BOOTLOADER
+	}
+
+	public static interface SleepResultListener
+	{
+		public void onSleepResult(boolean isSuccessful);
 	}
 
 	public static boolean shutdown(Context context)
@@ -60,15 +64,13 @@ public class SystemHelper
 	}
 
 	/**
-	 * Put the device to sleep. Since we have no way to know for sure the device
-	 * has gone into sleep mode, true is always returned
+	 * Put the device to sleep. The operation runs in a separate thread
 	 *
-	 * @param context The application context. Activity context is discouraged
-	 * as the context is passed to an AsyncTask and might be used after the
-	 * activity finished
-	 * @return
+	 * @param context
+	 * @param l Listener that get called when the operation is finished
+	 * @return Always true
 	 */
-	public static boolean sleep(final Context context)
+	public static boolean sleep(Context context, final SleepResultListener l)
 	{
 		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
 		{
@@ -98,10 +100,9 @@ public class SystemHelper
 			@Override
 			protected void onPostExecute(Boolean result)
 			{
-				if (!result)
+				if (l != null)
 				{
-					Toast.makeText(context, R.string.sleep_fail,
-							Toast.LENGTH_LONG).show();
+					l.onSleepResult(result);
 				}
 			}
 		};

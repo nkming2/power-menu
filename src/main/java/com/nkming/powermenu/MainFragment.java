@@ -213,7 +213,21 @@ public class MainFragment extends Fragment
 
 		// Sleep will run on a new thread and involve su, that takes quite some
 		// time so do it at once
-		SystemHelper.sleep(getActivity().getApplicationContext());
+		final Context appContext = getActivity().getApplicationContext();
+		SystemHelper.sleep(appContext, new SystemHelper.SleepResultListener()
+		{
+			@Override
+			public void onSleepResult(boolean isSuccessful)
+			{
+				if (!isSuccessful)
+				{
+					Toast.makeText(appContext, R.string.sleep_fail,
+							Toast.LENGTH_LONG).show();
+					getActivity().finish();
+					getActivity().unregisterReceiver(receiver);
+				}
+			}
+		});
 
 		mActionBtns[SLEEP_ID].setShadow(false);
 		dismissOtherViews(mActionBtnBounds, mActionBtnBounds[SLEEP_ID]);

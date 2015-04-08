@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
+import android.widget.Toast;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -234,7 +235,19 @@ public class PersistentService extends Service
 	private void onViewClick()
 	{
 		Log.d(LOG_TAG, "onViewClick");
-		SystemHelper.sleep(getApplicationContext());
+		SystemHelper.sleep(getApplicationContext(),
+				new SystemHelper.SleepResultListener()
+		{
+			@Override
+			public void onSleepResult(boolean isSuccessful)
+			{
+				if (!isSuccessful)
+				{
+					Toast.makeText(PersistentService.this, R.string.sleep_fail,
+							Toast.LENGTH_LONG).show();
+				}
+			}
+		});
 	}
 
 	private void onViewLongClick()
