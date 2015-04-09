@@ -274,7 +274,7 @@ public class PersistentView
 			mWindowManager.addView(mDummyView[i], params);
 		}
 
-		final int rightData[] = new int[2];
+		final Rect oldRect = new Rect();
 
 		mDummyView[0].addOnLayoutChangeListener(new View.OnLayoutChangeListener()
 		{
@@ -284,26 +284,32 @@ public class PersistentView
 					int oldBottom)
 			{
 				Log.d(LOG_TAG + ".OnLayoutChangeListener", "onLayoutChange(0)");
-				rightData[0] = right;
-				rightData[1] = oldRight;
+				if (left != oldRect.left || top != oldRect.top
+						|| right != oldRect.right)
+				{
+					// Bottom is invalid in this view
+					Rect newRect = new Rect(left, top, right, oldRect.bottom);
+					onScreenLayoutChange(newRect, oldRect);
+					oldRect.set(newRect);
+				}
 			}
 		});
 
 		mDummyView[1].addOnLayoutChangeListener(new View.OnLayoutChangeListener()
 		{
 			@Override
-			public void onLayoutChange(View v, int left, int top, int right_,
-					int bottom, int oldLeft, int oldTop, int oldRight_,
+			public void onLayoutChange(View v, int left, int top, int right,
+					int bottom, int oldLeft, int oldTop, int oldRight,
 					int oldBottom)
 			{
 				Log.d(LOG_TAG + ".OnLayoutChangeListener", "onLayoutChange(1)");
-				int right = rightData[0];
-				int oldRight = rightData[1];
-				if (left != oldLeft || top != oldTop || right != oldRight
-						|| bottom != oldBottom)
+				if (left != oldRect.left || top != oldRect.top
+						|| bottom != oldRect.bottom)
 				{
-					onScreenLayoutChange(new Rect(left, top, right, bottom),
-							new Rect(oldLeft, oldTop, oldRight, oldBottom));
+					// Right is invalid in this view
+					Rect newRect = new Rect(left, top, oldRect.right, bottom);
+					onScreenLayoutChange(newRect, oldRect);
+					oldRect.set(newRect);
 				}
 			}
 		});
