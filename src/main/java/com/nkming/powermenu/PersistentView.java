@@ -302,29 +302,8 @@ public class PersistentView
 				if (left != oldLeft || top != oldTop || right != oldRight
 						|| bottom != oldBottom)
 				{
-					// Something's changed
-					int location[] = new int[2];
-					mDummyView[1].getLocationOnScreen(location);
-					Log.d(LOG_TAG + ".OnLayoutChangeListener",
-							left + "," + oldLeft + "\n"
-									+ top + "," + oldTop + "\n"
-									+ right + "," + oldRight + "\n"
-									+ bottom + "," + oldBottom + "\n"
-									+ location[0] + "," + location[1]);
-
-					Rect rect = new Rect(left + location[0], top + location[1],
-							right + location[0], bottom + location[1]);
-					if (isFullscreen(rect) && !isFullscreen(mScreenRect))
-					{
-						onIntoFullscreen();
-					}
-					else if (!isFullscreen(rect) && isFullscreen(mScreenRect))
-					{
-						onOutOfFullscreen();
-					}
-					mScreenRect.set(left + location[0], top + location[1],
-							right + location[0], bottom + location[1]);
-					snap(true);
+					onScreenLayoutChange(new Rect(left, top, right, bottom),
+							new Rect(oldLeft, oldTop, oldRight, oldBottom));
 				}
 			}
 		});
@@ -387,6 +366,33 @@ public class PersistentView
 		Log.d(LOG_TAG, "onLongPress()");
 		mContainer.performLongClick();
 		reset(true);
+	}
+
+	private void onScreenLayoutChange(Rect newRect, Rect oldRect)
+	{
+		Log.d(LOG_TAG, "onScreenLayoutChange()");
+		int location[] = new int[2];
+		mDummyView[0].getLocationOnScreen(location);
+		Log.d(LOG_TAG + ".OnLayoutChangeListener",
+				newRect.left + "," + oldRect.left + "\n"
+						+ newRect.top + "," + oldRect.top + "\n"
+						+ newRect.right + "," + oldRect.right + "\n"
+						+ newRect.bottom + "," + oldRect.bottom + "\n"
+						+ location[0] + "," + location[1]);
+
+		Rect rect = new Rect(newRect.left + location[0],
+				newRect.top + location[1], newRect.right + location[0],
+				newRect.bottom + location[1]);
+		if (isFullscreen(rect) && !isFullscreen(mScreenRect))
+		{
+			onIntoFullscreen();
+		}
+		else if (!isFullscreen(rect) && isFullscreen(mScreenRect))
+		{
+			onOutOfFullscreen();
+		}
+		mScreenRect.set(rect);
+		snap(true);
 	}
 
 	private void onIntoFullscreen()
