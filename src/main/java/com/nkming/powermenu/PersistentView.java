@@ -113,11 +113,21 @@ public class PersistentView
 		mWindowManager.removeView(mDummyView[1]);
 	}
 
+	/**
+	 * Listen to click event on this view
+	 *
+	 * @param l
+	 */
 	public void setOnClickListener(View.OnClickListener l)
 	{
 		mContainer.setOnClickListener(l);
 	}
 
+	/**
+	 * Listen to long click/press event on this view
+	 *
+	 * @param l
+	 */
 	public void setOnLongClickListener(View.OnLongClickListener l)
 	{
 		mContainer.setOnLongClickListener(l);
@@ -133,12 +143,22 @@ public class PersistentView
 		mIsAutohide = flag;
 	}
 
+	/**
+	 * For the ObjectAnimator and animate the view
+	 *
+	 * @param x
+	 */
 	public void setX(int x)
 	{
 		mLayoutParams.x = x;
 		mWindowManager.updateViewLayout(mContainer, mLayoutParams);
 	}
 
+	/**
+	 * For the ObjectAnimator and animate the view
+	 *
+	 * @param y
+	 */
 	public void setY(int y)
 	{
 		mLayoutParams.y = y;
@@ -254,6 +274,9 @@ public class PersistentView
 		mWindowManager.addView(mContainer, mLayoutParams);
 	}
 
+	/**
+	 * Init the dummy views to detect changes in the screen size
+	 */
 	private void initDummyView()
 	{
 		// We use two views, one for horizontal and one for vertical in order to
