@@ -109,7 +109,8 @@ public class PersistentView
 	{
 		Log.d(LOG_TAG, "destroy()");
 		mWindowManager.removeView(mContainer);
-		mWindowManager.removeView(mDummyView);
+		mWindowManager.removeView(mDummyView[0]);
+		mWindowManager.removeView(mDummyView[1]);
 	}
 
 	public void setOnClickListener(View.OnClickListener l)
@@ -255,38 +256,61 @@ public class PersistentView
 
 	private void initDummyView()
 	{
-		mDummyView = new View(mContext);
+		// We use two views, one for horizontal and one for vertical in order to
+		// prevent having one view to cover the whole screen, which will disable
+		// views with filterTouchesWhenObscured
+		for (int i = 0; i < 2; ++i)
+		{
+			mDummyView[i] = new View(mContext);
 
-		WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-				WindowManager.LayoutParams.MATCH_PARENT,
-				WindowManager.LayoutParams.MATCH_PARENT,
-				WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-						| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-				PixelFormat.TRANSLUCENT);
-		params.gravity = Gravity.TOP | Gravity.LEFT;
-		mWindowManager.addView(mDummyView, params);
+			WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+					(i == 0) ? WindowManager.LayoutParams.MATCH_PARENT : 0,
+					(i == 0) ? 0 : WindowManager.LayoutParams.MATCH_PARENT,
+					WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+					WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+							| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+					PixelFormat.TRANSLUCENT);
+			params.gravity = Gravity.TOP | Gravity.LEFT;
+			mWindowManager.addView(mDummyView[i], params);
+		}
 
-		mDummyView.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
+		final int rightData[] = new int[2];
+
+		mDummyView[0].addOnLayoutChangeListener(new View.OnLayoutChangeListener()
 		{
 			@Override
 			public void onLayoutChange(View v, int left, int top, int right,
 					int bottom, int oldLeft, int oldTop, int oldRight,
 					int oldBottom)
 			{
-				Log.d(LOG_TAG + ".OnLayoutChangeListener", "onLayoutChange");
+				Log.d(LOG_TAG + ".OnLayoutChangeListener", "onLayoutChange(0)");
+				rightData[0] = right;
+				rightData[1] = oldRight;
+			}
+		});
+
+		mDummyView[1].addOnLayoutChangeListener(new View.OnLayoutChangeListener()
+		{
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right_,
+					int bottom, int oldLeft, int oldTop, int oldRight_,
+					int oldBottom)
+			{
+				Log.d(LOG_TAG + ".OnLayoutChangeListener", "onLayoutChange(1)");
+				int right = rightData[0];
+				int oldRight = rightData[1];
 				if (left != oldLeft || top != oldTop || right != oldRight
 						|| bottom != oldBottom)
 				{
 					// Something's changed
 					int location[] = new int[2];
-					mDummyView.getLocationOnScreen(location);
+					mDummyView[1].getLocationOnScreen(location);
 					Log.d(LOG_TAG + ".OnLayoutChangeListener",
 							left + "," + oldLeft + "\n"
-							+ top + "," + oldTop + "\n"
-							+ right + "," + oldRight + "\n"
-							+ bottom + "," + oldBottom + "\n"
-							+ location[0] + "," + location[1]);
+									+ top + "," + oldTop + "\n"
+									+ right + "," + oldRight + "\n"
+									+ bottom + "," + oldBottom + "\n"
+									+ location[0] + "," + location[1]);
 
 					Rect rect = new Rect(left + location[0], top + location[1],
 							right + location[0], bottom + location[1]);
@@ -546,5 +570,5 @@ public class PersistentView
 	private WindowManager mWindowManager;
 	private WindowManager.LayoutParams mLayoutParams;
 	// Used to detect app hiding navigation bar
-	private View mDummyView;
+	private View mDummyView[] = new View[2];
 }
