@@ -14,6 +14,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -191,6 +192,11 @@ public class PersistentService extends Service
 				return true;
 			}
 		});
+
+		SharedPreferences pref = getSharedPreferences(getString(
+				R.string.pref_file), Context.MODE_PRIVATE);
+		mView.setAutohide(pref.getBoolean(getString(
+				R.string.pref_autohide_persistent_view_key), false));
 	}
 
 	private void initForeground()
