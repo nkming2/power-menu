@@ -84,7 +84,7 @@ public class PersistentView
 	public void show(Animator.AnimatorListener listener)
 	{
 		Log.d(LOG_TAG, "show(...)");
-		mContainer.setTouchable(true);
+		setTouchable(true);
 
 		mChild.animate().scaleX(1.0f).scaleY(1.0f)
 				.setInterpolator(new DecelerateInterpolator())
@@ -97,7 +97,7 @@ public class PersistentView
 		Log.d(LOG_TAG, "hide(...)");
 		reset(true);
 		// A hidden view should not be responding to touch
-		mContainer.setTouchable(false);
+		setTouchable(false);
 
 		mChild.animate().scaleX(0.0f).scaleY(0.0f)
 				.setInterpolator(new AccelerateInterpolator())
@@ -178,11 +178,6 @@ public class PersistentView
 		@Override
 		public boolean onTouchEvent(MotionEvent event)
 		{
-			if (!mIsTouchable)
-			{
-				return false;
-			}
-
 			switch (event.getActionMasked())
 			{
 			case MotionEvent.ACTION_DOWN:
@@ -228,11 +223,6 @@ public class PersistentView
 			return true;
 		}
 
-		public void setTouchable(boolean flag)
-		{
-			mIsTouchable = flag;
-		}
-
 		@Override
 		protected void onLayout(boolean changed, int left, int top, int right,
 				int bottom)
@@ -249,8 +239,6 @@ public class PersistentView
 				updatePosition(x, y);
 			}
 		}
-
-		private boolean mIsTouchable = true;
 	}
 
 	private void initView(Config config)
@@ -580,6 +568,20 @@ public class PersistentView
 			return (rect.height() == mFullscreenSize.w()
 					&& rect.width() == mFullscreenSize.h());
 		}
+	}
+
+	private void setTouchable(boolean flag)
+	{
+		if (flag)
+		{
+			mLayoutParams.flags &=
+					~WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+		}
+		else
+		{
+			mLayoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+		}
+		mWindowManager.updateViewLayout(mContainer, mLayoutParams);
 	}
 
 	private int mPrimaryId;
