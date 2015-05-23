@@ -17,7 +17,7 @@
 #}
 
 -dontobfuscate
--keep class com.nkming.powermenu.PersistentView {
+-keep class com.nkming.utils.widget.PersistentView {
   public void setX(...);
   public void setY(...);
 }
