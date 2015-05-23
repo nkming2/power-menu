@@ -248,11 +248,10 @@ public class MainFragment extends Fragment
 
 		mActionBtns[RESTART_ID].animate().rotationBy(180)
 				.setInterpolator(new AccelerateDecelerateInterpolator())
-				.setDuration(Res.ANIMATION_MID)
+				.setDuration(Res.ANIMATION_FAST)
 				.setStartDelay(0);
 		mActionBtnBounds[RESTART_ID].setOnClickListener(null);
-		showRestartMenu(Res.ANIMATION_MID - Res.ANIMATION_FAST,
-				new Runnable()
+		showRestartMenu(Res.ANIMATION_FAST / 2, new Runnable()
 		{
 			@Override
 			public void run()
