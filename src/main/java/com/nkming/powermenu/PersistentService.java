@@ -21,6 +21,36 @@ import android.widget.Toast;
  */
 public class PersistentService extends com.nkming.utils.widget.PersistentService
 {
+	public static void start(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(createStart(intent));
+	}
+
+	public static void stop(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(createStop(intent));
+	}
+
+	public static void showView(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(createShowView(intent));
+	}
+
+	public static void hideView(Context context)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(createHideView(intent));
+	}
+
+	public static void setAutohideView(Context context, boolean flag)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(createSetAutohideView(intent, flag));
+	}
+
 	@Override
 	protected int getLayoutId()
 	{
