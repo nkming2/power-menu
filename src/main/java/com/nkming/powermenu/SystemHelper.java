@@ -13,10 +13,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.PowerManager;
+import android.text.format.DateFormat;
 
 import com.nkming.utils.str.StrUtils;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -148,6 +151,56 @@ public class SystemHelper
 					e);
 			return false;
 		}
+	}
+
+	public static boolean screenshot(Context context, final SuResultListener l)
+	{
+		File picDir = Environment.getExternalStoragePublicDirectory(
+				Environment.DIRECTORY_PICTURES);
+		File screenshotDir = new File(picDir, "Screenshots");
+		if (!screenshotDir.exists())
+		{
+			screenshotDir.mkdirs();
+		}
+		final String path = screenshotDir.getPath() + "/Screenshot_"
+				+ DateFormat.format("yyyy-MM-dd-kk-mm-ss", new java.util.Date())
+				+ ".png";
+
+		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
+		{
+			@Override
+			protected Boolean doInBackground(Void... params)
+			{
+				String scripts[] = new String[]
+						{
+							"system/bin/screencap -p " + path,
+							"echo \"good:)\""
+						};
+				List<String> out = Shell.SU.run(scripts);
+				if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
+				{
+					Log.e(LOG_TAG + ".screenshot", "su failed:\n"
+							+ ((out == null) ? "null"
+							: StrUtils.Implode("\n", out)));
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean result)
+			{
+				if (l != null)
+				{
+					l.onSuResult(result);
+				}
+			}
+		};
+		task.execute();
+		return true;
 	}
 
 	/**
