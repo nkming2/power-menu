@@ -31,9 +31,9 @@ public class SystemHelper
 		BOOTLOADER
 	}
 
-	public static interface SleepResultListener
+	public static interface SuResultListener
 	{
-		public void onSleepResult(boolean isSuccessful);
+		public void onSuResult(boolean isSuccessful);
 	}
 
 	public static interface StartActivityResultListener
@@ -77,7 +77,7 @@ public class SystemHelper
 	 * @param l Listener that get called when the operation is finished
 	 * @return Always true
 	 */
-	public static boolean sleep(Context context, final SleepResultListener l)
+	public static boolean sleep(Context context, final SuResultListener l)
 	{
 		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
 		{
@@ -109,7 +109,7 @@ public class SystemHelper
 			{
 				if (l != null)
 				{
-					l.onSleepResult(result);
+					l.onSuResult(result);
 				}
 			}
 		};

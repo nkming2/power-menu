@@ -214,10 +214,10 @@ public class MainFragment extends Fragment
 		// Sleep will run on a new thread and involve su, that takes quite some
 		// time so do it at once
 		final Context appContext = getActivity().getApplicationContext();
-		SystemHelper.sleep(appContext, new SystemHelper.SleepResultListener()
+		SystemHelper.sleep(appContext, new SystemHelper.SuResultListener()
 		{
 			@Override
-			public void onSleepResult(boolean isSuccessful)
+			public void onSuResult(boolean isSuccessful)
 			{
 				if (!isSuccessful)
 				{

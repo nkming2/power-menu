@@ -95,10 +95,10 @@ public class PersistentService extends com.nkming.utils.widget.PersistentService
 	{
 		super.onViewClick();
 		SystemHelper.sleep(getApplicationContext(),
-				new SystemHelper.SleepResultListener()
+				new SystemHelper.SuResultListener()
 		{
 			@Override
-			public void onSleepResult(boolean isSuccessful)
+			public void onSuResult(boolean isSuccessful)
 			{
 				if (!isSuccessful)
 				{
