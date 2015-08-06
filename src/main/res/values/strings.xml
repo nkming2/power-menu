@@ -35,6 +35,10 @@
 	<string name="pref_autohide_persistent_view_summary">Hide the persistent view when a fullscreen app is running</string>
 	<string name="pref_autohide_persistent_view_key" translatable="false">autohide_persistent_view</string>
 
+	<string name="pref_alpha_title">Opacity</string>
+	<string name="pref_alpha_summary">Adjust the opacity of the view</string>
+	<string name="pref_alpha_key" translatable="false">alpha</string>
+
 	<string name="pref_others_category">Others</string>
 
 	<string name="pref_hide_launcher_title">Hide launcher icon</string>

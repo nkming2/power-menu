@@ -51,6 +51,12 @@ public class PersistentService extends com.nkming.utils.widget.PersistentService
 		context.startService(createSetAutohideView(intent, flag));
 	}
 
+	public static void setAlpha(Context context, float alpha)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(createSetAlpha(intent, alpha));
+	}
+
 	@Override
 	protected int getLayoutId()
 	{

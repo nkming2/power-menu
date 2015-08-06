@@ -10,6 +10,10 @@ package com.nkming.powermenu;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import com.nkming.utils.preference.SeekBarPreference;
 
 public class PreferenceFragment extends android.preference.PreferenceFragment
 		implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -26,6 +30,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 		getPreferenceManager().setSharedPreferencesName(getString(
 				R.string.pref_file));
 		addPreferencesFromResource(R.xml.preference);
+		init();
 	}
 
 	@Override
@@ -56,11 +61,36 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 			PersistentService.setAutohideView(getActivity(),
 					pref.getBoolean(key, false));
 		}
+		else if (key.equals(getString(R.string.pref_alpha_key)))
+		{
+			PersistentService.setAlpha(getActivity(),
+					pref.getInt(key, 100) / 100.0f);
+		}
 		else if (key.equals(getString(R.string.pref_hide_launcher_key)))
 		{
 			SystemHelper.setEnableActivity(getActivity(), LauncherActivity.class,
 					!pref.getBoolean(key, false));
 		}
+	}
+
+	private void init()
+	{
+		initAlphaPref();
+	}
+
+	private void initAlphaPref()
+	{
+		SeekBarPreference pref = (SeekBarPreference)findPreference(getString(
+				R.string.pref_alpha_key));
+		pref.setPreviewListener(new SeekBarPreference.DefaultPreviewListener()
+		{
+			@Override
+			public void onPreviewChange(View preview, int value)
+			{
+				TextView v = (TextView)preview;
+				v.setText(String.format("%.2f", value / 100.0f));
+			}
+		});
 	}
 
 	private void onPersistentViewChange(SharedPreferences pref, String key)
