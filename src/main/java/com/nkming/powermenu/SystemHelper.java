@@ -177,7 +177,7 @@ public class SystemHelper
 				{
 					Log.e(LOG_TAG + ".screenshot", "su failed:\n"
 							+ ((out == null) ? "null"
-							: StrUtils.Implode("\n", out)));
+									: StrUtils.Implode("\n", out)));
 					return false;
 				}
 				else
