@@ -266,7 +266,7 @@ public class MainFragment extends Fragment
 
 	private void onRestartClick()
 	{
-		int ids[] = {SHUTDOWN_ID, SLEEP_ID};
+		int ids[] = {SHUTDOWN_ID, SLEEP_ID, SCREENSHOT_ID};
 		for (int i = 0; i < ids.length; ++i)
 		{
 			mActionBtnBounds[ids[i]].animate().xBy(100).alpha(0.0f)
