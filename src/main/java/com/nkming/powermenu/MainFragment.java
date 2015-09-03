@@ -15,6 +15,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -334,6 +335,27 @@ public class MainFragment extends Fragment
 				getActivity().finish();
 				final Context appContext = getActivity().getApplicationContext();
 
+				final SystemHelper.ScreenshotResultListener l =
+						new SystemHelper.ScreenshotResultListener()
+				{
+					@Override
+					public void onScreenshotResult(boolean isSuccessful,
+							String filepath)
+					{
+						if (isSuccessful)
+						{
+							// Add the file to media store
+							MediaScannerConnection.scanFile(appContext,
+									new String[]{filepath}, null, null);
+						}
+						else
+						{
+							Toast.makeText(appContext, R.string.screenshot_fail,
+									Toast.LENGTH_LONG).show();
+						}
+					}
+				};
+
 				// Wait til our activity is closed -- user pretty much are not
 				// trying to screenshot us
 				final BroadcastReceiver receiver = new BroadcastReceiver()
@@ -343,20 +365,7 @@ public class MainFragment extends Fragment
 					{
 						LocalBroadcastManager.getInstance(appContext)
 								.unregisterReceiver(this);
-						SystemHelper.screenshot(appContext,
-								new SystemHelper.SuResultListener()
-						{
-							@Override
-							public void onSuResult(boolean isSuccessful)
-							{
-								if (!isSuccessful)
-								{
-									Toast.makeText(appContext,
-											R.string.screenshot_fail,
-											Toast.LENGTH_LONG).show();
-								}
-							}
-						});
+						SystemHelper.screenshot(appContext, l);
 					}
 				};
 				IntentFilter filter = new IntentFilter();

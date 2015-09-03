@@ -12,7 +12,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaScannerConnection;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.text.format.DateFormat;
@@ -36,6 +35,11 @@ public class SystemHelper
 	public static interface SuResultListener
 	{
 		public void onSuResult(boolean isSuccessful);
+	}
+
+	public static interface ScreenshotResultListener
+	{
+		public void onScreenshotResult(boolean isSuccessful, String filepath);
 	}
 
 	public static interface StartActivityResultListener
@@ -152,8 +156,8 @@ public class SystemHelper
 		}
 	}
 
-	public static boolean screenshot(final Context context,
-			final SuResultListener l)
+	public static boolean screenshot(Context context,
+			final ScreenshotResultListener l)
 	{
 		final String filename = "Screenshot_" + DateFormat.format(
 				"yyyy-MM-dd-kk-mm-ss", new java.util.Date()) + ".png";
@@ -182,9 +186,7 @@ public class SystemHelper
 				}
 				else
 				{
-					// Add the file to media store
-					MediaScannerConnection.scanFile(context,
-							new String[]{out.get(1)}, null, null);
+					mFilepath = out.get(1);
 					return true;
 				}
 			}
@@ -194,9 +196,11 @@ public class SystemHelper
 			{
 				if (l != null)
 				{
-					l.onSuResult(result);
+					l.onScreenshotResult(result, mFilepath);
 				}
 			}
+
+			private String mFilepath;
 		};
 		task.execute();
 		return true;
