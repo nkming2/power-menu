@@ -94,6 +94,8 @@ public class PersistentService extends com.nkming.utils.widget.PersistentService
 				R.string.pref_file), Context.MODE_PRIVATE);
 		getView().setAutohide(pref.getBoolean(getString(
 				R.string.pref_autohide_persistent_view_key), false));
+		getView().setAlpha(pref.getInt(getString(R.string.pref_alpha_key), 100)
+				/ 100.0f);
 	}
 
 	@Override
