@@ -93,7 +93,7 @@ public class SystemHelper
 							"input keyevent 26",
 							"echo \"good:)\""
 						};
-				List<String> out = Shell.SU.run(scripts);
+				List<String> out = Shell.run("su", scripts, (String[])null, true);
 				if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
 				{
 					Log.e(LOG_TAG + ".sleep", "su failed:\n"
@@ -176,7 +176,7 @@ public class SystemHelper
 							"system/bin/screencap -p " + path,
 							"echo \"good:)\""
 						};
-				List<String> out = Shell.SU.run(scripts);
+				List<String> out = Shell.run("su", scripts, (String[])null, true);
 				if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
 				{
 					Log.e(LOG_TAG + ".screenshot", "su failed:\n"
@@ -224,7 +224,7 @@ public class SystemHelper
 									+ clz.getCanonicalName(),
 							"echo \"good:)\""
 						};
-				List<String> out = Shell.SU.run(scripts);
+				List<String> out = Shell.run("su", scripts, (String[])null, true);
 				if (out == null || out.isEmpty())
 				{
 					Log.e(LOG_TAG + ".startActivity", "su failed:\n"

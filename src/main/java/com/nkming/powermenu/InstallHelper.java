@@ -54,7 +54,7 @@ public class InstallHelper
 					};
 			Log.i(LOG_TAG , "Run:\n" + StrUtils.Implode("\n",
 					Arrays.asList(scripts)));
-			List<String> out = Shell.SU.run(scripts);
+			List<String> out = Shell.run("su", scripts, (String[])null, true);
 			if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
 			{
 				Log.e(LOG_TAG + ".InstallTask", "su failed:\n"
@@ -98,7 +98,7 @@ public class InstallHelper
 					};
 			Log.i(LOG_TAG , "Run:\n" + StrUtils.Implode("\n",
 					Arrays.asList(scripts)));
-			List<String> out = Shell.SU.run(scripts);
+			List<String> out = Shell.run("su", scripts, (String[])null, true);
 			if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
 			{
 				Log.e(LOG_TAG + ".UninstallTask", "su failed:\n"
