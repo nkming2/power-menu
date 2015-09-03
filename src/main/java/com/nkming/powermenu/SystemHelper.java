@@ -13,13 +13,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.os.PowerManager;
 import android.text.format.DateFormat;
 
 import com.nkming.utils.str.StrUtils;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -155,16 +153,8 @@ public class SystemHelper
 
 	public static boolean screenshot(Context context, final SuResultListener l)
 	{
-		File picDir = Environment.getExternalStoragePublicDirectory(
-				Environment.DIRECTORY_PICTURES);
-		File screenshotDir = new File(picDir, "Screenshots");
-		if (!screenshotDir.exists())
-		{
-			screenshotDir.mkdirs();
-		}
-		final String path = screenshotDir.getPath() + "/Screenshot_"
-				+ DateFormat.format("yyyy-MM-dd-kk-mm-ss", new java.util.Date())
-				+ ".png";
+		final String filename = "Screenshot_" + DateFormat.format(
+				"yyyy-MM-dd-kk-mm-ss", new java.util.Date()) + ".png";
 
 		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
 		{
@@ -173,7 +163,9 @@ public class SystemHelper
 			{
 				String scripts[] = new String[]
 						{
-							"system/bin/screencap -p " + path,
+							"save_dir=${EXTERNAL_STORAGE}/Pictures/Screenshots",
+							"mkdir -p ${save_dir}",
+							"system/bin/screencap -p ${save_dir}/" + filename,
 							"echo \"good:)\""
 						};
 				List<String> out = Shell.run("su", scripts, (String[])null, true);
