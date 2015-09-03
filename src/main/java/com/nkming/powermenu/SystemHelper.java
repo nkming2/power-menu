@@ -12,6 +12,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaScannerConnection;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.text.format.DateFormat;
@@ -151,7 +152,8 @@ public class SystemHelper
 		}
 	}
 
-	public static boolean screenshot(Context context, final SuResultListener l)
+	public static boolean screenshot(final Context context,
+			final SuResultListener l)
 	{
 		final String filename = "Screenshot_" + DateFormat.format(
 				"yyyy-MM-dd-kk-mm-ss", new java.util.Date()) + ".png";
@@ -166,10 +168,12 @@ public class SystemHelper
 							"save_dir=${EXTERNAL_STORAGE}/Pictures/Screenshots",
 							"mkdir -p ${save_dir}",
 							"system/bin/screencap -p ${save_dir}/" + filename,
-							"echo \"good:)\""
+							"echo \"good:)\"",
+							"echo ${save_dir}/" + filename
 						};
 				List<String> out = Shell.run("su", scripts, (String[])null, true);
-				if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
+				if (out == null || out.isEmpty() || !out.get(0).equals("good:)")
+						|| out.size() != 2)
 				{
 					Log.e(LOG_TAG + ".screenshot", "su failed:\n"
 							+ ((out == null) ? "null"
@@ -178,6 +182,9 @@ public class SystemHelper
 				}
 				else
 				{
+					// Add the file to media store
+					MediaScannerConnection.scanFile(context,
+							new String[]{out.get(1)}, null, null);
 					return true;
 				}
 			}
