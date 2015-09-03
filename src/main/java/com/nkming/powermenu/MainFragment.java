@@ -10,6 +10,7 @@ package com.nkming.powermenu;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +50,29 @@ public class MainFragment extends Fragment
 		return root;
 	}
 
+	@Override
+	public void onAttach(Activity activity)
+	{
+		super.onAttach(activity);
+		mAppContext = activity.getApplicationContext();
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		if (mAppContext != null)
+		{
+			LocalBroadcastManager.getInstance(mAppContext).sendBroadcast(
+					new Intent(ACTION_ON_DESTROY));
+			mAppContext = null;
+		}
+	}
+
 	private static final int SHUTDOWN_ID = 0;
 	private static final int SLEEP_ID = 1;
 	private static final int RESTART_ID = 2;
+	private static final int SCREENSHOT_ID = 3;
 
 	private static final int RESTART_NORMAL_ID = 0;
 	private static final int RESTART_RECOVERY_ID = 1;
@@ -58,6 +80,9 @@ public class MainFragment extends Fragment
 
 	private static final String LOG_TAG = Res.LOG_TAG + "."
 			+ MainFragment.class.getSimpleName();
+
+	private static final String ACTION_ON_DESTROY = Res.PACKAGE
+			+ ".ACTION_ON_DESTROY";
 
 	private void initRoot(View root)
 	{
@@ -156,6 +181,10 @@ public class MainFragment extends Fragment
 
 		case RESTART_ID:
 			onRestartClick();
+			return;
+
+		case SCREENSHOT_ID:
+			onScreenshotClick();
 			return;
 		}
 	}
@@ -287,6 +316,60 @@ public class MainFragment extends Fragment
 		dismissOtherViews(mRestartBtnBounds, mRestartBtnBounds[id]);
 		dismissOtherViews(mRestartLabels, null);
 		disableOtherButtonBounds(mRestartBtnBounds, null);
+	}
+
+	private void onScreenshotClick()
+	{
+		startReveal(mActionBtns[SCREENSHOT_ID], R.color.screenshot_bg, true,
+				new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				// App probably closed
+				if (getActivity() == null)
+				{
+					return;
+				}
+				getActivity().finish();
+				final Context appContext = getActivity().getApplicationContext();
+
+				// Wait til our activity is closed -- user pretty much are not
+				// trying to screenshot us
+				final BroadcastReceiver receiver = new BroadcastReceiver()
+				{
+					@Override
+					public void onReceive(Context context, Intent intent)
+					{
+						LocalBroadcastManager.getInstance(appContext)
+								.unregisterReceiver(this);
+						SystemHelper.screenshot(appContext,
+								new SystemHelper.SuResultListener()
+						{
+							@Override
+							public void onSuResult(boolean isSuccessful)
+							{
+								if (!isSuccessful)
+								{
+									Toast.makeText(appContext,
+											R.string.screenshot_fail,
+											Toast.LENGTH_LONG).show();
+								}
+							}
+						});
+					}
+				};
+				IntentFilter filter = new IntentFilter();
+				filter.addAction(ACTION_ON_DESTROY);
+				LocalBroadcastManager.getInstance(appContext).registerReceiver(
+						receiver, filter);
+			}
+		});
+
+		mActionBtns[SCREENSHOT_ID].setShadow(false);
+		dismissOtherViews(mActionBtnBounds, mActionBtnBounds[SCREENSHOT_ID]);
+		// Disable all click bounds
+		disableOtherButtonBounds(mActionBtnBounds, null);
 	}
 
 	/**
@@ -430,6 +513,9 @@ public class MainFragment extends Fragment
 
 		case RESTART_ID:
 			return R.id.restart_btn_bound;
+
+		case SCREENSHOT_ID:
+			return R.id.screenshot_btn_bound;
 		}
 	}
 
@@ -447,6 +533,9 @@ public class MainFragment extends Fragment
 
 		case RESTART_ID:
 			return R.id.restart_btn;
+
+		case SCREENSHOT_ID:
+			return R.id.screenshot_btn;
 		}
 	}
 
@@ -467,9 +556,10 @@ public class MainFragment extends Fragment
 		}
 	}
 
+	private Context mAppContext;
 	private Handler mHandler;
-	private View mActionBtnBounds[] = new View[3];
-	private FloatingActionButton mActionBtns[] = new FloatingActionButton[3];
+	private View mActionBtnBounds[] = new View[4];
+	private FloatingActionButton mActionBtns[] = new FloatingActionButton[4];
 	private View mRestartBtnBounds[] = new View[3];
 	private FloatingActionButton mRestartBtns[] = new FloatingActionButton[3];
 	private View mRestartLabels[] = new View[3];

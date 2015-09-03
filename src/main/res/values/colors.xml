@@ -12,4 +12,6 @@
 	<color name="restart_primary_dark">@color/md_blue_700</color>
 	<color name="sleep_primary">@color/md_green_500</color>
 	<color name="sleep_primary_dark">@color/md_green_700</color>
+	<color name="screenshot_primary">@color/md_yellow_700</color>
+	<color name="screenshot_primary_dark">@color/md_yellow_800</color>
 </resources>

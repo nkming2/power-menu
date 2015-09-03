@@ -5,6 +5,7 @@
 	<string name="shutdown_fail">Failed shutting down, not installed as system app?</string>
 	<string name="sleep_fail">Failed putting to sleep, not rooted?</string>
 	<string name="restart_fail">Failed rebooting, not installed as system app?</string>
+	<string name="screenshot_fail">Failed taking screenshot, not rooted?</string>
 	<string name="start_activity_fail">Failed starting activity, not rooted?</string>
 
 	<string name="restart_mode_normal">Reboot</string>

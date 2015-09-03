@@ -4,7 +4,7 @@
 	android:orientation="vertical"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
-	
+
 	<com.nkming.powermenu.RevealView
 		android:id="@+id/reveal"
 		android:layout_width="match_parent"
@@ -177,5 +177,28 @@
 			android:focusable="false"
 			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 			android:text="@string/restart_mode_bootloader"/>
+
+		<FrameLayout
+			android:id="@+id/screenshot_btn_bound"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/shutdown_btn_bound"
+			android:layout_alignLeft="@id/sleep_btn_bound"
+			android:paddingTop="@dimen/action_button_normal_vertical_extended_area"
+			android:paddingBottom="@dimen/action_button_normal_vertical_extended_area"
+			android:paddingLeft="@dimen/action_button_normal_horizontal_extended_area"
+			android:paddingRight="@dimen/action_button_normal_horizontal_extended_area"
+			android:clipToPadding="false">
+
+			<com.shamanland.fab.FloatingActionButton
+				android:id="@+id/screenshot_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ic_action_screenshot"
+				android:clickable="false"
+				android:focusable="false"
+				app:floatingActionButtonColor="@color/screenshot_bg"
+				app:floatingActionButtonSize="normal"/>
+		</FrameLayout>
 	</RelativeLayout>
 </FrameLayout>
