@@ -272,6 +272,24 @@ public class SystemHelper
 				PackageManager.DONT_KILL_APP);
 	}
 
+	public static boolean isBusyboxPresent()
+	{
+		String scripts[] = new String[]
+				{
+					"busybox",
+					"echo $?"
+				};
+		List<String> out = Shell.run("sh", scripts, (String[])null, true);
+		if (out == null || out.isEmpty() || !out.get(out.size() - 1).equals("0"))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
 	private static final String LOG_TAG = Res.LOG_TAG + "."
 			+ SystemHelper.class.getSimpleName();
 }

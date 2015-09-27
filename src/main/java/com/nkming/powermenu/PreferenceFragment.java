@@ -10,6 +10,7 @@ package com.nkming.powermenu;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.view.View;
 import android.widget.TextView;
 
@@ -76,6 +77,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 	private void init()
 	{
 		initAlphaPref();
+		initSoftRebootPref();
 	}
 
 	private void initAlphaPref()
@@ -91,6 +93,12 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 				v.setText(String.format("%.2f", value / 100.0f));
 			}
 		});
+	}
+
+	private void initSoftRebootPref()
+	{
+		Preference pref = findPreference(getString(R.string.pref_soft_reboot_key));
+		pref.setEnabled(SystemHelper.isBusyboxPresent());
 	}
 
 	private void onPersistentViewChange(SharedPreferences pref, String key)

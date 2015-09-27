@@ -54,5 +54,6 @@
 			android:title="@string/pref_soft_reboot_title"
 			android:summary="@string/pref_soft_reboot_summary"
 			android:defaultValue="false"
+			android:enabled="false"/>
 	</PreferenceCategory>
 </PreferenceScreen>
