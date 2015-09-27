@@ -2,11 +2,10 @@
 Android app that provides an alternative power menu in a sort of material way. **Require root**
 
 ## Screenshot
-[![Screenshot0](https://lh6.googleusercontent.com/-pTsmIJJnhk0/VSWtI2slb5I/AAAAAAAABp8/a1NzVk4EBGY/s400/100_l_2.png)](https://lh6.googleusercontent.com/-pTsmIJJnhk0/VSWtI2slb5I/AAAAAAAABp8/a1NzVk4EBGY/s0/100_l_2.png)
-[![Screenshot1](https://lh4.googleusercontent.com/-pOc4azJvdOI/VRl0v91rXHI/AAAAAAAABpI/qGRwe4SljQQ/s400/100_jb_0.jpeg)](https://lh4.googleusercontent.com/-pOc4azJvdOI/VRl0v91rXHI/AAAAAAAABpI/qGRwe4SljQQ/s0/100_jb_0.jpeg)
-[![Screenshot2](https://lh4.googleusercontent.com/-L7vsMgRH2Q0/VRl0wByC96I/AAAAAAAABpI/mgvw73sy0_Y/s400/100_jb_1.jpeg)](https://lh4.googleusercontent.com/-L7vsMgRH2Q0/VRl0wByC96I/AAAAAAAABpI/mgvw73sy0_Y/s0/100_jb_1.jpeg)
-[![Screenshot3](https://lh5.googleusercontent.com/-vKoEIc2tAjY/VRl0v9BYrnI/AAAAAAAABpI/jasIODUajnY/s400/100_jb_2.jpeg)](https://lh5.googleusercontent.com/-vKoEIc2tAjY/VRl0v9BYrnI/AAAAAAAABpI/jasIODUajnY/s0/100_jb_2.jpeg)
-[![Screenshot4](https://lh4.googleusercontent.com/-m2_RTJPG_bE/VRl0whuweXI/AAAAAAAABpI/_fvRClpbEn4/s400/100_jb_3.jpeg)](https://lh4.googleusercontent.com/-m2_RTJPG_bE/VRl0whuweXI/AAAAAAAABpI/_fvRClpbEn4/s0/100_jb_3.jpeg)
+[![Screenshot0](https://lh3.googleusercontent.com/-aioPuOYJPaw/VggulYyV0-I/AAAAAAAACkk/prxKVBGd6j8/s400-Ic42/Screenshot_2015-09-27-19-21-29.png)](https://lh3.googleusercontent.com/-aioPuOYJPaw/VggulYyV0-I/AAAAAAAACkk/prxKVBGd6j8/s0/Screenshot_2015-09-27-19-21-29.png)
+[![Screenshot1](https://lh3.googleusercontent.com/-KJJzagct1yg/VggulfoMTZI/AAAAAAAACks/f2NAaTPLqSY/s400-Ic42/Screenshot_2015-09-27-19-24-53.png)](https://lh3.googleusercontent.com/-KJJzagct1yg/VggulfoMTZI/AAAAAAAACks/f2NAaTPLqSY/s0/Screenshot_2015-09-27-19-24-53.png)
+[![Screenshot2](https://lh3.googleusercontent.com/-pYBOeTrELsk/VggumLS24CI/AAAAAAAACk0/IuTNf5tUsy4/s400-Ic42/Screenshot_2015-09-27-19-26-40.png)](https://lh3.googleusercontent.com/-pYBOeTrELsk/VggumLS24CI/AAAAAAAACk0/IuTNf5tUsy4/s0/Screenshot_2015-09-27-19-26-40.png)
+[![Screenshot3](https://lh3.googleusercontent.com/-AqfraDarzIA/Vggulbdly_I/AAAAAAAACkw/HWopVyB9wPA/s400-Ic42/Screenshot_2015-09-27-19-25-09.png)](https://lh3.googleusercontent.com/-AqfraDarzIA/Vggulbdly_I/AAAAAAAACkw/HWopVyB9wPA/s0/Screenshot_2015-09-27-19-25-09.png)
 
 ## Build dependency
 - floating-action-button (https://github.com/shamanland/floating-action-button)
