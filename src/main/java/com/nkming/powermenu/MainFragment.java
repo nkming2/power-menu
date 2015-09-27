@@ -15,6 +15,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -159,6 +160,23 @@ public class MainFragment extends Fragment
 						public void onClick(View v)
 						{
 							onRestartMenuClick(id);
+						}
+					});
+		}
+
+		SharedPreferences pref = getActivity().getSharedPreferences(getString(
+				R.string.pref_file), Context.MODE_PRIVATE);
+		if (pref.getBoolean(getString(R.string.pref_soft_reboot_key), false)
+				&& SystemHelper.isBusyboxPresent())
+		{
+			mRestartBtnBounds[RESTART_NORMAL_ID].setOnLongClickListener(
+					new View.OnLongClickListener()
+					{
+						@Override
+						public boolean onLongClick(View v)
+						{
+							onRestartNormalLongClick();
+							return true;
 						}
 					});
 		}
@@ -315,6 +333,45 @@ public class MainFragment extends Fragment
 
 		mRestartBtns[id].setShadow(false);
 		dismissOtherViews(mRestartBtnBounds, mRestartBtnBounds[id]);
+		dismissOtherViews(mRestartLabels, null);
+		disableOtherButtonBounds(mRestartBtnBounds, null);
+	}
+
+	private void onRestartNormalLongClick()
+	{
+		final Context appContext = getActivity().getApplicationContext();
+		final SystemHelper.SuResultListener l =
+				new SystemHelper.SuResultListener()
+		{
+			@Override
+			public void onSuResult(boolean isSuccessful)
+			{
+				if (!isSuccessful)
+				{
+					Toast.makeText(appContext, R.string.soft_reboot_fail,
+							Toast.LENGTH_LONG).show();
+					getActivity().finish();
+				}
+				// If succeeded, we'll get killed anyway
+			}
+		};
+		startReveal(mRestartBtns[0], R.color.restart_bg, true,
+				new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						// App probably closed
+						if (getActivity() == null)
+						{
+							return;
+						}
+						SystemHelper.killZygote(getActivity(), l);
+					}
+				});
+
+		mRestartBtns[0].setShadow(false);
+		dismissOtherViews(mRestartBtnBounds, mRestartBtnBounds[0]);
 		dismissOtherViews(mRestartLabels, null);
 		disableOtherButtonBounds(mRestartBtnBounds, null);
 	}
