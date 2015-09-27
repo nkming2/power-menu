@@ -98,7 +98,16 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 	private void initSoftRebootPref()
 	{
 		Preference pref = findPreference(getString(R.string.pref_soft_reboot_key));
-		pref.setEnabled(SystemHelper.isBusyboxPresent());
+		if (SystemHelper.isBusyboxPresent())
+		{
+			pref.setEnabled(true);
+			pref.setSummary(R.string.pref_soft_reboot_summary);
+		}
+		else
+		{
+			pref.setEnabled(false);
+			pref.setSummary(R.string.pref_soft_reboot_na_summary);
+		}
 	}
 
 	private void onPersistentViewChange(SharedPreferences pref, String key)

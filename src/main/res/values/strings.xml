@@ -53,7 +53,8 @@
 	<string name="pref_experimental_category">Experimental</string>
 
 	<string name="pref_soft_reboot_title">Enable soft reboot</string>
-	<string name="pref_soft_reboot_summary">Kill the zygote process, require busybox</string>
+	<string name="pref_soft_reboot_na_summary">Require busybox</string>
+	<string name="pref_soft_reboot_summary">Press and hold reboot button to kill the zygote process</string>
 	<string name="pref_soft_reboot_key" translatable="false">soft_reboot</string>
 
 	<string name="notification_ticker">Persistent power menu enabled</string>
