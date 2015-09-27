@@ -206,6 +206,46 @@ public class SystemHelper
 		return true;
 	}
 
+	public static boolean killZygote(Context context,
+			final SuResultListener l)
+	{
+		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
+		{
+			@Override
+			protected Boolean doInBackground(Void... params)
+			{
+				String scripts[] = new String[]
+						{
+								"busybox killall zygote",
+								"echo \"good:)\""
+						};
+				List<String> out = Shell.run("su", scripts, (String[])null, true);
+				if (out == null || out.isEmpty() || !out.get(0).equals("good:)"))
+				{
+					Log.e(LOG_TAG + ".killZygote", "su failed:\n"
+							+ ((out == null) ? "null"
+							: StrUtils.Implode("\n", out)));
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(Boolean result)
+			{
+				if (l != null)
+				{
+					l.onSuResult(result);
+				}
+			}
+		};
+		task.execute();
+		return true;
+	}
+
 	/**
 	 * Start an Activity specified by @a clz
 	 *
