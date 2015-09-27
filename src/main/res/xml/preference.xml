@@ -45,4 +45,14 @@
 				android:data="@string/data_uninstall"/>
 		</PreferenceScreen>
 	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/pref_experimental_category">
+
+		<CheckBoxPreference
+			android:key="@string/pref_soft_reboot_key"
+			android:title="@string/pref_soft_reboot_title"
+			android:summary="@string/pref_soft_reboot_summary"
+			android:defaultValue="false"
+	</PreferenceCategory>
 </PreferenceScreen>

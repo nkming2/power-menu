@@ -49,6 +49,12 @@
 	<string name="pref_uninstall_title">Pre-uninstall</string>
 	<string name="pref_uninstall_summary">Ready the app for uninstalling. Save your work before proceeding, as your device will reboot during the process</string>
 
+	<string name="pref_experimental_category">Experimental</string>
+
+	<string name="pref_soft_reboot_title">Enable soft reboot</string>
+	<string name="pref_soft_reboot_summary">Kill the zygote process, require busybox</string>
+	<string name="pref_soft_reboot_key" translatable="false">soft_reboot</string>
+
 	<string name="notification_ticker">Persistent power menu enabled</string>
 	<string name="notification_title">@string/app_name</string>
 	<string name="notification_text">Click to open config</string>
