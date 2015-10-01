@@ -10,6 +10,7 @@ Android app that provides an alternative power menu in a sort of material way. *
 ## Build dependency
 - floating-action-button (https://github.com/shamanland/floating-action-button)
 - libsuperuser (https://github.com/Chainfire/libsuperuser)
+- libutils (https://github.com/nkming2/libutils-android)
 - material-dialogs (https://github.com/afollestad/material-dialogs)
 
 ## Icon
