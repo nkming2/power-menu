@@ -42,7 +42,8 @@ public class InstallHelper
 			String scripts[] = new String[]
 					{
 						"mount -o remount,rw /system",
-						"cp " + getPackagePath(context) + " " + getInstallPath(),
+						"cat " + getPackagePath(context) + " > "
+								+ getInstallPath(),
 						"error=$?",
 						"chmod 644 " + getInstallPath(),
 						"mount -o remount,ro /system",
