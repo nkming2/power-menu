@@ -46,8 +46,7 @@ public class InstallHelper
 						"error=$?",
 						"chmod 644 " + getInstallPath(),
 						"mount -o remount,ro /system",
-						"if [ ${error}==\"0\" ]",
-						"then",
+						"if [ $error = \"0\" ]; then",
 						"  echo \"good:)\"",
 						"  reboot",
 						"fi"
@@ -90,8 +89,7 @@ public class InstallHelper
 							"rm " + getInstallPath(),
 							"error=$?",
 							"mount -o remount,ro /system",
-							"if [ ${error}==\"0\" ]",
-							"then",
+							"if [ $error = \"0\" ]; then",
 							"  echo \"good:)\"",
 							"  reboot",
 							"fi"
