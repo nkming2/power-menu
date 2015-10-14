@@ -204,7 +204,7 @@ public class InstallHelper
 		}
 		else
 		{
-			return "/system/" + Res.PACKAGE + ".apk";
+			return "/system/app/" + Res.PACKAGE + ".apk";
 		}
 	}
 }
