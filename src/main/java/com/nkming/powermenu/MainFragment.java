@@ -169,6 +169,8 @@ public class MainFragment extends Fragment
 		if (pref.getBoolean(getString(R.string.pref_soft_reboot_key), false)
 				&& SystemHelper.isBusyboxPresent())
 		{
+			mRestartBtnBounds[RESTART_NORMAL_ID].setHapticFeedbackEnabled(
+					pref.getBoolean(getString(R.string.pref_haptic_key), true));
 			mRestartBtnBounds[RESTART_NORMAL_ID].setOnLongClickListener(
 					new View.OnLongClickListener()
 					{
