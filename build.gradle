@@ -25,7 +25,7 @@ dependencies {
 	compile project(':libutils')
 	compile 'com.shamanland:fab:0.0.8'
 	compile 'com.afollestad:material-dialogs:0.7.8.0'
+	compile 'com.android.support:appcompat-v7:22.2.1'
+	compile 'com.android.support:support-v4:22.2.1'
 	compile 'eu.chainfire:libsuperuser:1.0.0.+'
-	compile 'com.android.support:appcompat-v7:22.1.1'
-	compile 'com.android.support:support-v4:22.1.1'
 }
