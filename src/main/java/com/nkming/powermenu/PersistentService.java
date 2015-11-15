@@ -57,6 +57,12 @@ public class PersistentService extends com.nkming.utils.widget.PersistentService
 		context.startService(createSetAlpha(intent, alpha));
 	}
 
+	public static void setEnableHaptic(Context context, boolean flag)
+	{
+		Intent intent = new Intent(context, PersistentService.class);
+		context.startService(createSetEnableHaptic(intent, flag));
+	}
+
 	@Override
 	protected int getLayoutId()
 	{
@@ -96,6 +102,8 @@ public class PersistentService extends com.nkming.utils.widget.PersistentService
 				R.string.pref_autohide_persistent_view_key), false));
 		getView().setAlpha(pref.getInt(getString(R.string.pref_alpha_key), 100)
 				/ 100.0f);
+		getView().setEnableHaptic(pref.getBoolean(getString(
+				R.string.pref_haptic_key), true));
 	}
 
 	@Override

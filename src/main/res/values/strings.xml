@@ -41,6 +41,10 @@
 	<string name="pref_alpha_summary">Adjust the opacity of the view</string>
 	<string name="pref_alpha_key" translatable="false">alpha</string>
 
+	<string name="pref_haptic_title">Haptic feedback</string>
+	<string name="pref_haptic_summary">Enable haptic feedback while long clicking the button</string>
+	<string name="pref_haptic_key" translatable="false">haptic</string>
+
 	<string name="pref_others_category">Others</string>
 
 	<string name="pref_hide_launcher_title">Hide launcher icon</string>
