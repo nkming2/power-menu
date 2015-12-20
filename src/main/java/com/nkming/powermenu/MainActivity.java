@@ -8,17 +8,26 @@
 
 package com.nkming.powermenu;
 
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.WindowManager;
 
 public class MainActivity extends ActionBarActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		KeyguardManager km = (KeyguardManager)getSystemService(
+				Context.KEYGUARD_SERVICE);
+		if (km.inKeyguardRestrictedInputMode())
+		{
+			onLaunchWithKeyguard();
+		}
+
 		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(this, getString(R.string.pref_file),
 				Context.MODE_PRIVATE, R.xml.preference, false);
@@ -85,6 +94,18 @@ public class MainActivity extends ActionBarActivity
 		{
 			overridePendingTransition(0, R.anim.activity_close_exit);
 		}
+	}
+
+	private static final String LOG_TAG = MainActivity.class.getCanonicalName();
+
+	/**
+	 * Called when the activity is launched with an active keyguard
+	 */
+	private void onLaunchWithKeyguard()
+	{
+		Log.d(LOG_TAG, "onLaunchWithKeyguard");
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		setTheme(R.style.AppThemeKeyguard);
 	}
 
 	private boolean mIsAnimateClose = true;

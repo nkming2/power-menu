@@ -5,6 +5,14 @@
 		<item name="android:windowTranslucentStatus">true</item>
 	</style>
 
+	<style name="AppThemeKeyguardBase19" parent="AppThemeBase19">
+		<item name="android:windowIsTranslucent">false</item>
+		<item name="android:windowShowWallpaper">true</item>
+	</style>
+
 	<style name="AppTheme" parent="AppThemeBase19">
+	</style>
+
+	<style name="AppThemeKeyguard" parent="AppThemeKeyguardBase19">
 	</style>
 </resources>
