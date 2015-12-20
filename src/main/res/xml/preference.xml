@@ -60,5 +60,12 @@
 			android:title="@string/pref_soft_reboot_title"
 			android:defaultValue="false"
 			android:enabled="false"/>
+
+		<CheckBoxPreference
+			android:key="@string/pref_override_system_menu_key"
+			android:title="@string/pref_override_system_menu_title"
+			android:summaryOff="@string/pref_override_system_menu_summary_false"
+			android:summaryOn="@string/pref_override_system_menu_summary_true"
+			android:defaultValue="false"/>
 	</PreferenceCategory>
 </PreferenceScreen>

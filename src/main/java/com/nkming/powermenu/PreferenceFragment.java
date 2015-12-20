@@ -77,6 +77,10 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 			PersistentService.setEnableHaptic(getActivity(),
 					pref.getBoolean(key, true));
 		}
+		else if (key.equals(getString(R.string.pref_override_system_menu_key)))
+		{
+			onOverrideSystemMenuChange(pref, key);
+		}
 	}
 
 	private void init()
@@ -124,6 +128,18 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 		else
 		{
 			PersistentService.stop(getActivity());
+		}
+	}
+
+	private void onOverrideSystemMenuChange(SharedPreferences pref, String key)
+	{
+		if (pref.getBoolean(key, false))
+		{
+			SystemOverrideService.startIfNecessary(getActivity());
+		}
+		else
+		{
+			SystemOverrideService.stop(getActivity());
 		}
 	}
 }

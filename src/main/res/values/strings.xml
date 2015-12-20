@@ -61,6 +61,11 @@
 	<string name="pref_soft_reboot_summary">Press and hold reboot button to kill the zygote process</string>
 	<string name="pref_soft_reboot_key" translatable="false">soft_reboot</string>
 
+	<string name="pref_override_system_menu_title">Override system power menu</string>
+	<string name="pref_override_system_menu_summary_false">Launch the system power menu while long pressing power button</string>
+	<string name="pref_override_system_menu_summary_true">Launch this app while long pressing power button. May not be compatible with all devices</string>
+	<string name="pref_override_system_menu_key" translatable="false">override_system_menu</string>
+
 	<string name="notification_ticker">Persistent power menu enabled</string>
 	<string name="notification_title">@string/app_name</string>
 	<string name="notification_text">Click to open config</string>
