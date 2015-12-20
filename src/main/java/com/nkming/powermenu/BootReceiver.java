@@ -18,5 +18,6 @@ public class BootReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent)
 	{
 		PersistentViewHelper.startIfNecessary(context);
+		SystemOverrideService.startIfNecessary(context);
 	}
 }

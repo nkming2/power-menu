@@ -63,6 +63,7 @@ public class MainActivity extends ActionBarActivity
 		else
 		{
 			PersistentViewHelper.startIfNecessary(this);
+			SystemOverrideService.startIfNecessary(this);
 		}
 	}
 

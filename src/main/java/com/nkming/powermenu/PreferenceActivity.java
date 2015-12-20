@@ -32,5 +32,6 @@ public class PreferenceActivity extends ActionBarActivity
 		}
 
 		PersistentViewHelper.startIfNecessary(this);
+		SystemOverrideService.startIfNecessary(this);
 	}
 }
