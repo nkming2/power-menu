@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
 	compileSdkVersion 23
@@ -34,5 +35,15 @@ dependencies {
 
 buildscript {
 	ext.support_version = '23.2.1'
+	ext.kotlin_version = '1.0.1'
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	}
 }
 
+repositories {
+	mavenCentral()
+}
