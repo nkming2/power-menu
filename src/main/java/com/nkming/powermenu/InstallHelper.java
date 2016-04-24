@@ -153,26 +153,19 @@ public class InstallHelper
 	 */
 	private static boolean isPrivileged(int appFlags)
 	{
-		// The name has been changed in later Android
-		String fieldVariants[] = new String[]{"FLAG_PRIVILEGED",
-				"PRIVATE_FLAG_PRIVILEGED"};
-		for (String field : fieldVariants)
+		try
 		{
-			try
-			{
-				Field fieldFLAG_PRIVILEGED =
-						ApplicationInfo.class.getDeclaredField(field);
-				fieldFLAG_PRIVILEGED.setAccessible(true);
-				int FLAG_PRIVILEGED = fieldFLAG_PRIVILEGED.getInt(null);
-				return ((appFlags & FLAG_PRIVILEGED) != 0);
-			}
-			catch (Exception e)
-			{
-				Log.e(LOG_TAG + ".isPrivileged", "Error while reflection", e);
-			}
+			Field fieldFLAG_PRIVILEGED = ApplicationInfo.class.getDeclaredField(
+					"FLAG_PRIVILEGED");
+			fieldFLAG_PRIVILEGED.setAccessible(true);
+			int FLAG_PRIVILEGED = fieldFLAG_PRIVILEGED.getInt(null);
+			return ((appFlags & FLAG_PRIVILEGED) != 0);
 		}
-		// All failed, new name again?
-		return true;
+		catch (Exception e)
+		{
+			Log.e(LOG_TAG + ".isPrivileged", "Error while reflection", e);
+			return true;
+		}
 	}
 
 	/**
