@@ -233,6 +233,10 @@ class MainFragment : Fragment()
 			LocalBroadcastManager.getInstance(_appContext)
 					.registerReceiver(receiver, IntentFilter(ACTION_ON_DESTROY))
 		})
+
+		_screenshotBtn.btn.isShadow = false
+		_dismissOtherBounds(_screenshotBtn)
+		_disableOtherBounds(null as ActionButtonMeta?)
 	}
 
 	private fun _onScreenshotSuccess(filepath: String)
