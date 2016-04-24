@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.PowerManager;
 import android.text.format.DateFormat;
 
@@ -159,8 +160,18 @@ public class SystemHelper
 	public static boolean screenshot(Context context,
 			final ScreenshotResultListener l)
 	{
-		final String filename = "Screenshot_" + DateFormat.format(
-				"yyyy-MM-dd-kk-mm-ss", new java.util.Date()) + ".png";
+		String filename_;
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+		{
+			filename_ = "Screenshot_" + DateFormat.format(
+					"yyyy-MM-dd-kk-mm-ss", new java.util.Date()) + ".png";
+		}
+		else
+		{
+			filename_ = "Screenshot_" + DateFormat.format(
+					"yyyyMMdd-kkmmss", new java.util.Date()) + ".png";
+		}
+		final String filename = filename_;
 
 		AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
 		{
