@@ -2,14 +2,19 @@ package com.nkming.powermenu
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaScannerConnection
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
@@ -18,13 +23,21 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import com.nkming.utils.graphic.BitmapLoader
+import com.nkming.utils.graphic.DrawableUtils
+import com.nkming.utils.graphic.FillSizeCalc
+import com.nkming.utils.type.Size
+import com.nkming.utils.unit.DimensionUtils
 import com.shamanland.fab.FloatingActionButton
+import java.io.File
 
 class MainFragment : Fragment()
 {
 	companion object
 	{
 		private val LOG_TAG = MainFragment::class.java.canonicalName
+
+		const val NOTIFICATION_SCREENSHOT = 1
 
 		private const val ACTION_ON_DESTROY = "${Res.PACKAGE}.ACTION_ON_DESTROY"
 	}
@@ -244,6 +257,80 @@ class MainFragment : Fragment()
 		// Add the file to media store
 		MediaScannerConnection.scanFile(_appContext, arrayOf(filepath), null,
 				null)
+
+		object: AsyncTask<String, Unit, Unit>()
+		{
+			override fun doInBackground(vararg params: String)
+			{
+				val uri = Uri.fromFile(File(filepath))
+				val iconW = _appContext.resources.getDimensionPixelSize(
+						android.R.dimen.notification_large_icon_width)
+				val iconH = _appContext.resources.getDimensionPixelSize(
+						android.R.dimen.notification_large_icon_height)
+				val thumbnail = BitmapLoader(_appContext)
+						.setTargetSize(Size(iconW, iconH))
+						.setSizeCalc(FillSizeCalc())
+						.loadUri(uri)
+
+				val dp512 = DimensionUtils.dpToPx(_appContext, 512f)
+				val bmp = BitmapLoader(_appContext)
+						.setTargetSize(Size(dp512.toInt(), (dp512 / 2f).toInt()))
+						.setSizeCalc(FillSizeCalc())
+						.loadUri(uri)
+
+				val bigLargeIcon = DrawableUtils.toBitmap(_appContext.resources
+						.getDrawable(R.drawable.ic_photo_white_24dp))
+
+				val openIntent = Intent(Intent.ACTION_VIEW)
+				openIntent.setDataAndType(uri, "image/png")
+				val openPendingIntent = PendingIntent.getActivity(_appContext,
+						0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+				val shareIntent = Intent(Intent.ACTION_SEND)
+				shareIntent.type = "image/png"
+				shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+				val shareChooser = Intent.createChooser(shareIntent,
+						_appContext.getString(
+								R.string.screenshot_notification_share_chooser))
+				val sharePendingIntent = PendingIntent.getActivity(_appContext,
+						1, shareChooser, PendingIntent.FLAG_UPDATE_CURRENT)
+
+				val deleteIntent = Intent(_appContext,
+						DeleteScreenshotService::class.java)
+				deleteIntent.putExtra(DeleteScreenshotService.EXTRA_FILEPATH,
+						filepath)
+				val deletePendingIntent = PendingIntent.getService(_appContext,
+						2, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+				val n = NotificationCompat.Builder(_appContext)
+						.setTicker(_appContext.getString(
+								R.string.screenshot_notification_ticker))
+						.setContentTitle(_appContext.getString(
+								R.string.screenshot_notification_title))
+						.setContentText(_appContext.getString(
+								R.string.screenshot_notification_text))
+						.setContentIntent(openPendingIntent)
+						.setWhen(System.currentTimeMillis())
+						.setSmallIcon(R.drawable.ic_photo_white_24dp)
+						.setLargeIcon(thumbnail)
+						.setStyle(NotificationCompat.BigPictureStyle()
+								.bigPicture(bmp)
+								.bigLargeIcon(bigLargeIcon))
+						.addAction(R.drawable.ic_screenshot_notification_share,
+								_appContext.getString(
+										R.string.screenshot_notification_share),
+								sharePendingIntent)
+						.addAction(R.drawable.ic_screenshot_notification_delete,
+								_appContext.getString(
+										R.string.screenshot_notification_delete),
+								deletePendingIntent)
+						.setOnlyAlertOnce(false)
+						.setAutoCancel(true)
+						.build()
+				val ns = NotificationManagerCompat.from(_appContext)
+				ns.notify(NOTIFICATION_SCREENSHOT, n)
+			}
+		}.execute()
 	}
 
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
