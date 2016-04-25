@@ -7,9 +7,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -278,9 +282,6 @@ class MainFragment : Fragment()
 						.setSizeCalc(FillSizeCalc())
 						.loadUri(uri)
 
-				val bigLargeIcon = DrawableUtils.toBitmap(_appContext.resources
-						.getDrawable(R.drawable.ic_photo_white_24dp))
-
 				val openIntent = Intent(Intent.ACTION_VIEW)
 				openIntent.setDataAndType(uri, "image/png")
 				val openPendingIntent = PendingIntent.getActivity(_appContext,
@@ -315,7 +316,7 @@ class MainFragment : Fragment()
 						.setLargeIcon(thumbnail)
 						.setStyle(NotificationCompat.BigPictureStyle()
 								.bigPicture(bmp)
-								.bigLargeIcon(bigLargeIcon))
+								.bigLargeIcon(_getBigLargeIcon()))
 						.addAction(R.drawable.ic_screenshot_notification_share,
 								_appContext.getString(
 										R.string.screenshot_notification_share),
@@ -329,6 +330,45 @@ class MainFragment : Fragment()
 						.build()
 				val ns = NotificationManagerCompat.from(_appContext)
 				ns.notify(NOTIFICATION_SCREENSHOT, n)
+			}
+
+			private fun _getBigLargeIcon(): Bitmap
+			{
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+				{
+					return _getBigLargeIconL()
+				}
+				else
+				{
+					return DrawableUtils.toBitmap(_appContext.resources
+							.getDrawable(R.drawable.ic_photo_white_24dp))
+				}
+			}
+
+			private fun _getBigLargeIconL(): Bitmap
+			{
+				val dp48 = DimensionUtils.dpToPx(_appContext, 48f)
+				val bmp = Bitmap.createBitmap(dp48.toInt(), dp48.toInt(),
+						Bitmap.Config.ARGB_8888)
+				val c = Canvas(bmp)
+
+				val bgPaint = Paint()
+				bgPaint.color = _appContext.resources.getColor(
+						R.color.md_blue_grey_500)
+				bgPaint.isAntiAlias = true
+				bgPaint.style = Paint.Style.FILL
+				c.drawCircle((dp48 - 1) / 2f, (dp48 - 1) / 2f, dp48 / 2f,
+						bgPaint)
+
+				val dp12 = DimensionUtils.dpToPx(_appContext, 12f)
+				val icon = DrawableUtils.toBitmap(_appContext.resources
+						.getDrawable(R.drawable.ic_photo_white_24dp))
+				val iconPaint = Paint()
+				iconPaint.isAntiAlias = true
+				iconPaint.style = Paint.Style.FILL
+				c.drawBitmap(icon, dp12, dp12, iconPaint)
+
+				return bmp
 			}
 		}.execute()
 	}
