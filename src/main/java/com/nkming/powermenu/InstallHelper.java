@@ -125,9 +125,13 @@ public class InstallHelper
 			PackageManager pm = context.getPackageManager();
 			ApplicationInfo app = pm.getApplicationInfo(Res.PACKAGE, 0);
 			boolean isSystem = ((app.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
 			{
-				return (isSystem && isPrivileged(app.flags));
+				return (isSystem && isPrivilegedM(app));
+			}
+			else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+			{
+				return (isSystem && isPrivileged(app));
 			}
 			else
 			{
@@ -148,10 +152,10 @@ public class InstallHelper
 	 * Return whether privileged flag is set in @a appFlags. since this involve
 	 * reflection, a separate method is better
 	 *
-	 * @param appFlags
+	 * @param app
 	 * @return
 	 */
-	private static boolean isPrivileged(int appFlags)
+	private static boolean isPrivileged(ApplicationInfo app)
 	{
 		try
 		{
@@ -159,7 +163,38 @@ public class InstallHelper
 					"FLAG_PRIVILEGED");
 			fieldFLAG_PRIVILEGED.setAccessible(true);
 			int FLAG_PRIVILEGED = fieldFLAG_PRIVILEGED.getInt(null);
-			return ((appFlags & FLAG_PRIVILEGED) != 0);
+			return ((app.flags & FLAG_PRIVILEGED) != 0);
+		}
+		catch (Exception e)
+		{
+			Log.e(LOG_TAG + ".isPrivileged", "Error while reflection", e);
+			return true;
+		}
+	}
+
+	/**
+	 * isPrivileged() that is compatible with M+
+	 *
+	 * @param app
+	 * @see isPrivileged()
+	 * @return
+	 */
+	private static boolean isPrivilegedM(ApplicationInfo app)
+	{
+		try
+		{
+			Field fieldPRIVATE_FLAG_PRIVILEGED =
+					ApplicationInfo.class.getDeclaredField(
+							"PRIVATE_FLAG_PRIVILEGED");
+			fieldPRIVATE_FLAG_PRIVILEGED.setAccessible(true);
+			int PRIVATE_FLAG_PRIVILEGED =
+					fieldPRIVATE_FLAG_PRIVILEGED.getInt(null);
+
+			Field fieldPrivateFlags = ApplicationInfo.class.getDeclaredField(
+					"privateFlags");
+			fieldPrivateFlags.setAccessible(true);
+			int privateFlags = fieldPrivateFlags.getInt(app);
+			return ((privateFlags & PRIVATE_FLAG_PRIVILEGED) != 0);
 		}
 		catch (Exception e)
 		{
