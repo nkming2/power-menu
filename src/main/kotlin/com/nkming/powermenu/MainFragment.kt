@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.AsyncTask
@@ -267,14 +268,7 @@ class MainFragment : Fragment()
 			override fun doInBackground(vararg params: String)
 			{
 				val uri = Uri.fromFile(File(filepath))
-				val iconW = _appContext.resources.getDimensionPixelSize(
-						android.R.dimen.notification_large_icon_width)
-				val iconH = _appContext.resources.getDimensionPixelSize(
-						android.R.dimen.notification_large_icon_height)
-				val thumbnail = BitmapLoader(_appContext)
-						.setTargetSize(Size(iconW, iconH))
-						.setSizeCalc(FillSizeCalc())
-						.loadUri(uri)
+				val thumbnail = _getThumbnail(uri)
 
 				val dp512 = DimensionUtils.dpToPx(_appContext, 512f)
 				val bmp = BitmapLoader(_appContext)
@@ -330,6 +324,44 @@ class MainFragment : Fragment()
 						.build()
 				val ns = NotificationManagerCompat.from(_appContext)
 				ns.notify(NOTIFICATION_SCREENSHOT, n)
+			}
+
+			private fun _getThumbnail(uri: Uri): Bitmap
+			{
+				val iconW = _appContext.resources.getDimensionPixelSize(
+						android.R.dimen.notification_large_icon_width)
+				val iconH = _appContext.resources.getDimensionPixelSize(
+						android.R.dimen.notification_large_icon_height)
+				val thumbnail = BitmapLoader(_appContext)
+						.setTargetSize(Size(iconW, iconH))
+						.setSizeCalc(FillSizeCalc())
+						.loadUri(uri)
+
+				val bmp = Bitmap.createBitmap(iconW, iconH,
+						Bitmap.Config.ARGB_8888)
+				val c = Canvas(bmp)
+				val paint = Paint()
+				paint.isAntiAlias = true
+				paint.isFilterBitmap = true
+				paint.style = Paint.Style.FILL
+
+				val rect = Rect(0, 0, thumbnail.width, thumbnail.height)
+				if (thumbnail.height > iconH)
+				{
+					val diff = thumbnail.height - iconH
+					val diffHalf = diff / 2
+					rect.top = diffHalf
+					rect.bottom = thumbnail.height - diffHalf
+				}
+				if (thumbnail.width > iconW)
+				{
+					val diff = thumbnail.width - iconW
+					val diffHalf = diff / 2
+					rect.left = diffHalf
+					rect.right = thumbnail.width - diffHalf
+				}
+				c.drawBitmap(thumbnail, rect, Rect(0, 0, iconW, iconH), paint)
+				return bmp
 			}
 
 			private fun _getBigLargeIcon(): Bitmap
