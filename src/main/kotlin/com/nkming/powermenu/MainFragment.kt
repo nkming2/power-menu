@@ -306,7 +306,7 @@ class MainFragment : Fragment()
 								R.string.screenshot_notification_text))
 						.setContentIntent(openPendingIntent)
 						.setWhen(System.currentTimeMillis())
-						.setSmallIcon(R.drawable.ic_action_shutdown)
+						.setSmallIcon(R.drawable.ic_photo_white_24dp)
 						.setColor(_appContext.resources.getColor(
 								R.color.color_primary))
 						.setLargeIcon(thumbnail)
