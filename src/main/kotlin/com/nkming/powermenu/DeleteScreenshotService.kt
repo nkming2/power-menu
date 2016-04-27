@@ -52,8 +52,16 @@ class DeleteScreenshotService : Service()
 		}
 		f.delete()
 
-		// Remove the file from media store
-		contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-				"${MediaStore.Images.ImageColumns.DATA}=?", arrayOf(filepath))
+		try
+		{
+			// Remove the file from media store
+			contentResolver.delete(MediaStore.Files.getContentUri("external"),
+					"${MediaStore.Files.FileColumns.DATA}=?",
+					arrayOf(f.canonicalPath))
+		}
+		catch (e: Exception)
+		{
+			Log.e("$LOG_TAG._delete", "Failed while ContentResolver.delete", e)
+		}
 	}
 }
