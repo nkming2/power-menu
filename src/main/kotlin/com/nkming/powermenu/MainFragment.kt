@@ -391,8 +391,7 @@ class MainFragment : Fragment()
 						R.color.md_blue_grey_500)
 				bgPaint.isAntiAlias = true
 				bgPaint.style = Paint.Style.FILL
-				c.drawCircle((dp48 - 1) / 2f, (dp48 - 1) / 2f, dp48 / 2f,
-						bgPaint)
+				c.drawCircle(dp48 / 2f, dp48 / 2f, dp48 / 2f, bgPaint)
 
 				val dp12 = DimensionUtils.dpToPx(_appContext, 12f)
 				val icon = DrawableUtils.toBitmap(_appContext.resources
