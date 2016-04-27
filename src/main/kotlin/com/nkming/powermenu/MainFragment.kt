@@ -7,10 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.AsyncTask
@@ -21,14 +18,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.LocalBroadcastManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import com.nkming.utils.graphic.BitmapLoader
+import com.nkming.utils.graphic.BitmapUtils
 import com.nkming.utils.graphic.DrawableUtils
 import com.nkming.utils.graphic.FillSizeCalc
 import com.nkming.utils.type.Size
@@ -223,21 +219,24 @@ class MainFragment : Fragment()
 			}
 			activity.finish()
 
-			val l = SystemHelper.ScreenshotResultListener(
+			val l = object: SystemHelper.ScreenshotResultListener
 			{
-				isSuccessful, filepath ->
+				override fun onScreenshotResult(isSuccessful: Boolean,
+						filepath: String)
 				{
 					if (isSuccessful)
 					{
-						_onScreenshotSuccess(filepath)
+						_onScreenshotSuccess(filepath, rotation)
 					}
 					else
 					{
 						Toast.makeText(_appContext, R.string.screenshot_fail,
 								Toast.LENGTH_LONG).show()
 					}
-				}()
-			})
+				}
+
+				var rotation = 0
+			}
 
 			val receiver = object: BroadcastReceiver()
 			{
@@ -245,6 +244,10 @@ class MainFragment : Fragment()
 				{
 					LocalBroadcastManager.getInstance(_appContext)
 							.unregisterReceiver(this)
+
+					val wm = _appContext.getSystemService(Context.WINDOW_SERVICE)
+							as WindowManager
+					l.rotation = wm.defaultDisplay.rotation
 					SystemHelper.screenshot(_appContext, l)
 				}
 			}
@@ -257,12 +260,84 @@ class MainFragment : Fragment()
 		_disableOtherBounds(null as ActionButtonMeta?)
 	}
 
-	private fun _onScreenshotSuccess(filepath: String)
+	private fun _onScreenshotSuccess(filepath: String, rotation: Int)
 	{
-		// Add the file to media store
-		MediaScannerConnection.scanFile(_appContext, arrayOf(filepath), null,
-				null)
+		val l = {
+			// Add the file to media store
+			MediaScannerConnection.scanFile(_appContext, arrayOf(filepath), null,
+					null)
+			_notifyScreenshot(filepath)
+		}
 
+		if (rotation == Surface.ROTATION_0
+				|| _isScreenshotOrientationGood(filepath, rotation))
+		{
+			// Do nothing
+			l()
+		}
+		else
+		{
+			_fixScreenshotOrientation(filepath, rotation, l)
+		}
+	}
+
+	/**
+	 * See if the screnshot is correctly oriented. Notice however that if the
+	 * device is rotated 180 degrees, this would fail
+	 *
+	 * @param filepath
+	 * @param rotation
+	 * @return
+	 */
+	private fun _isScreenshotOrientationGood(filepath: String, rotation: Int)
+			: Boolean
+	{
+		val size = BitmapUtils.getSize(filepath) ?: return false
+		val isScreenshotPortrait = (size.h > size.w)
+		val isDevicePortrait = (rotation == Surface.ROTATION_0
+				|| rotation == Surface.ROTATION_180)
+		return (isScreenshotPortrait == isDevicePortrait)
+	}
+
+	private fun _fixScreenshotOrientation(filepath: String, rotation: Int,
+			l: () -> Unit)
+	{
+		object: AsyncTask<Unit, Unit, Unit>()
+		{
+			override fun doInBackground(vararg params: Unit)
+			{
+				val uri = Uri.fromFile(File(filepath))
+				val bmp = BitmapLoader(_appContext)
+						.loadUri(uri)
+				val mat = Matrix()
+				mat.postRotate(_getRotationValue(rotation))
+				val rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.width,
+						bmp.height, mat, true)
+				BitmapUtils.saveBitmap(rotated, filepath,
+						Bitmap.CompressFormat.PNG, 100)
+			}
+
+			override fun onPostExecute(result: Unit)
+			{
+				l()
+			}
+
+			private fun _getRotationValue(rotation: Int): Float
+			{
+				return when (rotation)
+				{
+					Surface.ROTATION_0 -> 0f
+					Surface.ROTATION_90 -> -90f
+					Surface.ROTATION_180 -> 180f
+					Surface.ROTATION_270 -> 90f
+					else -> 0f
+				}
+			}
+		}.execute()
+	}
+
+	private fun _notifyScreenshot(filepath: String)
+	{
 		object: AsyncTask<String, Unit, Unit>()
 		{
 			override fun doInBackground(vararg params: String)
