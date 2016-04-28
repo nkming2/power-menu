@@ -65,14 +65,11 @@ class SystemOverrideService : Service()
 
 	private fun _onLongPressPowerButton()
 	{
-		_closeSystemMenu()
+		_closeSystemMenu.run()
+		// Close few more times to make sure the dialog disappear
+		_handler.postDelayed(_closeSystemMenu, 1000)
+		_handler.postDelayed(_closeSystemMenu, 2000)
 		_startActivity()
-	}
-
-	private fun _closeSystemMenu()
-	{
-		val intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
-		sendBroadcast(intent)
 	}
 
 	private fun _startActivity()
@@ -82,6 +79,12 @@ class SystemOverrideService : Service()
 				or Intent.FLAG_ACTIVITY_CLEAR_TOP)
 		startActivity(intent)
 	}
+
+	private val _closeSystemMenu = Runnable(
+	{
+		val intent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+		sendBroadcast(intent)
+	})
 
 	private val _receiver = object: BroadcastReceiver()
 	{
@@ -94,10 +97,7 @@ class SystemOverrideService : Service()
 				Log.d("$LOG_TAG.onReceive", reason)
 				if (reason == SYSTEM_DIALOG_REASON_GLOBAL_ACTIONS)
 				{
-					_handler.post(
-					{
-						_onLongPressPowerButton()
-					})
+					_onLongPressPowerButton()
 				}
 			}
 		}
