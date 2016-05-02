@@ -87,5 +87,89 @@
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 		</receiver>
+
+		<activity
+			android:name=".ShutdownActivity"
+			android:label="@string/activity_label_shutdown"
+			android:noHistory="true"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="@string/affinity_main">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name=".RebootActivity"
+			android:label="@string/activity_label_reboot"
+			android:noHistory="true"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="@string/affinity_main">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name=".RebootRecoveryActivity"
+			android:label="@string/activity_label_reboot_recovery"
+			android:noHistory="true"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="@string/affinity_main">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name=".RebootBootloaderActivity"
+			android:label="@string/activity_label_reboot_bootloader"
+			android:noHistory="true"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="@string/affinity_main">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name=".SoftRebootActivity"
+			android:label="@string/activity_label_soft_reboot"
+			android:noHistory="true"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="@string/affinity_main">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name=".SleepActivity"
+			android:label="@string/activity_label_sleep"
+			android:noHistory="true"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="@string/affinity_main">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
 	</application>
 </manifest>

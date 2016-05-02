@@ -81,4 +81,11 @@
 	<string name="affinity_main" translatable="false">com.nkming.powermenu.MAIN</string>
 	<string name="affinity_install" translatable="false">com.nkming.powermenu.INSTALL</string>
 	<string name="affinity_pref" translatable="false">com.nkming.powermenu.PREF</string>
+
+	<string name="activity_label_shutdown">Shutdown</string>
+	<string name="activity_label_reboot">Reboot</string>
+	<string name="activity_label_reboot_recovery">Reboot(Recovery)</string>
+	<string name="activity_label_reboot_bootloader">Reboot(Bootloader)</string>
+	<string name="activity_label_soft_reboot">Soft Reboot</string>
+	<string name="activity_label_sleep">Sleep</string>
 </resources>
