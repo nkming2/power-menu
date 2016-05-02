@@ -88,4 +88,5 @@
 	<string name="activity_label_reboot_bootloader">Reboot(Bootloader)</string>
 	<string name="activity_label_soft_reboot">Soft Reboot</string>
 	<string name="activity_label_sleep">Sleep</string>
+	<string name="activity_label_screenshot">Screenshot</string>
 </resources>

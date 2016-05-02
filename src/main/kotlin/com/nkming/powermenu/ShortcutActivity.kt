@@ -1,7 +1,9 @@
 package com.nkming.powermenu
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.WindowManager
 import android.widget.Toast
 
 class ShutdownActivity : AppCompatActivity()
@@ -95,6 +97,35 @@ class SleepActivity : AppCompatActivity()
 				Toast.makeText(appContext, R.string.sleep_fail,
 						Toast.LENGTH_LONG).show()
 			}
+		})
+		finish()
+	}
+}
+
+class ScreenshotActivity : AppCompatActivity()
+{
+	override fun onCreate(savedInstanceState: Bundle?)
+	{
+		super.onCreate(savedInstanceState)
+		val appContext = applicationContext
+		val wm = appContext.getSystemService(Context.WINDOW_SERVICE)
+				as WindowManager
+		val rotation = wm.defaultDisplay.rotation
+		val screenshotHandler = ScreenshotHandler(appContext)
+		SystemHelper.screenshot(appContext,
+		{
+			isSuccessful, filepath -> (
+			{
+				if (isSuccessful)
+				{
+					screenshotHandler.onScreenshotSuccess(filepath!!, rotation)
+				}
+				else
+				{
+					Toast.makeText(appContext, R.string.screenshot_fail,
+							Toast.LENGTH_LONG).show()
+				}
+			}())
 		})
 		finish()
 	}

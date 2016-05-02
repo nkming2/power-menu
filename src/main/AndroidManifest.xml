@@ -171,5 +171,19 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+
+		<activity
+			android:name=".ScreenshotActivity"
+			android:label="@string/activity_label_screenshot"
+			android:noHistory="true"
+			android:excludeFromRecents="true"
+			android:theme="@android:style/Theme.NoDisplay"
+			android:taskAffinity="@string/affinity_main">
+
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
 	</application>
 </manifest>
