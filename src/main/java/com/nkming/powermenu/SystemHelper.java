@@ -182,7 +182,7 @@ public class SystemHelper
 						{
 							"save_dir=${EXTERNAL_STORAGE}/Pictures/Screenshots",
 							"mkdir -p ${save_dir}",
-							"system/bin/screencap -p ${save_dir}/" + filename,
+							"/system/bin/screencap -p ${save_dir}/" + filename,
 							"echo \"good:)\"",
 							"echo ${save_dir}/" + filename
 						};
