@@ -19,6 +19,7 @@ import android.text.format.DateFormat;
 
 import com.nkming.utils.str.StrUtils;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -193,6 +194,15 @@ public class SystemHelper
 					Log.e(LOG_TAG + ".screenshot", "su failed:\n"
 							+ ((out == null) ? "null"
 									: StrUtils.Implode("\n", out)));
+					return false;
+				}
+
+				// Even the command returned normally doesn't mean that the
+				// screenshot is accessible (cause by mount namespace separation
+				// in supersu)
+				String filepath = out.get(1);
+				if (!new File(filepath).exists())
+				{
 					return false;
 				}
 				else
