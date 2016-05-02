@@ -12,4 +12,6 @@ public class Res extends com.nkming.utils.Res
 {
 	public static final String PACKAGE = "com.nkming.powermenu";
 	public static final String LOG_TAG = PACKAGE;
+
+	public static final int NOTIF_SCREENSHOT = 1;
 }

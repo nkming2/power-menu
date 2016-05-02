@@ -30,7 +30,7 @@ class DeleteScreenshotService : Service()
 
 		// Remove notification
 		val ns = NotificationManagerCompat.from(this)
-		ns.cancel(MainFragment.NOTIFICATION_SCREENSHOT)
+		ns.cancel(Res.NOTIF_SCREENSHOT)
 
 		stopSelf()
 		return START_NOT_STICKY

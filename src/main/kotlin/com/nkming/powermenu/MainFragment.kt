@@ -2,43 +2,29 @@ package com.nkming.powermenu
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.*
-import android.media.MediaScannerConnection
-import android.net.Uri
-import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.LocalBroadcastManager
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
-import com.nkming.utils.graphic.BitmapLoader
-import com.nkming.utils.graphic.BitmapUtils
-import com.nkming.utils.graphic.DrawableUtils
-import com.nkming.utils.graphic.FillSizeCalc
-import com.nkming.utils.type.Size
-import com.nkming.utils.unit.DimensionUtils
 import com.shamanland.fab.FloatingActionButton
-import java.io.File
 
 class MainFragment : Fragment()
 {
 	companion object
 	{
 		private val LOG_TAG = MainFragment::class.java.canonicalName
-
-		const val NOTIFICATION_SCREENSHOT = 1
 
 		private const val ACTION_ON_DESTROY = "${Res.PACKAGE}.ACTION_ON_DESTROY"
 	}
@@ -226,7 +212,8 @@ class MainFragment : Fragment()
 				{
 					if (isSuccessful)
 					{
-						_onScreenshotSuccess(filepath!!, rotation)
+						_screenshotHandler.onScreenshotSuccess(filepath!!,
+								rotation)
 					}
 					else
 					{
@@ -258,228 +245,6 @@ class MainFragment : Fragment()
 		_screenshotBtn.btn.isShadow = false
 		_dismissOtherBounds(_screenshotBtn)
 		_disableOtherBounds(null as ActionButtonMeta?)
-	}
-
-	private fun _onScreenshotSuccess(filepath: String, rotation: Int)
-	{
-		val l = {
-			// Add the file to media store
-			MediaScannerConnection.scanFile(_appContext, arrayOf(filepath), null,
-					null)
-			_notifyScreenshot(filepath)
-		}
-
-		if (rotation == Surface.ROTATION_0
-				|| _isScreenshotOrientationGood(filepath, rotation))
-		{
-			// Do nothing
-			l()
-		}
-		else
-		{
-			_fixScreenshotOrientation(filepath, rotation, l)
-		}
-	}
-
-	/**
-	 * See if the screnshot is correctly oriented. Notice however that if the
-	 * device is rotated 180 degrees, this would fail
-	 *
-	 * @param filepath
-	 * @param rotation
-	 * @return
-	 */
-	private fun _isScreenshotOrientationGood(filepath: String, rotation: Int)
-			: Boolean
-	{
-		val size = BitmapUtils.getSize(filepath) ?: return false
-		val isScreenshotPortrait = (size.h > size.w)
-		val isDevicePortrait = (rotation == Surface.ROTATION_0
-				|| rotation == Surface.ROTATION_180)
-		return (isScreenshotPortrait == isDevicePortrait)
-	}
-
-	private fun _fixScreenshotOrientation(filepath: String, rotation: Int,
-			l: () -> Unit)
-	{
-		object: AsyncTask<Unit, Unit, Unit>()
-		{
-			override fun doInBackground(vararg params: Unit)
-			{
-				val uri = Uri.fromFile(File(filepath))
-				val bmp = BitmapLoader(_appContext)
-						.loadUri(uri)
-				val mat = Matrix()
-				mat.postRotate(_getRotationValue(rotation))
-				val rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.width,
-						bmp.height, mat, true)
-				BitmapUtils.saveBitmap(rotated, filepath,
-						Bitmap.CompressFormat.PNG, 100)
-			}
-
-			override fun onPostExecute(result: Unit)
-			{
-				l()
-			}
-
-			private fun _getRotationValue(rotation: Int): Float
-			{
-				return when (rotation)
-				{
-					Surface.ROTATION_0 -> 0f
-					Surface.ROTATION_90 -> -90f
-					Surface.ROTATION_180 -> 180f
-					Surface.ROTATION_270 -> 90f
-					else -> 0f
-				}
-			}
-		}.execute()
-	}
-
-	private fun _notifyScreenshot(filepath: String)
-	{
-		object: AsyncTask<String, Unit, Unit>()
-		{
-			override fun doInBackground(vararg params: String)
-			{
-				val uri = Uri.fromFile(File(filepath))
-				val thumbnail = _getThumbnail(uri)
-
-				val dp512 = DimensionUtils.dpToPx(_appContext, 512f)
-				val bmp = BitmapLoader(_appContext)
-						.setTargetSize(Size(dp512.toInt(), (dp512 / 2f).toInt()))
-						.setSizeCalc(FillSizeCalc())
-						.loadUri(uri)
-
-				val openIntent = Intent(Intent.ACTION_VIEW)
-				openIntent.setDataAndType(uri, "image/png")
-				val openPendingIntent = PendingIntent.getActivity(_appContext,
-						0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-				val shareIntent = Intent(Intent.ACTION_SEND)
-				shareIntent.type = "image/png"
-				shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-				val shareChooser = Intent.createChooser(shareIntent,
-						_appContext.getString(
-								R.string.screenshot_notification_share_chooser))
-				val sharePendingIntent = PendingIntent.getActivity(_appContext,
-						1, shareChooser, PendingIntent.FLAG_UPDATE_CURRENT)
-
-				val deleteIntent = Intent(_appContext,
-						DeleteScreenshotService::class.java)
-				deleteIntent.putExtra(DeleteScreenshotService.EXTRA_FILEPATH,
-						filepath)
-				val deletePendingIntent = PendingIntent.getService(_appContext,
-						2, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-				val n = NotificationCompat.Builder(_appContext)
-						.setTicker(_appContext.getString(
-								R.string.screenshot_notification_ticker))
-						.setContentTitle(_appContext.getString(
-								R.string.screenshot_notification_title))
-						.setContentText(_appContext.getString(
-								R.string.screenshot_notification_text))
-						.setContentIntent(openPendingIntent)
-						.setWhen(System.currentTimeMillis())
-						.setSmallIcon(R.drawable.ic_photo_white_24dp)
-						.setColor(_appContext.resources.getColor(
-								R.color.color_primary))
-						.setLargeIcon(thumbnail)
-						.setStyle(NotificationCompat.BigPictureStyle()
-								.bigPicture(bmp)
-								.bigLargeIcon(_getBigLargeIcon()))
-						.addAction(R.drawable.ic_screenshot_notification_share,
-								_appContext.getString(
-										R.string.screenshot_notification_share),
-								sharePendingIntent)
-						.addAction(R.drawable.ic_screenshot_notification_delete,
-								_appContext.getString(
-										R.string.screenshot_notification_delete),
-								deletePendingIntent)
-						.setOnlyAlertOnce(false)
-						.setAutoCancel(true)
-						.setLocalOnly(true)
-						.build()
-				val ns = NotificationManagerCompat.from(_appContext)
-				ns.notify(NOTIFICATION_SCREENSHOT, n)
-			}
-
-			private fun _getThumbnail(uri: Uri): Bitmap
-			{
-				val iconW = _appContext.resources.getDimensionPixelSize(
-						android.R.dimen.notification_large_icon_width)
-				val iconH = _appContext.resources.getDimensionPixelSize(
-						android.R.dimen.notification_large_icon_height)
-				val thumbnail = BitmapLoader(_appContext)
-						.setTargetSize(Size(iconW, iconH))
-						.setSizeCalc(FillSizeCalc())
-						.loadUri(uri)
-
-				val bmp = Bitmap.createBitmap(iconW, iconH,
-						Bitmap.Config.ARGB_8888)
-				val c = Canvas(bmp)
-				val paint = Paint()
-				paint.isAntiAlias = true
-				paint.isFilterBitmap = true
-				paint.style = Paint.Style.FILL
-
-				val rect = Rect(0, 0, thumbnail.width, thumbnail.height)
-				if (thumbnail.height > iconH)
-				{
-					val diff = thumbnail.height - iconH
-					val diffHalf = diff / 2
-					rect.top = diffHalf
-					rect.bottom = thumbnail.height - diffHalf
-				}
-				if (thumbnail.width > iconW)
-				{
-					val diff = thumbnail.width - iconW
-					val diffHalf = diff / 2
-					rect.left = diffHalf
-					rect.right = thumbnail.width - diffHalf
-				}
-				c.drawBitmap(thumbnail, rect, Rect(0, 0, iconW, iconH), paint)
-				return bmp
-			}
-
-			private fun _getBigLargeIcon(): Bitmap
-			{
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-				{
-					return _getBigLargeIconL()
-				}
-				else
-				{
-					return DrawableUtils.toBitmap(_appContext.resources
-							.getDrawable(R.drawable.ic_photo_white_24dp))
-				}
-			}
-
-			private fun _getBigLargeIconL(): Bitmap
-			{
-				val dp48 = DimensionUtils.dpToPx(_appContext, 48f)
-				val bmp = Bitmap.createBitmap(dp48.toInt(), dp48.toInt(),
-						Bitmap.Config.ARGB_8888)
-				val c = Canvas(bmp)
-
-				val bgPaint = Paint()
-				bgPaint.color = _appContext.resources.getColor(
-						R.color.md_blue_grey_500)
-				bgPaint.isAntiAlias = true
-				bgPaint.style = Paint.Style.FILL
-				c.drawCircle(dp48 / 2f, dp48 / 2f, dp48 / 2f, bgPaint)
-
-				val dp12 = DimensionUtils.dpToPx(_appContext, 12f)
-				val icon = DrawableUtils.toBitmap(_appContext.resources
-						.getDrawable(R.drawable.ic_photo_white_24dp))
-				val iconPaint = Paint()
-				iconPaint.isAntiAlias = true
-				iconPaint.style = Paint.Style.FILL
-				c.drawBitmap(icon, dp12, dp12, iconPaint)
-
-				return bmp
-			}
-		}.execute()
 	}
 
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
@@ -719,6 +484,7 @@ class MainFragment : Fragment()
 
 	private val _appContext by lazy({activity.applicationContext})
 	private val _handler by lazy({Handler()})
+	private val _screenshotHandler by lazy({ScreenshotHandler(_appContext)})
 
 	private lateinit var _root: View
 	private val _actionBtns by lazy(
