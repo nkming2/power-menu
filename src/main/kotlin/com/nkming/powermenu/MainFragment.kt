@@ -222,11 +222,11 @@ class MainFragment : Fragment()
 			val l = object: SystemHelper.ScreenshotResultListener
 			{
 				override fun onScreenshotResult(isSuccessful: Boolean,
-						filepath: String)
+						filepath: String?)
 				{
 					if (isSuccessful)
 					{
-						_onScreenshotSuccess(filepath, rotation)
+						_onScreenshotSuccess(filepath!!, rotation)
 					}
 					else
 					{
