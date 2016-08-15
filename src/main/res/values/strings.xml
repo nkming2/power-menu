@@ -3,11 +3,12 @@
 	<string name="app_pref_name">Power Menu Config</string>
 
 	<string name="shutdown_fail">Failed shutting down, not installed as system app?</string>
-	<string name="sleep_fail">Failed putting to sleep, not rooted?</string>
+	<string name="sleep_fail">Failed putting to sleep, please report</string>
 	<string name="restart_fail">Failed rebooting, not installed as system app?</string>
-	<string name="soft_reboot_fail">Failed soft rebooting, not rooted?</string>
+	<string name="soft_reboot_fail">Failed soft rebooting, please report</string>
 	<string name="screenshot_fail">Failed taking screenshot, try disabling "mount namespace separation" in SuperSU</string>
-	<string name="start_activity_fail">Failed starting activity, not rooted?</string>
+	<string name="start_activity_fail">Failed starting activity, please report</string>
+	<string name="su_failed">Failed running su command, not rooted?</string>
 
 	<string name="restart_mode_normal">Reboot</string>
 	<string name="restart_mode_recovery">Recovery</string>

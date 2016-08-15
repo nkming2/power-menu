@@ -119,12 +119,15 @@ class MainFragment : Fragment()
 			{
 				return@_startReveal
 			}
-			if (!SystemHelper.shutdown(activity))
+			SystemHelper.shutdown(_appContext,
 			{
-				Toast.makeText(activity, R.string.shutdown_fail,
-						Toast.LENGTH_LONG).show()
-				activity.finish()
-			}
+				if (!it)
+				{
+					Toast.makeText(_appContext, R.string.shutdown_fail,
+							Toast.LENGTH_LONG).show()
+					activity?.finish()
+				}
+			})
 		})
 
 		_shutdownBtn.btn.isShadow = false
@@ -205,24 +208,18 @@ class MainFragment : Fragment()
 			}
 			activity.finish()
 
-			val l = object: SystemHelper.ScreenshotResultListener
+			var rotation = 0
+			val l = fun (isSuccessful: Boolean, filepath: String?)
 			{
-				override fun onScreenshotResult(isSuccessful: Boolean,
-						filepath: String?)
+				if (isSuccessful)
 				{
-					if (isSuccessful)
-					{
-						_screenshotHandler.onScreenshotSuccess(filepath!!,
-								rotation)
-					}
-					else
-					{
-						Toast.makeText(_appContext, R.string.screenshot_fail,
-								Toast.LENGTH_LONG).show()
-					}
+					_screenshotHandler.onScreenshotSuccess(filepath!!, rotation)
 				}
-
-				var rotation = 0
+				else
+				{
+					Toast.makeText(_appContext, R.string.screenshot_fail,
+							Toast.LENGTH_LONG).show()
+				}
 			}
 
 			val receiver = object: BroadcastReceiver()
@@ -234,7 +231,7 @@ class MainFragment : Fragment()
 
 					val wm = _appContext.getSystemService(Context.WINDOW_SERVICE)
 							as WindowManager
-					l.rotation = wm.defaultDisplay.rotation
+					rotation = wm.defaultDisplay.rotation
 					SystemHelper.screenshot(_appContext, l)
 				}
 			}
@@ -257,12 +254,15 @@ class MainFragment : Fragment()
 			{
 				return@_startReveal
 			}
-			if (!SystemHelper.reboot(rebootMode, activity))
+			SystemHelper.reboot(rebootMode, _appContext,
 			{
-				Toast.makeText(activity, R.string.restart_fail,
-						Toast.LENGTH_LONG).show()
-				activity.finish()
-			}
+				if (!it)
+				{
+					Toast.makeText(_appContext, R.string.restart_fail,
+							Toast.LENGTH_LONG).show()
+					activity?.finish()
+				}
+			})
 		})
 
 		meta.btn.isShadow = false
@@ -278,16 +278,16 @@ class MainFragment : Fragment()
 
 	private fun _onRestartNormalLongClick()
 	{
-		val l = SystemHelper.SuResultListener(
+		val l = fun (isSuccessful: Boolean)
 		{
-			if (!it)
+			if (!isSuccessful)
 			{
 				Toast.makeText(_appContext, R.string.soft_reboot_fail,
 						Toast.LENGTH_LONG).show();
 				activity?.finish();
 			}
 			// If succeeded, we'll get killed anyway
-		})
+		}
 		_startReveal(_restartNormalBtn.btn, R.color.restart_bg, true,
 		{
 			// App probably closed

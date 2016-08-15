@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity()
 	override fun onStart()
 	{
 		super.onStart()
-		if (PersistentService.isRunning())
+		if (com.nkming.utils.widget.PersistentService.isRunning())
 		{
 			PersistentService.hideView(this)
 		}
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity()
 	override fun onStop()
 	{
 		super.onStop()
-		if (PersistentService.isRunning())
+		if (com.nkming.utils.widget.PersistentService.isRunning())
 		{
 			PersistentService.showView(this)
 		}

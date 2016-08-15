@@ -12,11 +12,14 @@ class ShutdownActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 		val appContext = applicationContext
-		if (!SystemHelper.shutdown(appContext))
+		SystemHelper.shutdown(appContext,
 		{
-			Toast.makeText(appContext, R.string.shutdown_fail, Toast.LENGTH_LONG)
-					.show()
-		}
+			if (!it)
+			{
+				Toast.makeText(appContext, R.string.shutdown_fail,
+						Toast.LENGTH_LONG).show()
+			}
+		})
 		finish()
 	}
 }
@@ -27,11 +30,14 @@ class RebootActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 		val appContext = applicationContext
-		if (!SystemHelper.reboot(SystemHelper.RebootMode.NORMAL, appContext))
+		SystemHelper.reboot(SystemHelper.RebootMode.NORMAL, appContext,
 		{
-			Toast.makeText(appContext, R.string.restart_fail, Toast.LENGTH_LONG)
-					.show()
-		}
+			if (!it)
+			{
+				Toast.makeText(appContext, R.string.restart_fail,
+						Toast.LENGTH_LONG).show()
+			}
+		})
 		finish()
 	}
 }
@@ -42,11 +48,14 @@ class RebootRecoveryActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 		val appContext = applicationContext
-		if (!SystemHelper.reboot(SystemHelper.RebootMode.RECOVERY, appContext))
+		SystemHelper.reboot(SystemHelper.RebootMode.RECOVERY, appContext,
 		{
-			Toast.makeText(appContext, R.string.restart_fail, Toast.LENGTH_LONG)
-					.show()
-		}
+			if (!it)
+			{
+				Toast.makeText(appContext, R.string.restart_fail,
+						Toast.LENGTH_LONG).show()
+			}
+		})
 		finish()
 	}
 }
@@ -57,11 +66,14 @@ class RebootBootloaderActivity : AppCompatActivity()
 	{
 		super.onCreate(savedInstanceState)
 		val appContext = applicationContext
-		if (!SystemHelper.reboot(SystemHelper.RebootMode.BOOTLOADER, appContext))
+		SystemHelper.reboot(SystemHelper.RebootMode.BOOTLOADER, appContext,
 		{
-			Toast.makeText(appContext, R.string.restart_fail, Toast.LENGTH_LONG)
-					.show()
-		}
+			if (!it)
+			{
+				Toast.makeText(appContext, R.string.restart_fail,
+						Toast.LENGTH_LONG).show()
+			}
+		})
 		finish()
 	}
 }
@@ -114,18 +126,18 @@ class ScreenshotActivity : AppCompatActivity()
 		val screenshotHandler = ScreenshotHandler(appContext)
 		SystemHelper.screenshot(appContext,
 		{
-			isSuccessful, filepath -> (
-			{
+			isSuccessful, filepath ->
+			run{
 				if (isSuccessful)
 				{
-					screenshotHandler.onScreenshotSuccess(filepath!!, rotation)
+					screenshotHandler.onScreenshotSuccess(filepath, rotation)
 				}
 				else
 				{
 					Toast.makeText(appContext, R.string.screenshot_fail,
 							Toast.LENGTH_LONG).show()
 				}
-			}())
+			}
 		})
 		finish()
 	}
