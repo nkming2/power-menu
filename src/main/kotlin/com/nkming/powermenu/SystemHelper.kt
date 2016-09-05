@@ -248,7 +248,20 @@ object SystemHelper
 	private fun rebootSvc(mode: RebootMode, context: Context,
 			l: (isSuccessful: Boolean) -> Unit)
 	{
-		val scripts = listOf("svc power reboot $mode")
+		val modeStr = when (mode)
+		{
+			RebootMode.NORMAL -> ""
+			RebootMode.RECOVERY -> "recovery"
+			RebootMode.BOOTLOADER -> "bootloader"
+			else ->
+			{
+				Log.e("$LOG_TAG.reboot", "Unknown mode")
+				l(true)
+				return
+			}
+		}
+
+		val scripts = listOf("svc power reboot $modeStr")
 		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output -> output.isEmpty()},
 				onSuccess = {exitCode, output -> l(true)},
