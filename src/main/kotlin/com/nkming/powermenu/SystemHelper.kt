@@ -215,32 +215,32 @@ object SystemHelper
 				RebootMode.NORMAL ->
 				{
 					pm.reboot(null)
-					l(false)
+					l(true)
 				}
 
 				RebootMode.RECOVERY ->
 				{
 					pm.reboot("recovery")
-					l(false)
+					l(true)
 				}
 
 				RebootMode.BOOTLOADER ->
 				{
 					pm.reboot("bootloader")
-					l(false)
+					l(true)
 				}
 
 				else ->
 				{
 					Log.e("$LOG_TAG.reboot", "Unknown mode")
-					l(true)
+					l(false)
 				}
 			}
 		}
 		catch (e: Exception)
 		{
 			Log.e("$LOG_TAG.reboot", "Error while invoking reboot", e)
-			l(true)
+			l(false)
 		}
 	}
 
@@ -256,7 +256,7 @@ object SystemHelper
 			else ->
 			{
 				Log.e("$LOG_TAG.reboot", "Unknown mode")
-				l(true)
+				l(false)
 				return
 			}
 		}
