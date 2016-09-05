@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.Handler
 import android.os.PowerManager
 import android.text.format.DateFormat
-import android.widget.Toast
 import eu.chainfire.libsuperuser.Shell
 import java.io.File
 
@@ -24,7 +22,6 @@ object SystemHelper
 	@JvmStatic
 	fun shutdown(context: Context, l: (isSuccessful: Boolean) -> Unit)
 	{
-		setContext(context)
 		return try
 		{
 			val fieldACTION_REQUEST_SHUTDOWN = Intent::class.java.getDeclaredField(
@@ -61,9 +58,8 @@ object SystemHelper
 	@JvmStatic
 	fun sleep(context: Context, l: (isSuccessful: Boolean) -> Unit)
 	{
-		setContext(context)
 		val scripts = listOf("input keyevent 26")
-		doSuCommand(scripts,
+		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isEmpty())},
 				onSuccess = {exitCode, output -> l(true)},
@@ -74,7 +70,6 @@ object SystemHelper
 	fun reboot(mode: RebootMode, context: Context,
 			l: (isSuccessful: Boolean) -> Unit)
 	{
-		setContext(context)
 		try
 		{
 			val pm = context.getSystemService(Context.POWER_SERVICE)
@@ -117,7 +112,6 @@ object SystemHelper
 	fun screenshot(context: Context,
 			l: (isSuccessful: Boolean, filepath: String) -> Unit)
 	{
-		setContext(context)
 		val filename = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
 		{
 			"Screenshot_${DateFormat.format("yyyy-MM-dd-kk-mm-ss",
@@ -135,7 +129,7 @@ object SystemHelper
 				"/system/bin/screencap -p \${save_dir}/$filename",
 				"echo \":)\"",
 				"echo \${save_dir}/$filename")
-		doSuCommand(scripts,
+		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isNotEmpty()
 								&& output[0] == ":)")},
@@ -150,9 +144,8 @@ object SystemHelper
 	@JvmStatic
 	fun killZygote(context: Context, l: (isSuccessful: Boolean) -> Unit)
 	{
-		setContext(context)
 		val scripts = listOf("busybox killall zygote")
-		doSuCommand(scripts,
+		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isEmpty())},
 				onSuccess = {exitCode, output -> l(true)},
@@ -170,10 +163,9 @@ object SystemHelper
 	fun startActivity(context: Context, clz: Class<*>,
 			l: (isSuccessful: Boolean) -> Unit)
 	{
-		setContext(context)
 		val scripts = listOf(
 				"am start -n ${clz.`package`.name}/${clz.canonicalName}")
-		doSuCommand(scripts,
+		SuHelper.doSuCommand(context, scripts,
 				// There's no obvious way to distinguish error
 				successWhere = {exitCode, output ->
 						(!output.any{it.contains("error", ignoreCase = true)})},
@@ -193,7 +185,6 @@ object SystemHelper
 	fun setEnableActivity(context: Context, activityClz: Class<*>,
 			isEnable: Boolean)
 	{
-		setContext(context)
 		val pm = context.packageManager
 		val com = ComponentName(context, activityClz)
 		val newState = if (isEnable)
@@ -213,104 +204,5 @@ object SystemHelper
 		return out != null && out.isNotEmpty() && out.last() == "0"
 	}
 
-	private fun doSuCommand(scripts: List<String>,
-			successWhere: ((exitCode: Int, output: List<String>) -> Boolean) = {
-					exitCode, output -> exitCode >= 0},
-			onSuccess: ((exitCode: Int, output: List<String>) -> Unit)? = null,
-			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
-	{
-		if (!_su.isRunning)
-		{
-			_handler.postDelayed({doSuCommand(scripts, successWhere, onSuccess,
-					onFailure)}, 200)
-		}
-		else
-		{
-			_doSuCommand(scripts, successWhere, onSuccess, onFailure)
-		}
-	}
-
-	private fun _doSuCommand(scripts: List<String>,
-			successWhere: ((exitCode: Int, output: List<String>) -> Boolean) = {
-				exitCode, output -> exitCode >= 0},
-			onSuccess: ((exitCode: Int, output: List<String>) -> Unit)? = null,
-			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
-	{
-		_su.addCommand(scripts, 0, {commandCode, exitCode, output ->
-			run{
-				if (exitCode == Shell.OnCommandResultListener.WATCHDOG_EXIT)
-				{
-					Log.e("$LOG_TAG._doSuCommand", "Watchdog exception")
-					_su.kill()
-					_su = buildSuSession()
-					_handler.postDelayed({doSuCommand(scripts, successWhere,
-							onSuccess, onFailure)}, 200)
-				}
-				else if (!successWhere(exitCode, output))
-				{
-					Log.e("$LOG_TAG._doSuCommand",
-							"Failed($exitCode) executing\nCommand: ${scripts.joinToString("\n")}\nOutput: ${output.joinToString("\n")}")
-					onFailure?.invoke(exitCode, output)
-				}
-				else
-				{
-					onSuccess?.invoke(exitCode, output)
-				}
-			}
-		})
-	}
-
-	private fun buildSuSession(): Shell.Interactive
-	{
-		Log.d(LOG_TAG, "buildSuSession()")
-		_isSuStarting = true
-		return Shell.Builder()
-				.useSU()
-				.setWantSTDERR(true)
-				.setWatchdogTimeout(5)
-				.setMinimalLogging(true)
-				.open({commandCode, exitCode, output ->
-				run{
-					// FIXME not being called?
-					Log.d("$LOG_TAG.buildSuSession",
-							"Shell start status: $exitCode")
-					if (exitCode
-							!= Shell.OnCommandResultListener.SHELL_RUNNING)
-					{
-						Log.e("$LOG_TAG.init",
-								"Failed opening root shell (exitCode: $exitCode)")
-						if (_appContext != null)
-						{
-							Toast.makeText(_appContext, R.string.su_failed,
-									Toast.LENGTH_LONG).show()
-						}
-					}
-					_isSuStarting = false
-				}})
-	}
-
-	private fun setContext(context: Context)
-	{
-		if (_appContext == null)
-		{
-			_appContext = context.applicationContext
-		}
-	}
-
 	private val LOG_TAG = SystemHelper::class.java.canonicalName
-
-	private val _handler = Handler()
-	private var _appContext: Context? = null
-
-	private var _su: Shell.Interactive = buildSuSession()
-		get()
-		{
-			if (!field.isRunning && !_isSuStarting)
-			{
-				field = buildSuSession()
-			}
-			return field
-		}
-
-	private var _isSuStarting: Boolean = false
 }
