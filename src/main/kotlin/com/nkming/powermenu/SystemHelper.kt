@@ -22,30 +22,13 @@ object SystemHelper
 	@JvmStatic
 	fun shutdown(context: Context, l: (isSuccessful: Boolean) -> Unit)
 	{
-		return try
+		if (InstallHelper.isSystemApp(context))
 		{
-			val fieldACTION_REQUEST_SHUTDOWN = Intent::class.java.getDeclaredField(
-					"ACTION_REQUEST_SHUTDOWN")
-			fieldACTION_REQUEST_SHUTDOWN.isAccessible = true
-			val ACTION_REQUEST_SHUTDOWN = fieldACTION_REQUEST_SHUTDOWN.get(null)
-					as String
-
-			val fieldEXTRA_KEY_CONFIRM = Intent::class.java.getDeclaredField(
-					"EXTRA_KEY_CONFIRM")
-			fieldACTION_REQUEST_SHUTDOWN.isAccessible = true
-			val EXTRA_KEY_CONFIRM = fieldEXTRA_KEY_CONFIRM.get(null) as String
-
-			val shutdown = Intent(ACTION_REQUEST_SHUTDOWN)
-			shutdown.putExtra(EXTRA_KEY_CONFIRM, false)
-			shutdown.flags = (Intent.FLAG_ACTIVITY_CLEAR_TASK
-					or Intent.FLAG_ACTIVITY_NEW_TASK)
-			context.startActivity(shutdown)
-			l(true)
+			shutdownSystem(context, l)
 		}
-		catch (e: Exception)
+		else
 		{
-			Log.e("$LOG_TAG.shutdown", "Error while reflection", e)
-			l(false)
+			shutdownSvc(context, l)
 		}
 	}
 
@@ -70,41 +53,13 @@ object SystemHelper
 	fun reboot(mode: RebootMode, context: Context,
 			l: (isSuccessful: Boolean) -> Unit)
 	{
-		try
+		if (InstallHelper.isSystemApp(context))
 		{
-			val pm = context.getSystemService(Context.POWER_SERVICE)
-					as PowerManager
-			when (mode)
-			{
-				RebootMode.NORMAL ->
-				{
-					pm.reboot(null)
-					l(false)
-				}
-
-				RebootMode.RECOVERY ->
-				{
-					pm.reboot("recovery")
-					l(false)
-				}
-
-				RebootMode.BOOTLOADER ->
-				{
-					pm.reboot("bootloader")
-					l(false)
-				}
-
-				else ->
-				{
-					Log.e("$LOG_TAG.reboot", "Unknown mode")
-					l(true)
-				}
-			}
+			rebootSystem(mode, context, l)
 		}
-		catch (e: Exception)
+		else
 		{
-			Log.e("$LOG_TAG.reboot", "Error while invoking reboot", e)
-			l(true)
+			rebootSvc(mode, context, l)
 		}
 	}
 
@@ -205,4 +160,98 @@ object SystemHelper
 	}
 
 	private val LOG_TAG = SystemHelper::class.java.canonicalName
+
+	@JvmStatic
+	private fun shutdownSystem(context: Context,
+			l: (isSuccessful: Boolean) -> Unit)
+	{
+		return try
+		{
+			val fieldACTION_REQUEST_SHUTDOWN = Intent::class.java.getDeclaredField(
+					"ACTION_REQUEST_SHUTDOWN")
+			fieldACTION_REQUEST_SHUTDOWN.isAccessible = true
+			val ACTION_REQUEST_SHUTDOWN = fieldACTION_REQUEST_SHUTDOWN.get(null)
+					as String
+
+			val fieldEXTRA_KEY_CONFIRM = Intent::class.java.getDeclaredField(
+					"EXTRA_KEY_CONFIRM")
+			fieldACTION_REQUEST_SHUTDOWN.isAccessible = true
+			val EXTRA_KEY_CONFIRM = fieldEXTRA_KEY_CONFIRM.get(null) as String
+
+			val shutdown = Intent(ACTION_REQUEST_SHUTDOWN)
+			shutdown.putExtra(EXTRA_KEY_CONFIRM, false)
+			shutdown.flags = (Intent.FLAG_ACTIVITY_CLEAR_TASK
+					or Intent.FLAG_ACTIVITY_NEW_TASK)
+			context.startActivity(shutdown)
+			l(true)
+		}
+		catch (e: Exception)
+		{
+			Log.e("$LOG_TAG.shutdown", "Error while reflection", e)
+			l(false)
+		}
+	}
+
+	@JvmStatic
+	private fun shutdownSvc(context: Context, l: (isSuccessful: Boolean) -> Unit)
+	{
+		val scripts = listOf("svc power shutdown")
+		SuHelper.doSuCommand(context, scripts,
+				successWhere = {exitCode, output -> output.isEmpty()},
+				onSuccess = {exitCode, output -> l(true)},
+				onFailure = {exitCode, output -> l(false)})
+	}
+
+	@JvmStatic
+	fun rebootSystem(mode: RebootMode, context: Context,
+			l: (isSuccessful: Boolean) -> Unit)
+	{
+		try
+		{
+			val pm = context.getSystemService(Context.POWER_SERVICE)
+					as PowerManager
+			when (mode)
+			{
+				RebootMode.NORMAL ->
+				{
+					pm.reboot(null)
+					l(false)
+				}
+
+				RebootMode.RECOVERY ->
+				{
+					pm.reboot("recovery")
+					l(false)
+				}
+
+				RebootMode.BOOTLOADER ->
+				{
+					pm.reboot("bootloader")
+					l(false)
+				}
+
+				else ->
+				{
+					Log.e("$LOG_TAG.reboot", "Unknown mode")
+					l(true)
+				}
+			}
+		}
+		catch (e: Exception)
+		{
+			Log.e("$LOG_TAG.reboot", "Error while invoking reboot", e)
+			l(true)
+		}
+	}
+
+	@JvmStatic
+	private fun rebootSvc(mode: RebootMode, context: Context,
+			l: (isSuccessful: Boolean) -> Unit)
+	{
+		val scripts = listOf("svc power reboot $mode")
+		SuHelper.doSuCommand(context, scripts,
+				successWhere = {exitCode, output -> output.isEmpty()},
+				onSuccess = {exitCode, output -> l(true)},
+				onFailure = {exitCode, output -> l(false)})
+	}
 }

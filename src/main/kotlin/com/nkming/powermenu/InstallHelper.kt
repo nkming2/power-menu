@@ -91,6 +91,43 @@ object InstallHelper
 		}
 	}
 
+	@JvmStatic
+	fun isPowerCommandAvailable(context: Context,
+			onResult: (isAvailable: Boolean) -> Unit)
+	{
+		if (_isPowerCommandAvailable != null)
+		{
+			onResult(_isPowerCommandAvailable!!)
+			return
+		}
+
+		val scripts = listOf("svc power")
+		SuHelper.doSuCommand(context, scripts,
+				successWhere = {exitCode, output -> true},
+				onSuccess = {exitCode, output ->
+				run{
+					_isPowerCommandAvailable = true
+					var isRebootAvailable = false
+					var isShutdownAvailable = false
+					for (o in output)
+					{
+						if (o.contains("svc power reboot"))
+						{
+							isRebootAvailable = true
+						}
+						else if (o.contains("svc power shutdown"))
+						{
+							isShutdownAvailable = true
+						}
+					}
+					onResult(isRebootAvailable && isShutdownAvailable)
+				}},
+				onFailure = {exitCode, output ->
+				run{
+					_isPowerCommandAvailable = false
+					onResult(false)
+				}})
+	}
 
 	/**
 	 * Return if this app is installed as privileged (KK+) system app
@@ -220,4 +257,7 @@ object InstallHelper
 			"/system/app/" + Res.PACKAGE + ".apk"
 		}
 	}
+
+	// Shell command is expansive, cache the result
+	private var _isPowerCommandAvailable: Boolean? = null
 }

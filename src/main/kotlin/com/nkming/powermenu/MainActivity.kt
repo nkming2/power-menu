@@ -29,21 +29,29 @@ class MainActivity : AppCompatActivity()
 
 		if (!InstallHelper.isSystemApp(this))
 		{
-			// We don't want the animation here
-			super.finish()
-			startActivity(Intent(this, InstallActivity::class.java))
-		}
-		else
-		{
-			// Disable the standard activity launch animation
-			overridePendingTransition(0, 0)
-			setContentView(R.layout.activity_main)
-			if (savedInstanceState == null)
-			{
-				supportFragmentManager.beginTransaction()
-						.add(R.id.container, MainFragment())
-						.commit()
-			}
+			InstallHelper.isPowerCommandAvailable(this,
+					onResult =
+					{
+						if (!it)
+						{
+							// We don't want the animation here
+							super.finish()
+							startActivity(Intent(this,
+									InstallActivity::class.java))
+						}
+						else
+						{
+							// Disable the standard activity launch animation
+							overridePendingTransition(0, 0)
+							setContentView(R.layout.activity_main)
+							if (savedInstanceState == null)
+							{
+								supportFragmentManager.beginTransaction()
+										.add(R.id.container, MainFragment())
+										.commit()
+							}
+						}
+					})
 		}
 	}
 
