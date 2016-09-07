@@ -15,7 +15,7 @@
 	<string name="restart_mode_bootloader">Bootloader</string>
 
 	<string name="install_confirm_title">Install as System App</string>
-	<string name="install_confirm_content">Some features require the app to be installed as system app.\n\nSave your work before proceeding, as your device will reboot during the process.</string>
+	<string name="install_confirm_content">This app makes use of features only available to system apps.\n\nSave your work before proceeding, your device will reboot automatically after the installation.</string>
 	<string name="install_confirm_positive">Install</string>
 
 	<string name="install_title">Installing...</string>
