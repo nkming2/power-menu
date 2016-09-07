@@ -23,6 +23,11 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 		super.onCreate(savedInstanceState)
 		preferenceManager.sharedPreferencesName = getString(R.string.pref_file)
 		addPreferencesFromResource(R.xml.preference)
+	}
+
+	override fun onActivityCreated(savedInstanceState: Bundle?)
+	{
+		super.onActivityCreated(savedInstanceState)
 		_init()
 	}
 
@@ -74,6 +79,7 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 	private fun _init()
 	{
 		_initAlphaPref()
+		_initInstallPref()
 		_initSoftRebootPref()
 	}
 
@@ -88,6 +94,21 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 				v.text = String.format("%.2f", value / 100.0f)
 			}
 		})
+	}
+
+	private fun _initInstallPref()
+	{
+		val pref = findPreference(getString(R.string.pref_install_key))
+		if (InstallHelper.isSystemApp(context))
+		{
+			pref.setTitle(R.string.pref_uninstall_title)
+			pref.setSummary(R.string.pref_uninstall_summary)
+		}
+		else
+		{
+			pref.setTitle(R.string.pref_install_title)
+			pref.setSummary(R.string.pref_install_summary)
+		}
 	}
 
 	private fun _initSoftRebootPref()

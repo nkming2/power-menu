@@ -52,8 +52,11 @@
 	<string name="pref_hide_launcher_summary">The effect may only be visible after restarting your launcher app</string>
 	<string name="pref_hide_launcher_key" translatable="false">hide_launcher</string>
 
-	<string name="pref_uninstall_title">Pre-uninstall</string>
-	<string name="pref_uninstall_summary">Ready the app for uninstalling. Save your work before proceeding, as your device will reboot during the process</string>
+	<string name="pref_install_title">Install as system app</string>
+	<string name="pref_install_summary">Improve compatibility and, in some case, performance</string>
+	<string name="pref_uninstall_title">Undo system app installation</string>
+	<string name="pref_uninstall_summary">Remove the app from system partition. Required before you could remove this app</string>
+	<string name="pref_install_key" translatable="false">install</string>
 
 	<string name="pref_experimental_category">Experimental</string>
 
@@ -78,7 +81,6 @@
 	<string name="screenshot_notification_share_chooser">Share with</string>
 	<string name="screenshot_notification_delete">Delete</string>
 
-	<string name="data_uninstall" translatable="false">uninstall</string>
 	<string name="affinity_main" translatable="false">com.nkming.powermenu.MAIN</string>
 	<string name="affinity_install" translatable="false">com.nkming.powermenu.INSTALL</string>
 	<string name="affinity_pref" translatable="false">com.nkming.powermenu.PREF</string>

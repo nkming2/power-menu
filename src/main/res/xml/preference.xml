@@ -42,13 +42,13 @@
 			android:defaultValue="false"/>
 
 		<PreferenceScreen
-			android:title="@string/pref_uninstall_title"
-			android:summary="@string/pref_uninstall_summary">
+			android:key="@string/pref_install_key"
+			android:title="@string/pref_install_title"
+			android:summary="@string/pref_install_summary">
 
 			<intent
 				android:targetPackage="com.nkming.powermenu"
-				android:targetClass="com.nkming.powermenu.InstallActivity"
-				android:data="@string/data_uninstall"/>
+				android:targetClass="com.nkming.powermenu.InstallActivity" />
 		</PreferenceScreen>
 	</PreferenceCategory>
 

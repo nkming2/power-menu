@@ -14,7 +14,7 @@ class InstallActivity : AppCompatActivity(), InstallConfirmFragment.Listener
 	protected override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		if (intent.dataString == getString(R.string.data_uninstall))
+		if (InstallHelper.isSystemApp(this))
 		{
 			_onCreateUninstall(savedInstanceState)
 		}
