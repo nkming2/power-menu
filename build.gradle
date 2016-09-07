@@ -35,7 +35,7 @@ dependencies {
 }
 
 buildscript {
-	ext.support_version = '23.3.0'
+	ext.support_version = '23.4.0'
 	ext.kotlin_version = '1.0.1'
 	repositories {
 		mavenCentral()
