@@ -30,28 +30,11 @@ class MainActivity : AppCompatActivity()
 		if (!InstallHelper.isSystemApp(this))
 		{
 			InstallHelper.isPowerCommandAvailable(this,
-					onResult =
-					{
-						if (!it)
-						{
-							// We don't want the animation here
-							super.finish()
-							startActivity(Intent(this,
-									InstallActivity::class.java))
-						}
-						else
-						{
-							// Disable the standard activity launch animation
-							overridePendingTransition(0, 0)
-							setContentView(R.layout.activity_main)
-							if (savedInstanceState == null)
-							{
-								supportFragmentManager.beginTransaction()
-										.add(R.id.container, MainFragment())
-										.commit()
-							}
-						}
-					})
+					onResult = {_onPostCheckInstall(savedInstanceState, it)})
+		}
+		else
+		{
+			_onPostCheckInstall(savedInstanceState, true)
 		}
 	}
 
@@ -93,6 +76,29 @@ class MainActivity : AppCompatActivity()
 		if (_isAnimateClose)
 		{
 			overridePendingTransition(0, R.anim.activity_close_exit)
+		}
+	}
+
+	private fun _onPostCheckInstall(savedInstanceState: Bundle?,
+			hasInstalled: Boolean)
+	{
+		if (!hasInstalled)
+		{
+			// We don't want the animation here
+			super.finish()
+			startActivity(Intent(this, InstallActivity::class.java))
+		}
+		else
+		{
+			// Disable the standard activity launch animation
+			overridePendingTransition(0, 0)
+			setContentView(R.layout.activity_main)
+			if (savedInstanceState == null)
+			{
+				supportFragmentManager.beginTransaction()
+						.add(R.id.container, MainFragment())
+						.commit()
+			}
 		}
 	}
 
