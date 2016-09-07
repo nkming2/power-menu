@@ -41,6 +41,7 @@ public class InstallFragment extends DialogFragment
 				.title(R.string.install_title)
 				.title(R.string.install_content)
 				.progress(true, 0)
+				.progressIndeterminateStyle(true)
 				.cancelable(false)
 				.build();
 	}
