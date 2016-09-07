@@ -195,6 +195,7 @@ object SystemHelper
 	@JvmStatic
 	private fun shutdownSvc(context: Context, l: (isSuccessful: Boolean) -> Unit)
 	{
+		// See https://android.googlesource.com/platform/frameworks/base/+/master/cmds/svc/src/com/android/commands/svc/PowerCommand.java
 		val scripts = listOf("svc power shutdown")
 		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output -> output.isEmpty()},
