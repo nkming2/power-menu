@@ -41,6 +41,7 @@ public class UninstallFragment extends DialogFragment
 				.title(R.string.uninstall_title)
 				.title(R.string.uninstall_content)
 				.progress(true, 0)
+				.progressIndeterminateStyle(true)
 				.cancelable(false)
 				.build();
 	}
