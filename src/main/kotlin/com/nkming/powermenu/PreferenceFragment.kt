@@ -99,7 +99,7 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 	private fun _initInstallPref()
 	{
 		val pref = findPreference(getString(R.string.pref_install_key))
-		if (InstallHelper.isSystemApp(context))
+		if (InstallHelper.isSystemApp(activity))
 		{
 			pref.setTitle(R.string.pref_uninstall_title)
 			pref.setSummary(R.string.pref_uninstall_summary)
