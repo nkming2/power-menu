@@ -106,7 +106,6 @@ object InstallHelper
 				successWhere = {exitCode, output -> true},
 				onSuccess = {exitCode, output ->
 				run{
-					_isPowerCommandAvailable = true
 					var isRebootAvailable = false
 					var isShutdownAvailable = false
 					for (o in output)
@@ -120,7 +119,9 @@ object InstallHelper
 							isShutdownAvailable = true
 						}
 					}
-					onResult(isRebootAvailable && isShutdownAvailable)
+					_isPowerCommandAvailable = (isRebootAvailable
+							&& isShutdownAvailable)
+					onResult(_isPowerCommandAvailable!!)
 				}},
 				onFailure = {exitCode, output ->
 				run{
