@@ -52,10 +52,36 @@ class Preference(pref: SharedPreferences, context: Context)
 			_edit.putBoolean(_overrideSystemMenuKey, v)
 		}
 
+	var isSoftRebootEnabled: Boolean
+		get()
+		{
+			return _pref.getBoolean(_softRebootKey, false)
+		}
+		set(v: Boolean)
+		{
+			_edit.putBoolean(_softRebootKey, v)
+		}
+
+	var isHapticEnabled: Boolean
+		get()
+		{
+			return _pref.getBoolean(_hapticKey, true)
+		}
+		set(v: Boolean)
+		{
+			_edit.putBoolean(_hapticKey, v)
+		}
+
 	private val _overrideSystemMenuKey by lazy(
 	{
 		_context.getString(R.string.pref_override_system_menu_key)
 	})
+
+	private val _softRebootKey by lazy{_context.getString(
+			R.string.pref_soft_reboot_key)}
+
+	private val _hapticKey by lazy{_context.getString(
+			R.string.pref_haptic_key)}
 
 	private val _context = context
 	private val _pref = pref

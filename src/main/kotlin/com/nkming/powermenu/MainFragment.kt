@@ -95,13 +95,11 @@ class MainFragment : Fragment()
 			})
 		}
 
-		val pref = activity.getSharedPreferences(getString(R.string.pref_file),
-				Context.MODE_PRIVATE)
-		if (pref.getBoolean(getString(R.string.pref_soft_reboot_key), false)
-				&& SystemHelper.isBusyboxPresent())
+		val pref = Preference.from(context)
+		if (pref.isSoftRebootEnabled && SystemHelper.isBusyboxPresent())
 		{
 			_restartNormalBtn.bound.isHapticFeedbackEnabled =
-					pref.getBoolean(getString(R.string.pref_haptic_key), true)
+					pref.isHapticEnabled
 			_restartNormalBtn.bound.setOnLongClickListener(
 			{
 				_onRestartNormalLongClick()
