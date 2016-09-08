@@ -11,6 +11,7 @@
 	<string name="su_failed">Failed running su command, not rooted?</string>
 
 	<string name="restart_mode_normal">Reboot</string>
+	<string name="restart_mode_normal_or_soft">Reboot (hold to soft reboot)</string>
 	<string name="restart_mode_recovery">Recovery</string>
 	<string name="restart_mode_bootloader">Bootloader</string>
 

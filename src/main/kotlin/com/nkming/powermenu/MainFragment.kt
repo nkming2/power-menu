@@ -17,6 +17,7 @@ import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.widget.TextView
 import android.widget.Toast
 import com.shamanland.fab.FloatingActionButton
 
@@ -56,7 +57,7 @@ class MainFragment : Fragment()
 	(
 		val btn: FloatingActionButton,
 		val bound: View,
-		val label: View,
+		val label: TextView,
 		val onClick: () -> Unit
 	)
 
@@ -83,6 +84,12 @@ class MainFragment : Fragment()
 					.setDuration(Res.ANIMATION_FAST.toLong())
 					.setStartDelay(Res.ANIMATION_FAST.toLong() / 2 * i)
 		}
+
+		val pref = Preference.from(context)
+		_restartNormalBtn.label.text = getString(
+				if (pref.isSoftRebootEnabled && SystemHelper.isBusyboxPresent())
+						R.string.restart_mode_normal_or_soft
+				else R.string.restart_mode_normal)
 	}
 
 	private fun _initRestartBtns()
@@ -526,19 +533,22 @@ class MainFragment : Fragment()
 		arrayOf(RestartButtonMeta(
 						_restartBtn.btn,
 						_restartBtn.bound,
-						_root.findViewById(R.id.restart_normal_label),
+						_root.findViewById(R.id.restart_normal_label)
+								as TextView,
 						{_onRestartNormalClick()}),
 				RestartButtonMeta(
 						_root.findViewById(R.id.restart_recovery_btn)
 								as FloatingActionButton,
 						_root.findViewById(R.id.restart_recovery_btn_bound),
-						_root.findViewById(R.id.restart_recovery_label),
+						_root.findViewById(R.id.restart_recovery_label)
+								as TextView,
 						{_onRestartRecoveryClick()}),
 				RestartButtonMeta(
 						_root.findViewById(R.id.restart_bootloader_btn)
 								as FloatingActionButton,
 						_root.findViewById(R.id.restart_bootloader_btn_bound),
-						_root.findViewById(R.id.restart_bootloader_label),
+						_root.findViewById(R.id.restart_bootloader_label)
+								as TextView,
 						{_onRestartBootloaderClick()}))
 	})
 
