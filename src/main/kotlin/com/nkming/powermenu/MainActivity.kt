@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity()
 		{
 			PersistentService.hideView(this)
 		}
+		_isStop = false
 	}
 
 	override fun onStop()
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity()
 			PersistentViewHelper.startIfNecessary(this)
 			SystemOverrideService.startIfNecessary(this)
 		}
+		_isStop = true
 	}
 
 	override fun onUserLeaveHint()
@@ -90,14 +92,22 @@ class MainActivity : AppCompatActivity()
 		}
 		else
 		{
-			// Disable the standard activity launch animation
-			overridePendingTransition(0, 0)
-			setContentView(R.layout.activity_main)
-			if (savedInstanceState == null)
+			if (_isStop)
 			{
-				supportFragmentManager.beginTransaction()
-						.add(R.id.container, MainFragment())
-						.commit()
+				// User has closed/hid the app
+				super.finish()
+			}
+			else
+			{
+				// Disable the standard activity launch animation
+				overridePendingTransition(0, 0)
+				setContentView(R.layout.activity_main)
+				if (savedInstanceState == null)
+				{
+					supportFragmentManager.beginTransaction()
+							.add(R.id.container, MainFragment())
+							.commit()
+				}
 			}
 		}
 	}
@@ -113,4 +123,5 @@ class MainActivity : AppCompatActivity()
 	}
 
 	private var _isAnimateClose = true
+	private var _isStop = false
 }
