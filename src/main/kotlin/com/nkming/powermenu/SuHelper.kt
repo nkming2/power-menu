@@ -42,6 +42,7 @@ object SuHelper
 	{
 		_su.addCommand(scripts, 0, {commandCode, exitCode, output ->
 		run{
+			val output_ = output ?: listOf()
 			if (exitCode == Shell.OnCommandResultListener.WATCHDOG_EXIT)
 			{
 				Log.e("$LOG_TAG.__doSuCommand", "Watchdog exception")
@@ -50,15 +51,15 @@ object SuHelper
 				_handler.postDelayed({_doSuCommand(scripts, successWhere,
 						onSuccess, onFailure)}, 200)
 			}
-			else if (!successWhere(exitCode, output))
+			else if (!successWhere(exitCode, output_))
 			{
 				Log.e("$LOG_TAG.__doSuCommand",
-						"Failed($exitCode) executing\nCommand: ${scripts.joinToString("\n")}\nOutput: ${output.joinToString("\n")}")
-				onFailure?.invoke(exitCode, output)
+						"Failed($exitCode) executing\nCommand: ${scripts.joinToString("\n")}\nOutput: ${output_.joinToString("\n")}")
+				onFailure?.invoke(exitCode, output_)
 			}
 			else
 			{
-				onSuccess?.invoke(exitCode, output)
+				onSuccess?.invoke(exitCode, output_)
 			}
 		}})
 	}
