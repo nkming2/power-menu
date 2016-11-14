@@ -1,7 +1,6 @@
 package com.nkming.powermenu
 
 import android.content.Context
-import android.os.Handler
 import android.widget.Toast
 import eu.chainfire.libsuperuser.Shell
 
@@ -23,34 +22,15 @@ object SuHelper
 			onSuccess: ((exitCode: Int, output: List<String>) -> Unit)? = null,
 			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
 	{
-		if (!_su.isRunning)
-		{
-			_handler.postDelayed({_doSuCommand(scripts, successWhere, onSuccess,
-					onFailure)}, 200)
-		}
-		else
-		{
-			__doSuCommand(scripts, successWhere, onSuccess, onFailure)
-		}
-	}
-
-	private fun __doSuCommand(scripts: List<String>,
-			successWhere: ((exitCode: Int, output: List<String>) -> Boolean) = {
-					exitCode, output -> exitCode >= 0},
-			onSuccess: ((exitCode: Int, output: List<String>) -> Unit)? = null,
-			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
-	{
 		_su.addCommand(scripts, 0, {commandCode, exitCode, output ->
 		run{
 			val output_ = output ?: listOf()
 			if (exitCode == Shell.OnCommandResultListener.WATCHDOG_EXIT)
 			{
-				Log.e("$LOG_TAG.__doSuCommand", "Watchdog exception")
+				Log.e("$LOG_TAG._doSuCommand", "Watchdog exception")
 				// Script deadlock?
 				_su.kill()
-				_su = buildSuSession()
-				_handler.postDelayed({_doSuCommand(scripts, successWhere,
-						onSuccess, onFailure)}, 200)
+				onFailure?.invoke(exitCode, output_)
 			}
 			else if (!successWhere(exitCode, output_))
 			{
@@ -107,7 +87,6 @@ object SuHelper
 
 	private val LOG_TAG = SuHelper::class.java.canonicalName
 
-	private val _handler = Handler()
 	private var _appContext: Context? = null
 
 	private var _su: Shell.Interactive = buildSuSession()
