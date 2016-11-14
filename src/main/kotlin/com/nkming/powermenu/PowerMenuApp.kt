@@ -7,7 +7,7 @@ class PowerMenuApp : Application()
 	override fun onCreate()
 	{
 		super.onCreate()
-		Log.isShowDebug = false
-		Log.isShowVerbose = false
+		Log.isShowDebug = BuildConfig.DEBUG
+		Log.isShowVerbose = BuildConfig.DEBUG
 	}
 }
