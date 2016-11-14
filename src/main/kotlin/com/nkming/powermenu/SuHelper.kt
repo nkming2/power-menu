@@ -71,7 +71,7 @@ object SuHelper
 					}
 					else
 					{
-						Log.e("$LOG_TAG.buildSuSession", "Successful")
+						Log.i("$LOG_TAG.buildSuSession", "Successful")
 					}
 					_isSuStarting = false
 				}})
