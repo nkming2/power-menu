@@ -71,7 +71,7 @@ object SuHelper
 		_isSuStarting = true
 		return Shell.Builder()
 				.useSU()
-				.setWantSTDERR(true)
+				//.setWantSTDERR(true)
 				.setWatchdogTimeout(5)
 				.setMinimalLogging(true)
 				.open({commandCode, exitCode, output ->
