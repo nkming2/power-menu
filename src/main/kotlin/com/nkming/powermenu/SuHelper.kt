@@ -46,6 +46,7 @@ object SuHelper
 			if (exitCode == Shell.OnCommandResultListener.WATCHDOG_EXIT)
 			{
 				Log.e("$LOG_TAG.__doSuCommand", "Watchdog exception")
+				// Script deadlock?
 				_su.kill()
 				_su = buildSuSession()
 				_handler.postDelayed({_doSuCommand(scripts, successWhere,
@@ -75,19 +76,22 @@ object SuHelper
 				.setMinimalLogging(true)
 				.open({commandCode, exitCode, output ->
 				run{
-					// FIXME not being called?
 					Log.d("$LOG_TAG.buildSuSession",
 							"Shell start status: $exitCode")
 					if (exitCode
 							!= Shell.OnCommandResultListener.SHELL_RUNNING)
 					{
-						Log.e("$LOG_TAG.init",
+						Log.e("$LOG_TAG.buildSuSession",
 								"Failed opening root shell (exitCode: $exitCode)")
 						if (_appContext != null)
 						{
 							Toast.makeText(_appContext, R.string.su_failed,
 									Toast.LENGTH_LONG).show()
 						}
+					}
+					else
+					{
+						Log.e("$LOG_TAG.buildSuSession", "Successful")
 					}
 					_isSuStarting = false
 				}})
