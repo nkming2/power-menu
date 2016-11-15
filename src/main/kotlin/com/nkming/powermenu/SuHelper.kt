@@ -22,59 +22,73 @@ object SuHelper
 			onSuccess: ((exitCode: Int, output: List<String>) -> Unit)? = null,
 			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
 	{
-		_su.addCommand(scripts, 0, {commandCode, exitCode, output ->
-		run{
-			val output_ = output ?: listOf()
-			if (exitCode == Shell.OnCommandResultListener.WATCHDOG_EXIT)
-			{
-				Log.e("$LOG_TAG._doSuCommand", "Watchdog exception")
-				// Script deadlock?
-				_su.kill()
-				onFailure?.invoke(exitCode, output_)
-			}
-			else if (!successWhere(exitCode, output_))
-			{
-				Log.e("$LOG_TAG.__doSuCommand",
-						"Failed($exitCode) executing\nCommand: ${scripts.joinToString("\n")}\nOutput: ${output_.joinToString("\n")}")
-				onFailure?.invoke(exitCode, output_)
-			}
-			else
-			{
-				onSuccess?.invoke(exitCode, output_)
-			}
-		}})
-	}
-
-	private fun buildSuSession(): Shell.Interactive
-	{
-		Log.d(LOG_TAG, "buildSuSession()")
-		_isSuStarting = true
-		return Shell.Builder()
-				.useSU()
-				//.setWantSTDERR(true)
-				.setWatchdogTimeout(5)
-				.setMinimalLogging(true)
-				.open({commandCode, exitCode, output ->
+		requestSuSession(onFailure).addCommand(scripts, 0, {
+				commandCode, exitCode, output ->
 				run{
-					Log.d("$LOG_TAG.buildSuSession",
-							"Shell start status: $exitCode")
-					if (exitCode
-							!= Shell.OnCommandResultListener.SHELL_RUNNING)
+					val output_ = output ?: listOf()
+					if (exitCode == Shell.OnCommandResultListener.WATCHDOG_EXIT)
 					{
-						Log.e("$LOG_TAG.buildSuSession",
-								"Failed opening root shell (exitCode: $exitCode)")
-						if (_appContext != null)
-						{
-							Toast.makeText(_appContext, R.string.su_failed,
-									Toast.LENGTH_LONG).show()
-						}
+						Log.e("$LOG_TAG._doSuCommand", "Watchdog exception")
+						// Script deadlock?
+						_su?.kill()
+						onFailure?.invoke(exitCode, output_)
+					}
+					else if (!successWhere(exitCode, output_))
+					{
+						Log.e("$LOG_TAG.__doSuCommand",
+								"Failed($exitCode) executing\nCommand: ${scripts.joinToString("\n")}\nOutput: ${output_.joinToString("\n")}")
+						onFailure?.invoke(exitCode, output_)
 					}
 					else
 					{
-						Log.i("$LOG_TAG.buildSuSession", "Successful")
+						onSuccess?.invoke(exitCode, output_)
 					}
-					_isSuStarting = false
 				}})
+	}
+
+	private fun requestSuSession(
+			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
+			: Shell.Interactive
+	{
+		synchronized(this)
+		{
+			Log.d(LOG_TAG, "buildSuSession()")
+			if (_isSuStarting || (_su?.isRunning ?: false))
+			{
+				return _su!!
+			}
+
+			_isSuStarting = true
+			val su = Shell.Builder()
+					.useSU()
+					//.setWantSTDERR(true)
+					.setWatchdogTimeout(5)
+					.setMinimalLogging(true)
+					.open({commandCode, exitCode, output ->
+					run{
+						Log.d("$LOG_TAG.buildSuSession",
+								"Shell start status: $exitCode")
+						if (exitCode
+								!= Shell.OnCommandResultListener.SHELL_RUNNING)
+						{
+							Log.e("$LOG_TAG.buildSuSession",
+									"Failed opening root shell (exitCode: $exitCode)")
+							if (_appContext != null)
+							{
+								Toast.makeText(_appContext, R.string.su_failed,
+										Toast.LENGTH_LONG).show()
+							}
+							onFailure?.invoke(exitCode, output ?: listOf())
+						}
+						else
+						{
+							Log.i("$LOG_TAG.buildSuSession", "Successful")
+						}
+						_isSuStarting = false
+					}})
+			_su = su
+			return su
+		}
 	}
 
 	private fun setContext(context: Context)
@@ -89,15 +103,6 @@ object SuHelper
 
 	private var _appContext: Context? = null
 
-	private var _su: Shell.Interactive = buildSuSession()
-		get()
-		{
-			if (!field.isRunning && !_isSuStarting)
-			{
-				field = buildSuSession()
-			}
-			return field
-		}
-
+	private var _su: Shell.Interactive? = null
 	private var _isSuStarting: Boolean = false
 }

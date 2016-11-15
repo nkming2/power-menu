@@ -125,7 +125,11 @@ object InstallHelper
 				}},
 				onFailure = {exitCode, output ->
 				run{
-					_isPowerCommandAvailable = false
+					// SU error?
+					if (exitCode != Shell.OnCommandResultListener.SHELL_DIED)
+					{
+						_isPowerCommandAvailable = false
+					}
 					onResult(false)
 				}})
 	}
