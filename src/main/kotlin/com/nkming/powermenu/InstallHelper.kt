@@ -101,7 +101,7 @@ object InstallHelper
 			return
 		}
 
-		val scripts = listOf("svc power")
+		val scripts = listOf("svc power 2>&1")
 		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output -> true},
 				onSuccess = {exitCode, output ->
