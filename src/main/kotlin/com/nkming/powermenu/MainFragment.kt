@@ -204,6 +204,8 @@ class MainFragment : Fragment()
 
 	private fun _onScreenshotClick()
 	{
+		val close_duration = resources.getInteger(R.integer.close_duration)
+				.toLong()
 		_startReveal(_screenshotBtn.btn, R.color.screenshot_bg, true,
 		{
 			// App probably closed
@@ -234,10 +236,13 @@ class MainFragment : Fragment()
 					LocalBroadcastManager.getInstance(_appContext)
 							.unregisterReceiver(this)
 
-					val wm = _appContext.getSystemService(Context.WINDOW_SERVICE)
-							as WindowManager
-					rotation = wm.defaultDisplay.rotation
-					SystemHelper.screenshot(_appContext, l)
+					_handler.postDelayed(
+					{
+						val wm = _appContext.getSystemService(
+								Context.WINDOW_SERVICE) as WindowManager
+						rotation = wm.defaultDisplay.rotation
+						SystemHelper.screenshot(_appContext, l)
+					}, close_duration)
 				}
 			}
 			LocalBroadcastManager.getInstance(_appContext)
