@@ -39,7 +39,7 @@ public class InstallFragment extends DialogFragment
 	{
 		return new MaterialDialog.Builder(getActivity())
 				.title(R.string.install_title)
-				.title(R.string.install_content)
+				.content(R.string.install_content)
 				.progress(true, 0)
 				.progressIndeterminateStyle(true)
 				.cancelable(false)
