@@ -72,6 +72,16 @@ class Preference(pref: SharedPreferences, context: Context)
 			_edit.putBoolean(_hapticKey, v)
 		}
 
+	var isConfirmAction: Boolean
+		get()
+		{
+			return _pref.getBoolean(_confirmKey, false)
+		}
+		set(v)
+		{
+			_edit.putBoolean(_confirmKey, v)
+		}
+
 	private val _overrideSystemMenuKey by lazy(
 	{
 		_context.getString(R.string.pref_override_system_menu_key)
@@ -82,6 +92,9 @@ class Preference(pref: SharedPreferences, context: Context)
 
 	private val _hapticKey by lazy{_context.getString(
 			R.string.pref_haptic_key)}
+
+	private val _confirmKey by lazy{_context.getString(
+			R.string.pref_confirm_key)}
 
 	private val _context = context
 	private val _pref = pref

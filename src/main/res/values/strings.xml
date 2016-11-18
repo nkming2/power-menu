@@ -27,6 +27,12 @@
 	<string name="uninstall_content">Do not do anything. You device will reboot automatically if successful</string>
 	<string name="uninstall_failed">Failed uninstalling, not rooted?</string>
 
+	<string name="shutdown_confirm_title">Ready to shut down?</string>
+	<string name="shutdown_confirm_content">All unsaved work would be lost</string>
+
+	<string name="restart_confirm_title">Ready to restart?</string>
+	<string name="restart_confirm_content">@string/shutdown_confirm_content</string>
+
 	<string name="pref_file" translatable="false">com.nkming.powermenu</string>
 
 	<string name="pref_persistent_view_category">Persistent view</string>
@@ -52,6 +58,10 @@
 	<string name="pref_hide_launcher_title">Hide launcher icon</string>
 	<string name="pref_hide_launcher_summary">The effect may only be visible after restarting your launcher app</string>
 	<string name="pref_hide_launcher_key" translatable="false">hide_launcher</string>
+
+	<string name="pref_confirm_title">Confirm non-trivial action</string>
+	<string name="pref_confirm_summary">Confirm before shutting down or restarting your device</string>
+	<string name="pref_confirm_key" translatable="false">confirm</string>
 
 	<string name="pref_install_title">Install as system app</string>
 	<string name="pref_install_summary">Improve compatibility and, in some case, performance</string>

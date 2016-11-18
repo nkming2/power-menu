@@ -2,6 +2,7 @@ package com.nkming.powermenu
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -19,6 +20,8 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.Theme
 import com.shamanland.fab.FloatingActionButton
 
 class MainFragment : Fragment()
@@ -37,6 +40,12 @@ class MainFragment : Fragment()
 		_initRoot()
 		_initButton()
 		return _root
+	}
+
+	override fun onStop()
+	{
+		super.onStop()
+		_confirmDialog?.cancel()
 	}
 
 	override fun onDestroy()
@@ -116,6 +125,28 @@ class MainFragment : Fragment()
 	}
 
 	private fun _onShutdownClick()
+	{
+		val pref = Preference.from(context)
+		if (pref.isConfirmAction)
+		{
+			_confirmDialog?.cancel()
+			_confirmDialog = MaterialDialog.Builder(context)
+					.title(R.string.shutdown_confirm_title)
+					.content(R.string.shutdown_confirm_content)
+					.theme(Theme.LIGHT)
+					.positiveText(android.R.string.yes)
+					.onPositive({materialDialog, dialogAction -> _doShutdown()})
+					.negativeText(android.R.string.no)
+					.build()
+			_confirmDialog?.show()
+		}
+		else
+		{
+			_doShutdown()
+		}
+	}
+
+	private fun _doShutdown()
 	{
 		_startReveal(_shutdownBtn.btn, R.color.shutdown_bg, true,
 		{
@@ -257,6 +288,30 @@ class MainFragment : Fragment()
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
 			rebootMode: SystemHelper.RebootMode)
 	{
+		val pref = Preference.from(context)
+		if (pref.isConfirmAction)
+		{
+			_confirmDialog?.cancel()
+			_confirmDialog = MaterialDialog.Builder(context)
+					.title(R.string.restart_confirm_title)
+					.content(R.string.restart_confirm_content)
+					.theme(Theme.LIGHT)
+					.positiveText(android.R.string.yes)
+					.onPositive({materialDialog, dialogAction -> _doRestart(meta,
+							rebootMode)})
+					.negativeText(android.R.string.no)
+					.build()
+			_confirmDialog?.show()
+		}
+		else
+		{
+			_doRestart(meta, rebootMode)
+		}
+	}
+
+	private fun _doRestart(meta: RestartButtonMeta,
+			rebootMode: SystemHelper.RebootMode)
+	{
 		_startReveal(meta.btn, R.color.restart_bg, true,
 		{
 			// App probably closed
@@ -287,6 +342,28 @@ class MainFragment : Fragment()
 	}
 
 	private fun _onRestartNormalLongClick()
+	{
+		val pref = Preference.from(context)
+		if (pref.isConfirmAction)
+		{
+			_confirmDialog?.cancel()
+			_confirmDialog = MaterialDialog.Builder(context)
+					.title(R.string.restart_confirm_title)
+					.content(R.string.restart_confirm_content)
+					.theme(Theme.LIGHT)
+					.positiveText(android.R.string.yes)
+					.onPositive({materialDialog, dialogAction -> _doSoftRestart()})
+					.negativeText(android.R.string.no)
+					.build()
+			_confirmDialog?.show()
+		}
+		else
+		{
+			_doSoftRestart()
+		}
+	}
+
+	private fun _doSoftRestart()
 	{
 		val l = fun (isSuccessful: Boolean)
 		{
@@ -567,4 +644,5 @@ class MainFragment : Fragment()
 		get() = _restartMenuBtns[2]
 
 	private val _reveal by lazy({_root.findViewById(R.id.reveal) as RevealView})
+	private var _confirmDialog: Dialog? = null
 }

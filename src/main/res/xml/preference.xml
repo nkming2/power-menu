@@ -41,6 +41,12 @@
 			android:summary="@string/pref_hide_launcher_summary"
 			android:defaultValue="false"/>
 
+		<CheckBoxPreference
+			android:key="@string/pref_confirm_key"
+			android:title="@string/pref_confirm_title"
+			android:summary="@string/pref_confirm_summary"
+			android:defaultValue="false"/>
+
 		<PreferenceScreen
 			android:key="@string/pref_install_key"
 			android:title="@string/pref_install_title"
