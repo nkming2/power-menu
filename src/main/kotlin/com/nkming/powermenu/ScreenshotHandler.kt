@@ -11,6 +11,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.view.Surface
+import android.widget.Toast
 import com.nkming.utils.graphic.BitmapLoader
 import com.nkming.utils.graphic.BitmapUtils
 import com.nkming.utils.graphic.DrawableUtils
@@ -21,6 +22,11 @@ import java.io.File
 
 class ScreenshotHandler(context: Context)
 {
+	companion object
+	{
+		private val LOG_TAG = ScreenshotHandler::class.java.canonicalName
+	}
+
 	fun onScreenshotSuccess(filepath: String, rotation: Int)
 	{
 		val l =
@@ -68,20 +74,32 @@ class ScreenshotHandler(context: Context)
 		{
 			override fun doInBackground(vararg params: Unit)
 			{
+				try
+				{
+					_doInBackground()
+				}
+				catch (e: Exception)
+				{
+					Log.e("$LOG_TAG._fixScreenshotOrientation", "Failed", e)
+					_onFailureFallback()
+				}
+			}
+
+			override fun onPostExecute(result: Unit)
+			{
+				l()
+			}
+
+			private fun _doInBackground()
+			{
 				val uri = Uri.fromFile(File(filepath))
-				val bmp = BitmapLoader(_context)
-						.loadUri(uri)
+				val bmp = BitmapLoader(_context).loadUri(uri)
 				val mat = Matrix()
 				mat.postRotate(_getRotationValue(rotation))
 				val rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.width,
 						bmp.height, mat, true)
 				BitmapUtils.saveBitmap(rotated, filepath,
 						Bitmap.CompressFormat.PNG, 100)
-			}
-
-			override fun onPostExecute(result: Unit)
-			{
-				l()
 			}
 
 			private fun _getRotationValue(rotation: Int): Float
@@ -104,10 +122,25 @@ class ScreenshotHandler(context: Context)
 		{
 			override fun doInBackground(vararg params: Unit)
 			{
+				try
+				{
+					_doInBackground()
+				}
+				catch (e: Exception)
+				{
+					Log.e("$LOG_TAG._notifyScreenshot", "Failed", e)
+					_onFailureFallback()
+				}
+			}
+
+			private fun _doInBackground()
+			{
 				val uri = Uri.fromFile(File(filepath))
 				val thumbnail = _getThumbnail(uri)
 
 				val dp512 = DimensionUtils.dpToPx(_context, 512f)
+				// Somehow the bitmap couldn't be load on some device, not sure
+				// why...
 				val bmp = BitmapLoader(_context)
 						.setTargetSize(Size(dp512.toInt(), (dp512 / 2f).toInt()))
 						.setSizeCalc(FillSizeCalc())
@@ -242,6 +275,12 @@ class ScreenshotHandler(context: Context)
 				return bmp
 			}
 		}.execute()
+	}
+
+	private fun _onFailureFallback()
+	{
+		Toast.makeText(_context, R.string.screenshot_succeed_fallback,
+				Toast.LENGTH_LONG).show()
 	}
 
 	private val _context = context
