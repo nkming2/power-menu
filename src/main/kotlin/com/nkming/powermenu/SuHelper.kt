@@ -35,7 +35,7 @@ object SuHelper
 					}
 					else if (!successWhere(exitCode, output_))
 					{
-						Log.e("$LOG_TAG.__doSuCommand",
+						Log.e("$LOG_TAG._doSuCommand",
 								"Failed($exitCode) executing\nCommand: ${scripts.joinToString("\n")}\nOutput: ${output_.joinToString("\n")}")
 						onFailure?.invoke(exitCode, output_)
 					}
@@ -52,12 +52,12 @@ object SuHelper
 	{
 		synchronized(this)
 		{
-			Log.d(LOG_TAG, "buildSuSession()")
 			if (_isSuStarting || (_su?.isRunning ?: false))
 			{
 				return _su!!
 			}
 
+			Log.d("$LOG_TAG.requestSuSession", "Starting new session")
 			_isSuStarting = true
 			val su = Shell.Builder()
 					.useSU()
