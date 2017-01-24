@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="app_name">Power Menu</string>
+	<string name="app_pref_name">Power Menu Config</string>
+
 	<string name="shutdown_fail">Ошибка выключения, не установлен в качестве системного приложения?</string>
 	<string name="sleep_fail">Ошибка режима сна, пожалуйста, сообщите</string>
 	<string name="restart_fail">Ошибка перезагрузки, не установлен в качестве системного приложения?</string>
@@ -7,7 +10,7 @@
 	<string name="screenshot_fail">Не удался скриншот, попробуйте отключить монтирование разделение пространства в SuperSU</string>
 	<string name="start_activity_fail">Ошибка активации запуска, пожалуйста, сообщите</string>
 	<string name="su_failed">Ошибка запуска команды su, нет рута?</string>
-	<!--<string name="screenshot_succeed_fallback">Screenshot captured</string>-->
+	<string name="screenshot_succeed_fallback">Screenshot captured</string>
 
 	<string name="restart_mode_normal">Перезагрузка</string>
 	<string name="restart_mode_normal_or_soft">Перезагрузка (удерживайте для мягкой перезагрузки)</string>
@@ -32,6 +35,7 @@
 	<string name="shutdown_confirm_content">Все несохраненные данные будут потеряны</string>
 
 	<string name="restart_confirm_title">Готовы к перезагрузке?</string>
+	<string name="restart_confirm_content">@string/shutdown_confirm_content</string>
 
 	<string name="pref_persistent_view_category">Постоянный просмотр</string>
 
@@ -80,9 +84,11 @@
 	<string name="about_translator_credit">Виталя Борисов</string>
 
 	<string name="notification_ticker">Процент меню питания включено</string>
+	<string name="notification_title">@string/app_name</string>
 	<string name="notification_text">Нажмите, чтобы открыть конфигурацию</string>
 
 	<string name="screenshot_notification_ticker">Скриншот снят</string>
+	<string name="screenshot_notification_title">@string/screenshot_notification_ticker</string>
 	<string name="screenshot_notification_text">Нажмите, чтобы посмотреть скриншот</string>
 	<string name="screenshot_notification_share">Поделиться</string>
 	<string name="screenshot_notification_share_chooser">Поделиться с</string>
