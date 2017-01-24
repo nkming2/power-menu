@@ -16,3 +16,7 @@ Android app that provides an alternative power menu in a sort of material way. *
 
 ## Icon
 This project has used icons from [Google Design](https://www.google.com/design/icons/) under the [CC-BY license](https://creativecommons.org/licenses/by/4.0/)
+
+## Language
+- English
+- Russian (contributed by Виталя Борисов)
