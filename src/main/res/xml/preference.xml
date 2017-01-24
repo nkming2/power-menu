@@ -74,4 +74,26 @@
 			android:summaryOn="@string/pref_override_system_menu_summary_true"
 			android:defaultValue="false"/>
 	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/pref_about_category">
+
+		<Preference
+			android:key="@string/about_version_key"
+			android:title="@string/about_version_title" />
+
+		<Preference
+			android:title="@string/about_source_title"
+			android:summary="@string/about_source_summary">
+
+			<intent
+				android:action="android.intent.action.VIEW"
+				android:data="@string/about_source_summary" />
+		</Preference>
+
+		<Preference
+			android:key="@string/about_translator_key"
+			android:title="@string/about_translator_title"
+			android:summary="@string/about_translator_credit" />
+	</PreferenceCategory>
 </PreferenceScreen>

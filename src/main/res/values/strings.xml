@@ -82,6 +82,20 @@
 	<string name="pref_override_system_menu_summary_true">Launch this app while long pressing power button. May not be compatible with all devices</string>
 	<string name="pref_override_system_menu_key" translatable="false">override_system_menu</string>
 
+	<string name="pref_about_category">About</string>
+
+	<string name="about_version_key" translatable="false">version</string>
+	<string name="about_version_title">Version</string>
+
+	<string name="about_source_title">Source code</string>
+	<string name="about_source_summary" translatable="false">https://github.com/nkming2/power-menu</string>
+
+	<string name="about_translator_key" translatable="false">translator</string>
+	<string name="about_translator_title">Translator</string>
+	<string name="about_translator_credit"></string>
+	<string name="about_translator_help" translatable="false">Help translating to your language \u263A</string>
+	<string name="about_translator_help_url" translatable="false">https://github.com/nkming2/power-menu/blob/master/src/main/res/values/strings.xml</string>
+
 	<string name="notification_ticker">Persistent power menu enabled</string>
 	<string name="notification_title">@string/app_name</string>
 	<string name="notification_text">Click to open config</string>
