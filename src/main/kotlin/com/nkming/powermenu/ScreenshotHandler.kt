@@ -118,17 +118,26 @@ class ScreenshotHandler(context: Context)
 
 	private fun _notifyScreenshot(filepath: String)
 	{
-		object: AsyncTask<Unit, Unit, Unit>()
+		object: AsyncTask<Unit, Unit, Boolean>()
 		{
-			override fun doInBackground(vararg params: Unit)
+			override fun doInBackground(vararg params: Unit): Boolean
 			{
-				try
+				return try
 				{
 					_doInBackground()
+					true
 				}
 				catch (e: Exception)
 				{
 					Log.e("$LOG_TAG._notifyScreenshot", "Failed", e)
+					false
+				}
+			}
+
+			override fun onPostExecute(result: Boolean)
+			{
+				if (!result)
+				{
 					_onFailureFallback()
 				}
 			}
