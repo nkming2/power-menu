@@ -107,7 +107,18 @@ object SystemHelper
 						l(ScreenshotError.NO_ERROR, filepath)
 					}
 				}},
-				onFailure = {exitCode, output -> l(false, "")})
+				onFailure = {exitCode, output ->
+				run{
+					// screencap failed
+					try
+					{
+						// Remove the 0B file left behind
+						File(output[1]).delete()
+					}
+					catch (e: Exception)
+					{}
+					l(ScreenshotError.SCREENCAP_FAILURE, "")
+				}})
 	}
 
 	@JvmStatic
