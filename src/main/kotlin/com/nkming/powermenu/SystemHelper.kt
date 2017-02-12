@@ -82,12 +82,12 @@ object SystemHelper
 				"save_dir=\${EXTERNAL_STORAGE}/Pictures/Screenshots",
 				"mkdir -p \${save_dir}",
 				"/system/bin/screencap -p \${save_dir}/$filename",
-				"echo \":)\"",
+				"echo $?",
 				"echo \${save_dir}/$filename")
 		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isNotEmpty()
-								&& output[0] == ":)")},
+								&& output[0] == "0")},
 				onSuccess = {exitCode, output ->
 				run{
 					val filepath = output[1]
