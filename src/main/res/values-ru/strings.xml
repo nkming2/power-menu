@@ -7,7 +7,8 @@
 	<string name="sleep_fail">Ошибка режима сна, пожалуйста, сообщите</string>
 	<string name="restart_fail">Ошибка перезагрузки, не установлен в качестве системного приложения?</string>
 	<string name="soft_reboot_fail">Ошибка мягкой перезагрузки, пожалуйста, сообщите</string>
-	<string name="screenshot_fail">Не удался скриншот, попробуйте отключить монтирование разделение пространства в SuperSU</string>
+	<string name="screenshot_fail_file">Не удался скриншот, попробуйте отключить монтирование разделение пространства в SuperSU</string>
+	<string name="screenshot_fail_screencap">Failed taking screenshot</string>
 	<string name="start_activity_fail">Ошибка активации запуска, пожалуйста, сообщите</string>
 	<string name="su_failed">Ошибка запуска команды su, нет рута?</string>
 	<string name="screenshot_succeed_fallback">Screenshot captured</string>
