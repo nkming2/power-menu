@@ -247,16 +247,25 @@ class MainFragment : Fragment()
 			activity.finish()
 
 			var rotation = 0
-			val l = fun (isSuccessful: Boolean, filepath: String?)
+			val l = fun (error: SystemHelper.ScreenshotError, filepath: String?)
 			{
-				if (isSuccessful)
+				if (error == SystemHelper.ScreenshotError.NO_ERROR)
 				{
-					_screenshotHandler.onScreenshotSuccess(filepath!!, rotation)
+					_screenshotHandler.onScreenshotSuccess(filepath!!,
+							rotation)
 				}
 				else
 				{
-					Toast.makeText(_appContext, R.string.screenshot_fail,
-							Toast.LENGTH_LONG).show()
+					val textId = if (error
+							== SystemHelper.ScreenshotError.SCREENCAP_FAILURE)
+					{
+						R.string.screenshot_fail_screencap
+					}
+					else
+					{
+						R.string.screenshot_fail_file
+					}
+					Toast.makeText(_appContext, textId, Toast.LENGTH_LONG).show()
 				}
 			}
 

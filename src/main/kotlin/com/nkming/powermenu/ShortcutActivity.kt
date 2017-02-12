@@ -126,16 +126,24 @@ class ScreenshotActivity : AppCompatActivity()
 		val screenshotHandler = ScreenshotHandler(appContext)
 		SystemHelper.screenshot(appContext,
 		{
-			isSuccessful, filepath ->
+			error, filepath ->
 			run{
-				if (isSuccessful)
+				if (error == SystemHelper.ScreenshotError.NO_ERROR)
 				{
 					screenshotHandler.onScreenshotSuccess(filepath, rotation)
 				}
 				else
 				{
-					Toast.makeText(appContext, R.string.screenshot_fail,
-							Toast.LENGTH_LONG).show()
+					val textId = if (error
+							== SystemHelper.ScreenshotError.SCREENCAP_FAILURE)
+					{
+						R.string.screenshot_fail_screencap
+					}
+					else
+					{
+						R.string.screenshot_fail_file
+					}
+					Toast.makeText(appContext, textId, Toast.LENGTH_LONG).show()
 				}
 			}
 		})

@@ -19,6 +19,13 @@ object SystemHelper
 		BOOTLOADER
 	}
 
+	enum class ScreenshotError
+	{
+		NO_ERROR,
+		SCREENCAP_FAILURE,
+		FILE_FAILURE,
+	}
+
 	@JvmStatic
 	fun shutdown(context: Context, l: (isSuccessful: Boolean) -> Unit)
 	{
@@ -65,7 +72,7 @@ object SystemHelper
 
 	@JvmStatic
 	fun screenshot(context: Context,
-			l: (isSuccessful: Boolean, filepath: String) -> Unit)
+			l: (error: ScreenshotError, filepath: String) -> Unit)
 	{
 		val filename = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
 		{
@@ -91,7 +98,14 @@ object SystemHelper
 				onSuccess = {exitCode, output ->
 				run{
 					val filepath = output[1]
-					l(File(filepath).exists(), filepath)
+					if (!File(filepath).exists())
+					{
+						l(ScreenshotError.FILE_FAILURE, filepath)
+					}
+					else
+					{
+						l(ScreenshotError.NO_ERROR, filepath)
+					}
 				}},
 				onFailure = {exitCode, output -> l(false, "")})
 	}
