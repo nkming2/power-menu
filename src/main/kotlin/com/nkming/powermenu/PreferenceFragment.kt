@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.preference.CheckBoxPreference
 import android.preference.Preference
 import android.view.View
 import android.widget.TextView
@@ -81,10 +82,37 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 
 	private fun _init()
 	{
+		_initEnablePersistentViewPref()
 		_initAlphaPref()
 		_initInstallPref()
 		_initSoftRebootPref()
 		_initAbout()
+	}
+
+	private fun _initEnablePersistentViewPref()
+	{
+		val pref = findPreference(getString(R.string.pref_persistent_view_key))
+				as CheckBoxPreference
+		// User removed our permission since last run
+		if (!PermissionUtils.hasSystemAlertWindow(activity))
+		{
+			pref.isChecked = false
+		}
+		// Click again after just granting permission
+		pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener{
+				preference, newValue ->
+				run{
+					if (newValue as Boolean
+							&& !PermissionUtils.hasSystemAlertWindow(activity))
+					{
+						PermissionUtils.requestSystemAlertWindow(activity)
+						false
+					}
+					else
+					{
+						true
+					}
+				}}
 	}
 
 	private fun _initAlphaPref()
