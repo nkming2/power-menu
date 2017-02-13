@@ -13,6 +13,7 @@
 	<string name="su_failed">Ошибка запуска команды su, нет рута?</string>
 	<string name="screenshot_succeed_fallback">Screenshot captured</string>
 	<string name="overlay_permission_required">Please grant us permission to draw over other apps</string>
+	<string name="write_storage_required">Please grant us permission in order to take screenshots</string>
 
 	<string name="restart_mode_normal">Перезагрузка</string>
 	<string name="restart_mode_normal_or_soft">Перезагрузка (удерживайте для мягкой перезагрузки)</string>

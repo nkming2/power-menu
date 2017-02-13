@@ -37,6 +37,17 @@ class MainFragment : Fragment()
 		return _root
 	}
 
+	override fun onActivityCreated(savedInstanceState: Bundle?)
+	{
+		super.onActivityCreated(savedInstanceState)
+		if (!PermissionUtils.hasWriteExternalStorage(context))
+		{
+			// We can still work without this permission, so no need to care
+			// about the results
+			PermissionUtils.requestWriteExternalStorage(activity)
+		}
+	}
+
 	override fun onStop()
 	{
 		super.onStop()
