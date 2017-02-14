@@ -40,6 +40,21 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 		super.onResume()
 		preferenceManager.sharedPreferences
 				.registerOnSharedPreferenceChangeListener(this)
+		if (_prefFile.hasRequestOverlayPermission
+				&& !_persistentViewPref.isChecked
+				&& PermissionUtils.hasSystemAlertWindow(activity))
+		{
+			// Permission requested and granted
+			_persistentViewPref.isChecked = true
+			PermissionUtils.forceRequestSystemAlertWindowNextTime(activity)
+		}
+		else if (_persistentViewPref.isChecked
+				&& !PermissionUtils.hasSystemAlertWindow(activity))
+		{
+			// User revoked our permission
+			_persistentViewPref.isChecked = false
+			PermissionUtils.forceRequestSystemAlertWindowNextTime(activity)
+		}
 	}
 
 	override fun onPause()
@@ -91,28 +106,22 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 
 	private fun _initEnablePersistentViewPref()
 	{
-		val pref = findPreference(getString(R.string.pref_persistent_view_key))
-				as CheckBoxPreference
-		// User removed our permission since last run
-		if (!PermissionUtils.hasSystemAlertWindow(activity))
-		{
-			pref.isChecked = false
-		}
-		// Click again after just granting permission
-		pref.onPreferenceChangeListener = Preference.OnPreferenceChangeListener{
-				preference, newValue ->
-				run{
-					if (newValue as Boolean
-							&& !PermissionUtils.hasSystemAlertWindow(activity))
-					{
-						PermissionUtils.requestSystemAlertWindow(activity)
-						false
-					}
-					else
-					{
-						true
-					}
-				}}
+		val l = Preference.OnPreferenceChangeListener{preference, newValue ->
+		run{
+			// User modified preference, could request again
+			PermissionUtils.forceRequestSystemAlertWindowNextTime(activity)
+			if (newValue as Boolean
+					&& !PermissionUtils.hasSystemAlertWindow(activity))
+			{
+				PermissionUtils.requestSystemAlertWindow(activity)
+				false
+			}
+			else
+			{
+				true
+			}
+		}}
+		_persistentViewPref.onPreferenceChangeListener = l
 	}
 
 	private fun _initAlphaPref()
@@ -202,4 +211,8 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 			SystemOverrideService.stop(activity)
 		}
 	}
+
+	private val _prefFile by lazy{com.nkming.powermenu.Preference.from(activity)}
+	private val _persistentViewPref by lazy{findPreference(getString(
+			R.string.pref_persistent_view_key)) as CheckBoxPreference}
 }

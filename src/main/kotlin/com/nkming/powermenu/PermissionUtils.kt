@@ -29,6 +29,16 @@ object PermissionUtils
 
 	fun requestSystemAlertWindow(context: Context)
 	{
+		// We don't want to keep bothering the user -- if permission is
+		// explicitly rejected, we won't ask again
+		val pref = Preference.from(context)
+		if (!shouldRequestSystemAlertWindow(context, pref))
+		{
+			Log.d("$LOG_TAG.requestSystemAlertWindow",
+					"Requested permission already, skipping")
+			return
+		}
+
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
 		{
 			Log.w("$LOG_TAG.requestSystemAlertWindow", "Invoking method on M-")
@@ -41,6 +51,19 @@ object PermissionUtils
 		val i = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
 		i.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
 		context.startActivity(i)
+
+		pref.hasRequestOverlayPermission = true
+		pref.apply()
+	}
+
+	fun forceRequestSystemAlertWindowNextTime(context: Context)
+	{
+		val pref = Preference.from(context)
+		if (pref.hasRequestOverlayPermission)
+		{
+			pref.hasRequestOverlayPermission = false
+			pref.apply()
+		}
 	}
 
 	fun hasWriteExternalStorage(context: Context): Boolean
@@ -59,4 +82,10 @@ object PermissionUtils
 	}
 
 	private val LOG_TAG = PermissionUtils::class.java.canonicalName
+
+	private fun shouldRequestSystemAlertWindow(context: Context,
+			pref: Preference): Boolean
+	{
+		return !pref.hasRequestOverlayPermission
+	}
 }
