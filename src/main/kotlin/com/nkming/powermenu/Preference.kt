@@ -120,7 +120,7 @@ class Preference(pref: SharedPreferences, context: Context)
 			R.string.pref_confirm_key)}
 
 	private val _requestOverlayPermissionKey by lazy{_context.getString(
-			R.string.pref_request_overlay_permission)}
+			R.string.pref_request_overlay_permission_key)}
 
 	private val _context = context
 	private val _pref = pref

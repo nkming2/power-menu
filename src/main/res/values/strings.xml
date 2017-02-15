@@ -87,7 +87,7 @@
 
 	<string name="pref_about_category">About</string>
 
-	<string name="pref_request_overlay_permission">request_overlay_permission</string>
+	<string name="pref_request_overlay_permission_key" translatable="false">request_overlay_permission</string>
 
 	<string name="about_version_key" translatable="false">version</string>
 	<string name="about_version_title">Version</string>
