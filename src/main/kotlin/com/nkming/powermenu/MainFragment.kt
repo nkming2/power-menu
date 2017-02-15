@@ -14,14 +14,10 @@ import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
-import android.widget.Toast
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.Theme
 import com.shamanland.fab.FloatingActionButton
 
 class MainFragment : Fragment()
@@ -126,50 +122,25 @@ class MainFragment : Fragment()
 
 	private fun _onShutdownClick()
 	{
-		val pref = Preference.from(context)
-		if (pref.isConfirmAction)
+		val action = object: ShutdownAction(_appContext, activity)
 		{
-			_confirmDialog?.cancel()
-			_confirmDialog = MaterialDialog.Builder(context)
-					.title(R.string.shutdown_confirm_title)
-					.content(R.string.shutdown_confirm_content)
-					.theme(Theme.LIGHT)
-					.positiveText(android.R.string.yes)
-					.onPositive({materialDialog, dialogAction -> _doShutdown()})
-					.negativeText(android.R.string.no)
-					.build()
-			_confirmDialog?.show()
-		}
-		else
-		{
-			_doShutdown()
-		}
-	}
-
-	private fun _doShutdown()
-	{
-		_startReveal(_shutdownBtn.btn, R.color.shutdown_bg, true,
-		{
-			// App probably closed
-			if (activity == null)
+			override fun onPostConfirm()
 			{
-				return@_startReveal
-			}
-			SystemHelper.shutdown(_appContext,
-			{
-				if (!it)
+				_startReveal(_shutdownBtn.btn, R.color.shutdown_bg, true,
 				{
-					Toast.makeText(_appContext, R.string.shutdown_fail,
-							Toast.LENGTH_LONG).show()
-					activity?.finish()
-				}
-			})
-		})
+					activity ?: return@_startReveal
+					super.onPostConfirm()
+				})
 
-		_shutdownBtn.btn.isShadow = false
-		_dismissOtherBounds(_shutdownBtn)
-		// Disable all click bounds
-		_disableOtherBounds(null as ActionButtonMeta?)
+				_shutdownBtn.btn.isShadow = false
+				_dismissOtherBounds(_shutdownBtn)
+				// Disable all click bounds
+				_disableOtherBounds(null as ActionButtonMeta?)
+			}
+		}
+		// If succeeded, we'll get killed anyway
+		action.onFailed = {activity?.finish()}
+		action()
 	}
 
 	private fun _onSleepClick()
@@ -189,16 +160,13 @@ class MainFragment : Fragment()
 
 		// Sleep will run on a new thread and involve su, that takes quite some
 		// time so do it at once
-		SystemHelper.sleep(_appContext,
+		val action = SleepAction(_appContext)
+		action.onFailed =
 		{
-			if (!it)
-			{
-				Toast.makeText(_appContext, R.string.sleep_fail,
-						Toast.LENGTH_LONG).show()
-				activity?.finish()
-				activity?.unregisterReceiver(receiver)
-			}
-		})
+			activity?.finish()
+			activity?.unregisterReceiver(receiver)
+		}
+		action()
 
 		_sleepBtn.btn.isShadow = false
 		_dismissOtherBounds(_sleepBtn)
@@ -246,29 +214,6 @@ class MainFragment : Fragment()
 			}
 			activity.finish()
 
-			var rotation = 0
-			val l = fun (error: SystemHelper.ScreenshotError, filepath: String?)
-			{
-				if (error == SystemHelper.ScreenshotError.NO_ERROR)
-				{
-					_screenshotHandler.onScreenshotSuccess(filepath!!,
-							rotation)
-				}
-				else
-				{
-					val textId = if (error
-							== SystemHelper.ScreenshotError.SCREENCAP_FAILURE)
-					{
-						R.string.screenshot_fail_screencap
-					}
-					else
-					{
-						R.string.screenshot_fail_file
-					}
-					Toast.makeText(_appContext, textId, Toast.LENGTH_LONG).show()
-				}
-			}
-
 			val receiver = object: BroadcastReceiver()
 			{
 				override fun onReceive(context: Context?, intent: Intent?)
@@ -278,10 +223,7 @@ class MainFragment : Fragment()
 
 					_handler.postDelayed(
 					{
-						val wm = _appContext.getSystemService(
-								Context.WINDOW_SERVICE) as WindowManager
-						rotation = wm.defaultDisplay.rotation
-						SystemHelper.screenshot(_appContext, l)
+						ScreenshotAction(_appContext)()
 					}, close_duration)
 				}
 			}
@@ -297,52 +239,25 @@ class MainFragment : Fragment()
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
 			rebootMode: SystemHelper.RebootMode)
 	{
-		val pref = Preference.from(context)
-		if (pref.isConfirmAction)
+		val action = object: RebootAction(_appContext, activity, rebootMode)
 		{
-			_confirmDialog?.cancel()
-			_confirmDialog = MaterialDialog.Builder(context)
-					.title(R.string.restart_confirm_title)
-					.content(R.string.restart_confirm_content)
-					.theme(Theme.LIGHT)
-					.positiveText(android.R.string.yes)
-					.onPositive({materialDialog, dialogAction -> _doRestart(meta,
-							rebootMode)})
-					.negativeText(android.R.string.no)
-					.build()
-			_confirmDialog?.show()
-		}
-		else
-		{
-			_doRestart(meta, rebootMode)
-		}
-	}
-
-	private fun _doRestart(meta: RestartButtonMeta,
-			rebootMode: SystemHelper.RebootMode)
-	{
-		_startReveal(meta.btn, R.color.restart_bg, true,
-		{
-			// App probably closed
-			if (activity == null)
+			override fun onPostConfirm()
 			{
-				return@_startReveal
-			}
-			SystemHelper.reboot(rebootMode, _appContext,
-			{
-				if (!it)
+				_startReveal(meta.btn, R.color.restart_bg, true,
 				{
-					Toast.makeText(_appContext, R.string.restart_fail,
-							Toast.LENGTH_LONG).show()
-					activity?.finish()
-				}
-			})
-		})
+					activity ?: return@_startReveal
+					super.onPostConfirm()
+				})
 
-		meta.btn.isShadow = false
-		_dismissOtherBounds(meta)
-		_dismissOtherLabels(null)
-		_disableOtherBounds(null as RestartButtonMeta?)
+				meta.btn.isShadow = false
+				_dismissOtherBounds(meta)
+				_dismissOtherLabels(null)
+				_disableOtherBounds(null as RestartButtonMeta?)
+			}
+		}
+		// If succeeded, we'll get killed anyway
+		action.onFailed = {activity?.finish()}
+		action()
 	}
 
 	private fun _onRestartNormalClick()
@@ -352,52 +267,25 @@ class MainFragment : Fragment()
 
 	private fun _onRestartNormalLongClick()
 	{
-		val pref = Preference.from(context)
-		if (pref.isConfirmAction)
+		val action = object: SoftRebootAction(_appContext, activity)
 		{
-			_confirmDialog?.cancel()
-			_confirmDialog = MaterialDialog.Builder(context)
-					.title(R.string.restart_confirm_title)
-					.content(R.string.restart_confirm_content)
-					.theme(Theme.LIGHT)
-					.positiveText(android.R.string.yes)
-					.onPositive({materialDialog, dialogAction -> _doSoftRestart()})
-					.negativeText(android.R.string.no)
-					.build()
-			_confirmDialog?.show()
-		}
-		else
-		{
-			_doSoftRestart()
-		}
-	}
-
-	private fun _doSoftRestart()
-	{
-		val l = fun (isSuccessful: Boolean)
-		{
-			if (!isSuccessful)
+			override fun onPostConfirm()
 			{
-				Toast.makeText(_appContext, R.string.soft_reboot_fail,
-						Toast.LENGTH_LONG).show();
-				activity?.finish();
-			}
-			// If succeeded, we'll get killed anyway
-		}
-		_startReveal(_restartNormalBtn.btn, R.color.restart_bg, true,
-		{
-			// App probably closed
-			if (activity == null)
-			{
-				return@_startReveal
-			}
-			SystemHelper.killZygote(activity, l)
-		})
+				_startReveal(_restartNormalBtn.btn, R.color.restart_bg, true,
+				{
+					activity ?: return@_startReveal
+					super.onPostConfirm()
+				})
 
-		_restartNormalBtn.btn.isShadow = false
-		_dismissOtherBounds(_restartNormalBtn)
-		_dismissOtherLabels(null)
-		_disableOtherBounds(null as RestartButtonMeta?)
+				_restartNormalBtn.btn.isShadow = false
+				_dismissOtherBounds(_restartNormalBtn)
+				_dismissOtherLabels(null)
+				_disableOtherBounds(null as RestartButtonMeta?)
+			}
+		}
+		// If succeeded, we'll get killed anyway
+		action.onFailed = {activity?.finish()}
+		action()
 	}
 
 	private fun _onRestartRecoveryClick()
@@ -580,7 +468,6 @@ class MainFragment : Fragment()
 
 	private val _appContext by lazy({activity.applicationContext})
 	private val _handler by lazy({Handler()})
-	private val _screenshotHandler by lazy({ScreenshotHandler(_appContext)})
 
 	private lateinit var _root: View
 	private val _actionBtns by lazy(

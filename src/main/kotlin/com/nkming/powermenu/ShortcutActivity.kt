@@ -1,26 +1,16 @@
 package com.nkming.powermenu
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.WindowManager
-import android.widget.Toast
 
 class ShutdownActivity : AppCompatActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val appContext = applicationContext
-		SystemHelper.shutdown(appContext,
-		{
-			if (!it)
-			{
-				Toast.makeText(appContext, R.string.shutdown_fail,
-						Toast.LENGTH_LONG).show()
-			}
-		})
-		finish()
+		val action = ShutdownAction(applicationContext, this)
+		action.onDone = {finish()}
+		action()
 	}
 }
 
@@ -29,16 +19,10 @@ class RebootActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val appContext = applicationContext
-		SystemHelper.reboot(SystemHelper.RebootMode.NORMAL, appContext,
-		{
-			if (!it)
-			{
-				Toast.makeText(appContext, R.string.restart_fail,
-						Toast.LENGTH_LONG).show()
-			}
-		})
-		finish()
+		val action = RebootAction(applicationContext, this,
+				SystemHelper.RebootMode.NORMAL)
+		action.onDone = {finish()}
+		action()
 	}
 }
 
@@ -47,16 +31,10 @@ class RebootRecoveryActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val appContext = applicationContext
-		SystemHelper.reboot(SystemHelper.RebootMode.RECOVERY, appContext,
-		{
-			if (!it)
-			{
-				Toast.makeText(appContext, R.string.restart_fail,
-						Toast.LENGTH_LONG).show()
-			}
-		})
-		finish()
+		val action = RebootAction(applicationContext, this,
+				SystemHelper.RebootMode.RECOVERY)
+		action.onDone = {finish()}
+		action()
 	}
 }
 
@@ -65,16 +43,10 @@ class RebootBootloaderActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val appContext = applicationContext
-		SystemHelper.reboot(SystemHelper.RebootMode.BOOTLOADER, appContext,
-		{
-			if (!it)
-			{
-				Toast.makeText(appContext, R.string.restart_fail,
-						Toast.LENGTH_LONG).show()
-			}
-		})
-		finish()
+		val action = RebootAction(applicationContext, this,
+				SystemHelper.RebootMode.BOOTLOADER)
+		action.onDone = {finish()}
+		action()
 	}
 }
 
@@ -83,16 +55,9 @@ class SoftRebootActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val appContext = applicationContext
-		SystemHelper.killZygote(appContext,
-		{
-			if (!it)
-			{
-				Toast.makeText(appContext, R.string.soft_reboot_fail,
-						Toast.LENGTH_LONG).show();
-			}
-		})
-		finish()
+		val action = SoftRebootAction(applicationContext, this)
+		action.onDone = {finish()}
+		action()
 	}
 }
 
@@ -101,15 +66,7 @@ class SleepActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val appContext = applicationContext
-		SystemHelper.sleep(appContext,
-		{
-			if (!it)
-			{
-				Toast.makeText(appContext, R.string.sleep_fail,
-						Toast.LENGTH_LONG).show()
-			}
-		})
+		SleepAction(applicationContext)()
 		finish()
 	}
 }
@@ -119,34 +76,7 @@ class ScreenshotActivity : AppCompatActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val appContext = applicationContext
-		val wm = appContext.getSystemService(Context.WINDOW_SERVICE)
-				as WindowManager
-		val rotation = wm.defaultDisplay.rotation
-		val screenshotHandler = ScreenshotHandler(appContext)
-		SystemHelper.screenshot(appContext,
-		{
-			error, filepath ->
-			run{
-				if (error == SystemHelper.ScreenshotError.NO_ERROR)
-				{
-					screenshotHandler.onScreenshotSuccess(filepath, rotation)
-				}
-				else
-				{
-					val textId = if (error
-							== SystemHelper.ScreenshotError.SCREENCAP_FAILURE)
-					{
-						R.string.screenshot_fail_screencap
-					}
-					else
-					{
-						R.string.screenshot_fail_file
-					}
-					Toast.makeText(appContext, textId, Toast.LENGTH_LONG).show()
-				}
-			}
-		})
+		ScreenshotAction(applicationContext)()
 		finish()
 	}
 }
