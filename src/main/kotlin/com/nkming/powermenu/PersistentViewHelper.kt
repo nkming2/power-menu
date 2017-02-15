@@ -7,18 +7,17 @@ object PersistentViewHelper
 	@JvmStatic
 	fun startIfNecessary(context: Context): Boolean
 	{
-		val pref = context.getSharedPreferences(context.getString(
-				R.string.pref_file), Context.MODE_PRIVATE)
-		if (pref.getBoolean(context.getString(R.string.pref_persistent_view_key),
-				false) && !com.nkming.utils.widget.PersistentService.isRunning())
+		val pref = Preference.from(context)
+		if (pref.isPersistentViewEnabled
+				&& !com.nkming.utils.widget.PersistentService.isRunning())
 		{
-			Log.d("$LOG_TAG.startIfNecessary", "Starting service")
 			if (!ensurePermission(context))
 			{
 				return false
 			}
 			else
 			{
+				Log.d("$LOG_TAG.startIfNecessary", "Starting service")
 				PersistentService.start(context)
 				return true
 			}
@@ -36,6 +35,7 @@ object PersistentViewHelper
 		}
 		else
 		{
+			Log.d("$LOG_TAG.ensurePermission", "Missing overlay permission")
 			PermissionUtils.requestSystemAlertWindow(context)
 			return false
 		}
