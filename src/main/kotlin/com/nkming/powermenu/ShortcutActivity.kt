@@ -1,9 +1,9 @@
 package com.nkming.powermenu
 
+import android.app.Activity
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 
-class ShutdownActivity : AppCompatActivity()
+class ShutdownActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -14,7 +14,7 @@ class ShutdownActivity : AppCompatActivity()
 	}
 }
 
-class RebootActivity : AppCompatActivity()
+class RebootActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -26,7 +26,7 @@ class RebootActivity : AppCompatActivity()
 	}
 }
 
-class RebootRecoveryActivity : AppCompatActivity()
+class RebootRecoveryActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -38,7 +38,7 @@ class RebootRecoveryActivity : AppCompatActivity()
 	}
 }
 
-class RebootBootloaderActivity : AppCompatActivity()
+class RebootBootloaderActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -50,7 +50,7 @@ class RebootBootloaderActivity : AppCompatActivity()
 	}
 }
 
-class SoftRebootActivity : AppCompatActivity()
+class SoftRebootActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -61,7 +61,7 @@ class SoftRebootActivity : AppCompatActivity()
 	}
 }
 
-class SleepActivity : AppCompatActivity()
+class SleepActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -71,7 +71,7 @@ class SleepActivity : AppCompatActivity()
 	}
 }
 
-class ScreenshotActivity : AppCompatActivity()
+class ScreenshotActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
