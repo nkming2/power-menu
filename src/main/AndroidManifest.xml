@@ -87,6 +87,83 @@
 			</intent-filter>
 		</receiver>
 
+		<service
+			android:name=".ShutdownService"
+			android:label="@string/activity_label_shutdown"
+			android:icon="@drawable/ic_action_shutdown"
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+			<intent-filter>
+				<action android:name="android.service.quicksettings.action.QS_TILE" />
+			</intent-filter>
+		</service>
+
+		<service
+			android:name=".RebootService"
+			android:label="@string/activity_label_reboot"
+			android:icon="@drawable/ic_action_restart"
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+			<intent-filter>
+				<action android:name="android.service.quicksettings.action.QS_TILE" />
+			</intent-filter>
+		</service>
+
+		<service
+			android:name=".RebootRecoveryService"
+			android:label="@string/activity_label_reboot_recovery"
+			android:icon="@drawable/ic_action_restart_recovery"
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+			<intent-filter>
+				<action android:name="android.service.quicksettings.action.QS_TILE" />
+			</intent-filter>
+		</service>
+
+		<service
+			android:name=".RebootBootloaderService"
+			android:label="@string/activity_label_reboot_bootloader"
+			android:icon="@drawable/ic_action_restart_bootloader"
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+			<intent-filter>
+				<action android:name="android.service.quicksettings.action.QS_TILE" />
+			</intent-filter>
+		</service>
+
+		<service
+			android:name=".SoftRebootService"
+			android:label="@string/activity_label_soft_reboot"
+			android:icon="@drawable/ic_action_restart"
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+			<intent-filter>
+				<action android:name="android.service.quicksettings.action.QS_TILE" />
+			</intent-filter>
+		</service>
+
+		<service
+			android:name=".SleepTileService"
+			android:label="@string/activity_label_sleep"
+			android:icon="@drawable/ic_action_sleep"
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+			<intent-filter>
+				<action android:name="android.service.quicksettings.action.QS_TILE" />
+			</intent-filter>
+		</service>
+
+		<service
+			android:name=".ScreenshotTileService"
+			android:label="@string/activity_label_screenshot"
+			android:icon="@drawable/ic_action_screenshot"
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+			<intent-filter>
+				<action android:name="android.service.quicksettings.action.QS_TILE" />
+			</intent-filter>
+		</service>
+
 		<activity
 			android:name=".ShutdownActivity"
 			android:label="@string/activity_label_shutdown"
