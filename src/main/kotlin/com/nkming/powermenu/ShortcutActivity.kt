@@ -10,6 +10,7 @@ class ShutdownActivity : Activity()
 		super.onCreate(savedInstanceState)
 		val action = ShutdownAction(applicationContext, this)
 		action.onDone = {finish()}
+		action.onCancel = {finish()}
 		action()
 	}
 }
@@ -22,6 +23,7 @@ class RebootActivity : Activity()
 		val action = RebootAction(applicationContext, this,
 				SystemHelper.RebootMode.NORMAL)
 		action.onDone = {finish()}
+		action.onCancel = {finish()}
 		action()
 	}
 }
@@ -34,6 +36,7 @@ class RebootRecoveryActivity : Activity()
 		val action = RebootAction(applicationContext, this,
 				SystemHelper.RebootMode.RECOVERY)
 		action.onDone = {finish()}
+		action.onCancel = {finish()}
 		action()
 	}
 }
@@ -46,6 +49,7 @@ class RebootBootloaderActivity : Activity()
 		val action = RebootAction(applicationContext, this,
 				SystemHelper.RebootMode.BOOTLOADER)
 		action.onDone = {finish()}
+		action.onCancel = {finish()}
 		action()
 	}
 }
@@ -57,6 +61,7 @@ class SoftRebootActivity : Activity()
 		super.onCreate(savedInstanceState)
 		val action = SoftRebootAction(applicationContext, this)
 		action.onDone = {finish()}
+		action.onCancel = {finish()}
 		action()
 	}
 }

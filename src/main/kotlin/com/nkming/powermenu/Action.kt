@@ -42,6 +42,8 @@ abstract class DangerousAction(appContext: Context, activity: Activity)
 			return pref.isConfirmAction
 		}
 
+	var onCancel: (() -> Unit)? = null
+
 	protected abstract fun buildConfirmDialog(onPositive: () -> Unit): Dialog
 	protected abstract fun onPostConfirm()
 
@@ -58,8 +60,10 @@ open class ShutdownAction(appContext: Context, activity: Activity)
 				.content(R.string.shutdown_confirm_content)
 				.theme(Theme.LIGHT)
 				.positiveText(android.R.string.yes)
-				.onPositive({materialDialog, dialogAction -> onPositive()})
+				.onPositive{materialDialog, dialogAction -> onPositive()}
 				.negativeText(android.R.string.no)
+				.onNegative{materialDialog, dialogAction -> onCancel?.invoke()}
+				.cancelListener{onCancel?.invoke()}
 				.build()
 	}
 
@@ -93,8 +97,10 @@ open class RebootAction(appContext: Context, activity: Activity,
 				.content(R.string.restart_confirm_content)
 				.theme(Theme.LIGHT)
 				.positiveText(android.R.string.yes)
-				.onPositive({materialDialog, dialogAction -> onPositive()})
+				.onPositive{materialDialog, dialogAction -> onPositive()}
 				.negativeText(android.R.string.no)
+				.onNegative{materialDialog, dialogAction -> onCancel?.invoke()}
+				.cancelListener{onCancel?.invoke()}
 				.build()
 	}
 
@@ -129,8 +135,10 @@ open class SoftRebootAction(appContext: Context, activity: Activity)
 				.content(R.string.restart_confirm_content)
 				.theme(Theme.LIGHT)
 				.positiveText(android.R.string.yes)
-				.onPositive({materialDialog, dialogAction -> onPositive()})
+				.onPositive{materialDialog, dialogAction -> onPositive()}
 				.negativeText(android.R.string.no)
+				.onNegative{materialDialog, dialogAction -> onCancel?.invoke()}
+				.cancelListener{onCancel?.invoke()}
 				.build()
 	}
 
