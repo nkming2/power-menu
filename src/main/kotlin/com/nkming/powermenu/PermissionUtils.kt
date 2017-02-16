@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
 
@@ -78,6 +79,14 @@ object PermissionUtils
 		Toast.makeText(activity, R.string.write_storage_required,
 				Toast.LENGTH_LONG).show()
 		ActivityCompat.requestPermissions(activity,
+				arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), reqCode)
+	}
+
+	fun requestWriteExternalStorage(frag: Fragment, reqCode: Int = 1)
+	{
+		Toast.makeText(frag.context, R.string.write_storage_required,
+				Toast.LENGTH_LONG).show()
+		frag.requestPermissions(
 				arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), reqCode)
 	}
 
