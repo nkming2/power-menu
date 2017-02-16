@@ -8,11 +8,18 @@ class ShutdownActivity : Activity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val action = ShutdownAction(applicationContext, this)
-		action.onDone = {finish()}
-		action.onCancel = {finish()}
-		action()
+		_action.onDone = {finish()}
+		_action.onCancel = {finish()}
+		_action()
 	}
+
+	override fun onStop()
+	{
+		super.onStop()
+		_action.dismissConfirm()
+	}
+
+	private val _action by lazy{ShutdownAction(applicationContext, this)}
 }
 
 class RebootActivity : Activity()
@@ -20,12 +27,19 @@ class RebootActivity : Activity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val action = RebootAction(applicationContext, this,
-				SystemHelper.RebootMode.NORMAL)
-		action.onDone = {finish()}
-		action.onCancel = {finish()}
-		action()
+		_action.onDone = {finish()}
+		_action.onCancel = {finish()}
+		_action()
 	}
+
+	override fun onStop()
+	{
+		super.onStop()
+		_action.dismissConfirm()
+	}
+
+	private val _action by lazy{RebootAction(applicationContext, this,
+			SystemHelper.RebootMode.NORMAL)}
 }
 
 class RebootRecoveryActivity : Activity()
@@ -33,12 +47,19 @@ class RebootRecoveryActivity : Activity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val action = RebootAction(applicationContext, this,
-				SystemHelper.RebootMode.RECOVERY)
-		action.onDone = {finish()}
-		action.onCancel = {finish()}
-		action()
+		_action.onDone = {finish()}
+		_action.onCancel = {finish()}
+		_action()
 	}
+
+	override fun onStop()
+	{
+		super.onStop()
+		_action.dismissConfirm()
+	}
+
+	private val _action by lazy{RebootAction(applicationContext, this,
+			SystemHelper.RebootMode.RECOVERY)}
 }
 
 class RebootBootloaderActivity : Activity()
@@ -46,12 +67,19 @@ class RebootBootloaderActivity : Activity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val action = RebootAction(applicationContext, this,
-				SystemHelper.RebootMode.BOOTLOADER)
-		action.onDone = {finish()}
-		action.onCancel = {finish()}
-		action()
+		_action.onDone = {finish()}
+		_action.onCancel = {finish()}
+		_action()
 	}
+
+	override fun onStop()
+	{
+		super.onStop()
+		_action.dismissConfirm()
+	}
+
+	private val _action by lazy{RebootAction(applicationContext, this,
+			SystemHelper.RebootMode.BOOTLOADER)}
 }
 
 class SoftRebootActivity : Activity()
@@ -59,11 +87,18 @@ class SoftRebootActivity : Activity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
-		val action = SoftRebootAction(applicationContext, this)
-		action.onDone = {finish()}
-		action.onCancel = {finish()}
-		action()
+		_action.onDone = {finish()}
+		_action.onCancel = {finish()}
+		_action()
 	}
+
+	override fun onStop()
+	{
+		super.onStop()
+		_action.dismissConfirm()
+	}
+
+	private val _action by lazy{SoftRebootAction(applicationContext, this)}
 }
 
 class SleepActivity : Activity()

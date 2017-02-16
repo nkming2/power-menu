@@ -28,11 +28,18 @@ abstract class DangerousAction(appContext: Context, activity: Activity)
 		{
 			val dialog = buildConfirmDialog{onPostConfirm()}
 			dialog.show()
+			_dialog = dialog
 		}
 		else
 		{
 			onPostConfirm()
 		}
+	}
+
+	fun dismissConfirm()
+	{
+		_dialog?.dismiss()
+		_dialog = null
 	}
 
 	open val shouldConfirm: Boolean
@@ -48,6 +55,8 @@ abstract class DangerousAction(appContext: Context, activity: Activity)
 	protected abstract fun onPostConfirm()
 
 	protected val _activity = activity
+
+	private var _dialog: Dialog? = null
 }
 
 open class ShutdownAction(appContext: Context, activity: Activity)

@@ -2,7 +2,6 @@ package com.nkming.powermenu
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -41,7 +40,7 @@ class MainFragment : Fragment()
 	override fun onStop()
 	{
 		super.onStop()
-		_confirmDialog?.cancel()
+		_activeDangerousAction?.dismissConfirm()
 	}
 
 	override fun onDestroy()
@@ -141,6 +140,7 @@ class MainFragment : Fragment()
 		// If succeeded, we'll get killed anyway
 		action.onFailed = {activity?.finish()}
 		action()
+		_activeDangerousAction = action
 	}
 
 	private fun _onSleepClick()
@@ -258,6 +258,7 @@ class MainFragment : Fragment()
 		// If succeeded, we'll get killed anyway
 		action.onFailed = {activity?.finish()}
 		action()
+		_activeDangerousAction = action
 	}
 
 	private fun _onRestartNormalClick()
@@ -286,6 +287,7 @@ class MainFragment : Fragment()
 		// If succeeded, we'll get killed anyway
 		action.onFailed = {activity?.finish()}
 		action()
+		_activeDangerousAction = action
 	}
 
 	private fun _onRestartRecoveryClick()
@@ -468,6 +470,7 @@ class MainFragment : Fragment()
 
 	private val _appContext by lazy({activity.applicationContext})
 	private val _handler by lazy({Handler()})
+	private var _activeDangerousAction: DangerousAction? = null
 
 	private lateinit var _root: View
 	private val _actionBtns by lazy(
@@ -540,5 +543,4 @@ class MainFragment : Fragment()
 		get() = _restartMenuBtns[2]
 
 	private val _reveal by lazy({_root.findViewById(R.id.reveal) as RevealView})
-	private var _confirmDialog: Dialog? = null
 }
