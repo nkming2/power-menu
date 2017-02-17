@@ -29,6 +29,7 @@
 			android:key="@string/pref_haptic_key"
 			android:title="@string/pref_haptic_title"
 			android:summary="@string/pref_haptic_summary"
+			android:dependency="@string/pref_persistent_view_key"
 			android:defaultValue="true" />
 	</PreferenceCategory>
 
