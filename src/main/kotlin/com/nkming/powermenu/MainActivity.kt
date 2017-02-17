@@ -4,7 +4,6 @@ import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
 
@@ -24,9 +23,6 @@ class MainActivity : AppCompatActivity()
 		}
 
 		super.onCreate(savedInstanceState)
-		PreferenceManager.setDefaultValues(this, getString(R.string.pref_file),
-				Context.MODE_PRIVATE, R.xml.preference, false)
-
 		if (!InstallHelper.isSystemApp(this))
 		{
 			InstallHelper.isPowerCommandAvailable(this,
