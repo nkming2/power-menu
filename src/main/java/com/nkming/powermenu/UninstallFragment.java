@@ -39,7 +39,7 @@ public class UninstallFragment extends DialogFragment
 	{
 		return new MaterialDialog.Builder(getActivity())
 				.title(R.string.uninstall_title)
-				.title(R.string.uninstall_content)
+				.content(R.string.uninstall_content)
 				.progress(true, 0)
 				.progressIndeterminateStyle(true)
 				.cancelable(false)
