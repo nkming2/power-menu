@@ -5,6 +5,11 @@
 	<color name="primary_light_light">@color/md_blue_grey_100</color>
 	<color name="accent_light">@color/md_red_A200</color>
 
+	<color name="primary_dark">@color/md_teal_600</color>
+	<color name="primary_dark_dark">@color/md_teal_800</color>
+	<color name="primary_light_dark">@color/md_teal_200</color>
+	<color name="accent_dark">@color/md_teal_A400</color>
+
 	<color name="app_bg">#80000000</color>
 	<color name="shutdown_primary">@color/md_red_500</color>
 	<color name="shutdown_primary_dark">@color/md_red_700</color>

@@ -1,8 +1,6 @@
 <resources>
 
-	<!-- Base application theme. -->
-	<style name="AppThemeBase" parent="Theme.AppCompat.NoActionBar">
-		<!-- Customize your theme here. -->
+	<style name="AppThemeBase.Light" parent="Theme.AppCompat.Light.NoActionBar">
 		<item name="android:windowIsTranslucent">true</item>
 		<item name="android:windowBackground">@color/app_bg</item>
 		<item name="android:windowContentOverlay">@null</item>
@@ -12,39 +10,72 @@
 		<item name="colorPrimary">@color/primary_light</item>
 		<item name="colorPrimaryDark">@color/primary_dark_light</item>
 		<item name="colorAccent">@color/accent_light</item>
+		<item name="android:textColorPrimary">?android:textColorPrimaryInverse</item>
 	</style>
+	<style name="AppTheme.Light" parent="AppThemeBase.Light" />
 
-	<style name="AppThemeKeyguardBase" parent="AppThemeBase">
+	<style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowBackground">@color/app_bg</item>
+		<item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowAnimationStyle">@style/AppTheme.Animation</item>
+
+		<item name="colorPrimary">@color/primary_dark</item>
+		<item name="colorPrimaryDark">@color/primary_dark_dark</item>
+		<item name="colorAccent">@color/accent_dark</item>
+	</style>
+	<style name="AppTheme.Dark" parent="AppThemeBase.Dark" />
+
+	<style name="AppThemeKeyguardBase.Light" parent="AppThemeBase.Light">
 		<item name="android:windowIsTranslucent">false</item>
 		<item name="android:windowShowWallpaper">true</item>
 	</style>
+	<style name="AppThemeKeyguard.Light" parent="AppThemeKeyguardBase.Light" />
 
-	<style name="AppThemeDialogBase" parent="Theme.AppCompat.Light.Dialog">
+	<style name="AppThemeKeyguardBase.Dark" parent="AppThemeBase.Dark">
+		<item name="android:windowIsTranslucent">false</item>
+		<item name="android:windowShowWallpaper">true</item>
+	</style>
+	<style name="AppThemeKeyguard.Dark" parent="AppThemeKeyguardBase.Dark" />
+
+	<style name="AppThemeBase.Light.Dialog" parent="Theme.AppCompat.Light.Dialog">
 		<item name="android:windowNoTitle">true</item>
 		<item name="windowActionBar">false</item>
-	</style>
 
-	<style name="AppThemePreferenceBase" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="colorPrimary">@color/primary_light</item>
 		<item name="colorPrimaryDark">@color/primary_dark_light</item>
 		<item name="colorAccent">@color/accent_light</item>
 	</style>
+	<style name="AppTheme.Light.Dialog" parent="AppThemeBase.Light.Dialog" />
+
+	<style name="AppThemeBase.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+		<item name="android:windowNoTitle">true</item>
+		<item name="windowActionBar">false</item>
+
+		<item name="colorPrimary">@color/primary_dark</item>
+		<item name="colorPrimaryDark">@color/primary_dark_dark</item>
+		<item name="colorAccent">@color/accent_dark</item>
+	</style>
+	<style name="AppTheme.Dark.Dialog" parent="AppThemeBase.Dark.Dialog" />
+
+	<style name="AppThemePreferenceBase.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorPrimary">@color/primary_light</item>
+		<item name="colorPrimaryDark">@color/primary_dark_light</item>
+		<item name="colorAccent">@color/accent_light</item>
+	</style>
+	<style name="AppThemePreference.Light" parent="AppThemePreferenceBase.Light" />
+
+	<style name="AppThemePreferenceBase.Dark" parent="Theme.AppCompat">
+		<item name="colorPrimary">@color/primary_dark</item>
+		<item name="colorPrimaryDark">@color/primary_dark_dark</item>
+		<item name="colorAccent">@color/accent_dark</item>
+	</style>
+	<style name="AppThemePreference.Dark" parent="AppThemePreferenceBase.Dark" />
 
 	<style name="AppTheme.Animation" parent="android:style/Animation.Activity">
 		<item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
 		<item name="android:windowEnterAnimation">@anim/activity_open_enter</item>
-	</style>
-
-	<style name="AppTheme" parent="AppThemeBase">
-	</style>
-
-	<style name="AppThemeKeyguard" parent="AppThemeKeyguardBase">
-	</style>
-
-	<style name="AppThemeDialog" parent="AppThemeDialogBase">
-	</style>
-
-	<style name="AppThemePreference" parent="AppThemePreferenceBase">
 	</style>
 
 	<style name="AppThemeNoDisplay" parent="android:style/Theme.NoDisplay">
