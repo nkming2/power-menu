@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="AppThemeNoDisplay" parent="@android:style/Theme.Translucent.NoTitleBar">
+	<style name="AppThemeNoDisplayBase23.Light" parent="@android:style/Theme.Translucent.NoTitleBar">
+		<item name="colorPrimary">@color/primary_light</item>
+		<item name="colorPrimaryDark">@color/primary_dark_light</item>
+		<item name="colorAccent">@color/accent_light</item>
 	</style>
+	<style name="AppThemeNoDisplay.Light" parent="AppThemeNoDisplayBase23.Light" />
+
+	<style name="AppThemeNoDisplayBase23.Dark" parent="@android:style/Theme.Translucent.NoTitleBar">
+		<item name="colorPrimary">@color/primary_dark</item>
+		<item name="colorPrimaryDark">@color/primary_dark_dark</item>
+		<item name="colorAccent">@color/accent_dark</item>
+	</style>
+	<style name="AppThemeNoDisplay.Dark" parent="AppThemeNoDisplayBase23.Dark" />
 </resources>

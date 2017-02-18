@@ -92,7 +92,7 @@
 			android:label="@string/activity_label_shutdown"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay"
+			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -106,7 +106,7 @@
 			android:label="@string/activity_label_reboot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay"
+			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -120,7 +120,7 @@
 			android:label="@string/activity_label_reboot_recovery"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay"
+			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -134,7 +134,7 @@
 			android:label="@string/activity_label_reboot_bootloader"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay"
+			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -148,7 +148,7 @@
 			android:label="@string/activity_label_soft_reboot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay"
+			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -162,7 +162,7 @@
 			android:label="@string/activity_label_sleep"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay"
+			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -176,7 +176,7 @@
 			android:label="@string/activity_label_screenshot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay"
+			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
