@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 
 public class UninstallFragment extends DialogFragment
 {
@@ -37,9 +38,11 @@ public class UninstallFragment extends DialogFragment
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
+		Preference pref = Preference.from(getActivity());
 		return new MaterialDialog.Builder(getActivity())
 				.title(R.string.uninstall_title)
 				.content(R.string.uninstall_content)
+				.theme(pref.isDarkTheme() ? Theme.DARK : Theme.LIGHT)
 				.progress(true, 0)
 				.progressIndeterminateStyle(true)
 				.cancelable(false)

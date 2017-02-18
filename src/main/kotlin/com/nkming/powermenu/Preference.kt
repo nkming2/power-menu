@@ -42,6 +42,21 @@ class Preference(pref: SharedPreferences, context: Context)
 		})
 	}
 
+	var onSharedPreferenceChangeListener
+			: SharedPreferences.OnSharedPreferenceChangeListener? = null
+		set(v)
+		{
+			if (field != null)
+			{
+				_pref.unregisterOnSharedPreferenceChangeListener(field)
+			}
+			if (v != null)
+			{
+				_pref.registerOnSharedPreferenceChangeListener(v)
+				field = v
+			}
+		}
+
 	var isPersistentViewEnabled: Boolean
 		get()
 		{
