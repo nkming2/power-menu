@@ -73,6 +73,11 @@
 	<string name="pref_uninstall_summary">Remove the app from system partition. Required before you could remove this app</string>
 	<string name="pref_install_key" translatable="false">install</string>
 
+	<string name="pref_dark_theme_key" translatable="false">dark_theme</string>
+	<string name="pref_dark_theme_title">Dark theme</string>
+	<string name="pref_dark_theme_summary_on">Using dark theme</string>
+	<string name="pref_dark_theme_summary_off">Using light theme</string>
+
 	<string name="pref_experimental_category">Experimental</string>
 
 	<string name="pref_soft_reboot_title">Enable soft reboot</string>
