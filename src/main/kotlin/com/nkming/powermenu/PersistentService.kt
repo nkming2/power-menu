@@ -117,7 +117,7 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 				.setOnlyAlertOnce(true)
 				.setPriority(NotificationCompat.PRIORITY_MIN)
 				.setSmallIcon(R.drawable.ic_action_shutdown)
-				.setColor(ContextCompat.getColor(this, R.color.color_primary))
+				.setColor(ContextCompat.getColor(this, R.color.primary_light))
 				.setTicker(getString(R.string.notification_ticker))
 
 		val activity = Intent(this, PreferenceActivity::class.java)

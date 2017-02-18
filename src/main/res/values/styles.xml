@@ -9,9 +9,9 @@
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowAnimationStyle">@style/AppTheme.Animation</item>
 
-		<item name="colorPrimary">@color/color_primary</item>
-		<item name="colorPrimaryDark">@color/color_primary_dark</item>
-		<item name="colorAccent">@color/color_accent</item>
+		<item name="colorPrimary">@color/primary_light</item>
+		<item name="colorPrimaryDark">@color/primary_dark_light</item>
+		<item name="colorAccent">@color/accent_light</item>
 	</style>
 
 	<style name="AppThemeKeyguardBase" parent="AppThemeBase">
@@ -25,9 +25,9 @@
 	</style>
 
 	<style name="AppThemePreferenceBase" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorPrimary">@color/color_primary</item>
-		<item name="colorPrimaryDark">@color/color_primary_dark</item>
-		<item name="colorAccent">@color/color_accent</item>
+		<item name="colorPrimary">@color/primary_light</item>
+		<item name="colorPrimaryDark">@color/primary_dark_light</item>
+		<item name="colorAccent">@color/accent_light</item>
 	</style>
 
 	<style name="AppTheme.Animation" parent="android:style/Animation.Activity">
