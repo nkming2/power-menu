@@ -15,6 +15,13 @@ open class _BaseTileService : TileService()
 		qsTile.state = Tile.STATE_INACTIVE
 		qsTile.updateTile()
 	}
+
+	override fun onClick()
+	{
+		super.onClick()
+		val i = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+		sendBroadcast(i)
+	}
 }
 
 class ShutdownTileService : _BaseTileService()
@@ -27,6 +34,7 @@ class ShutdownTileService : _BaseTileService()
 	override fun onClick()
 	{
 		Log.d(LOG_TAG, "onClick()")
+		super.onClick()
 		// We can't show dialog from service
 		val i = Intent(this, ShutdownActivity::class.java)
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -45,6 +53,7 @@ class RebootTileService : _BaseTileService()
 	override fun onClick()
 	{
 		Log.d(LOG_TAG, "onClick()")
+		super.onClick()
 		// We can't show dialog from service
 		val i = Intent(this, RebootActivity::class.java)
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -63,6 +72,7 @@ class RebootRecoveryTileService : _BaseTileService()
 	override fun onClick()
 	{
 		Log.d(LOG_TAG, "onClick()")
+		super.onClick()
 		// We can't show dialog from service
 		val i = Intent(this, RebootRecoveryActivity::class.java)
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -82,6 +92,7 @@ class RebootBootloaderTileService : _BaseTileService()
 	override fun onClick()
 	{
 		Log.d(LOG_TAG, "onClick()")
+		super.onClick()
 		// We can't show dialog from service
 		val i = Intent(this, RebootBootloaderActivity::class.java)
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -100,6 +111,7 @@ class SoftRebootTileService : _BaseTileService()
 	override fun onClick()
 	{
 		Log.d(LOG_TAG, "onClick()")
+		super.onClick()
 		// We can't show dialog from service
 		val i = Intent(this, SoftRebootActivity::class.java)
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
@@ -118,6 +130,7 @@ class SleepTileService : _BaseTileService()
 	override fun onClick()
 	{
 		Log.d(LOG_TAG, "onClick()")
+		super.onClick()
 		SleepAction(applicationContext)()
 	}
 }
@@ -132,9 +145,7 @@ class ScreenshotTileService : _BaseTileService()
 	override fun onClick()
 	{
 		Log.d(LOG_TAG, "onClick()")
-		val i = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
-		sendBroadcast(i)
-
+		super.onClick()
 		// Need to wait until the drawer is closed, which is unknown
 		val handler = Handler()
 		handler.postDelayed(
