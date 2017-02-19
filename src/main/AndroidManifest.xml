@@ -88,7 +88,7 @@
 		</receiver>
 
 		<service
-			android:name=".ShutdownService"
+			android:name=".ShutdownTileService"
 			android:label="@string/activity_label_shutdown"
 			android:icon="@drawable/ic_action_shutdown"
 			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -99,7 +99,7 @@
 		</service>
 
 		<service
-			android:name=".RebootService"
+			android:name=".RebootTileService"
 			android:label="@string/activity_label_reboot"
 			android:icon="@drawable/ic_action_restart"
 			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -110,7 +110,7 @@
 		</service>
 
 		<service
-			android:name=".RebootRecoveryService"
+			android:name=".RebootRecoveryTileService"
 			android:label="@string/activity_label_reboot_recovery"
 			android:icon="@drawable/ic_action_restart_recovery"
 			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -121,7 +121,7 @@
 		</service>
 
 		<service
-			android:name=".RebootBootloaderService"
+			android:name=".RebootBootloaderTileService"
 			android:label="@string/activity_label_reboot_bootloader"
 			android:icon="@drawable/ic_action_restart_bootloader"
 			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -132,7 +132,7 @@
 		</service>
 
 		<service
-			android:name=".SoftRebootService"
+			android:name=".SoftRebootTileService"
 			android:label="@string/activity_label_soft_reboot"
 			android:icon="@drawable/ic_action_restart"
 			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">

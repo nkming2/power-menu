@@ -17,11 +17,11 @@ open class _BaseTileService : TileService()
 	}
 }
 
-class ShutdownService : _BaseTileService()
+class ShutdownTileService : _BaseTileService()
 {
 	companion object
 	{
-		private val LOG_TAG = ShutdownService::class.java.canonicalName
+		private val LOG_TAG = ShutdownTileService::class.java.canonicalName
 	}
 
 	override fun onClick()
@@ -35,11 +35,11 @@ class ShutdownService : _BaseTileService()
 	}
 }
 
-class RebootService : _BaseTileService()
+class RebootTileService : _BaseTileService()
 {
 	companion object
 	{
-		private val LOG_TAG = RebootService::class.java.canonicalName
+		private val LOG_TAG = RebootTileService::class.java.canonicalName
 	}
 
 	override fun onClick()
@@ -53,11 +53,11 @@ class RebootService : _BaseTileService()
 	}
 }
 
-class RebootRecoveryService : _BaseTileService()
+class RebootRecoveryTileService : _BaseTileService()
 {
 	companion object
 	{
-		private val LOG_TAG = RebootRecoveryService::class.java.canonicalName
+		private val LOG_TAG = RebootRecoveryTileService::class.java.canonicalName
 	}
 
 	override fun onClick()
@@ -71,11 +71,12 @@ class RebootRecoveryService : _BaseTileService()
 	}
 }
 
-class RebootBootloaderService : _BaseTileService()
+class RebootBootloaderTileService : _BaseTileService()
 {
 	companion object
 	{
-		private val LOG_TAG = RebootBootloaderService::class.java.canonicalName
+		private val LOG_TAG =
+				RebootBootloaderTileService::class.java.canonicalName
 	}
 
 	override fun onClick()
@@ -89,11 +90,11 @@ class RebootBootloaderService : _BaseTileService()
 	}
 }
 
-class SoftRebootService : _BaseTileService()
+class SoftRebootTileService : _BaseTileService()
 {
 	companion object
 	{
-		private val LOG_TAG = SoftRebootService::class.java.canonicalName
+		private val LOG_TAG = SoftRebootTileService::class.java.canonicalName
 	}
 
 	override fun onClick()
