@@ -46,4 +46,7 @@
 
 	<style name="AppThemePreference" parent="AppThemePreferenceBase">
 	</style>
+
+	<style name="AppThemeNoDisplay" parent="android:style/Theme.NoDisplay">
+	</style>
 </resources>

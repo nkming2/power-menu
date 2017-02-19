@@ -31,10 +31,14 @@ class ScreenshotHandler(context: Context)
 	{
 		val l =
 		{
+			val callback = MediaScannerConnection.OnScanCompletedListener{
+					path, uri ->
+					run{
+						_notifyScreenshot(filepath, uri)
+					}}
 			// Add the file to media store
 			MediaScannerConnection.scanFile(_context, arrayOf(filepath), null,
-					null)
-			_notifyScreenshot(filepath)
+					callback)
 		}
 
 		if (rotation == Surface.ROTATION_0
@@ -116,8 +120,15 @@ class ScreenshotHandler(context: Context)
 		}.execute()
 	}
 
-	private fun _notifyScreenshot(filepath: String)
+	private fun _notifyScreenshot(filepath: String, uri: Uri?)
 	{
+		if (uri == null)
+		{
+			Log.e("$LOG_TAG._notifyScreenshot", "Uri is null")
+			_onFailureFallback()
+			return
+		}
+
 		object: AsyncTask<Unit, Unit, Boolean>()
 		{
 			override fun doInBackground(vararg params: Unit): Boolean
@@ -144,8 +155,8 @@ class ScreenshotHandler(context: Context)
 
 			private fun _doInBackground()
 			{
-				val uri = Uri.fromFile(File(filepath))
-				val thumbnail = _getThumbnail(uri)
+				val fileUri = Uri.fromFile(File(filepath))
+				val thumbnail = _getThumbnail(fileUri)
 
 				val dp512 = DimensionUtils.dpToPx(_context, 512f)
 				// Somehow the bitmap couldn't be load on some device, not sure
@@ -153,7 +164,7 @@ class ScreenshotHandler(context: Context)
 				val bmp = BitmapLoader(_context)
 						.setTargetSize(Size(dp512.toInt(), (dp512 / 2f).toInt()))
 						.setSizeCalc(FillSizeCalc())
-						.loadUri(uri)
+						.loadUri(fileUri)
 
 				val openIntent = Intent(Intent.ACTION_VIEW)
 				openIntent.setDataAndType(uri, "image/png")

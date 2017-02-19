@@ -42,6 +42,16 @@ class Preference(pref: SharedPreferences, context: Context)
 		})
 	}
 
+	var isPersistentViewEnabled: Boolean
+		get()
+		{
+			return _pref.getBoolean(_persistentViewKey, false)
+		}
+		set(v)
+		{
+			_edit.putBoolean(_persistentViewKey, v)
+		}
+
 	var isOverrideSystemMenu: Boolean
 		get()
 		{
@@ -82,6 +92,19 @@ class Preference(pref: SharedPreferences, context: Context)
 			_edit.putBoolean(_confirmKey, v)
 		}
 
+	var hasRequestOverlayPermission: Boolean
+		get()
+		{
+			return _pref.getBoolean(_requestOverlayPermissionKey, false)
+		}
+		set(v)
+		{
+			_edit.putBoolean(_requestOverlayPermissionKey, v)
+		}
+
+	private val _persistentViewKey by lazy{_context.getString(
+			R.string.pref_persistent_view_key)}
+
 	private val _overrideSystemMenuKey by lazy(
 	{
 		_context.getString(R.string.pref_override_system_menu_key)
@@ -95,6 +118,9 @@ class Preference(pref: SharedPreferences, context: Context)
 
 	private val _confirmKey by lazy{_context.getString(
 			R.string.pref_confirm_key)}
+
+	private val _requestOverlayPermissionKey by lazy{_context.getString(
+			R.string.pref_request_overlay_permission_key)}
 
 	private val _context = context
 	private val _pref = pref

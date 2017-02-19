@@ -18,7 +18,6 @@
 
 		<activity
 			android:name=".LauncherActivity"
-			android:noHistory="true"
 			android:excludeFromRecents="true"
 			android:theme="@android:style/Theme.NoDisplay"
 			android:taskAffinity="@string/affinity_main">
@@ -31,7 +30,6 @@
 
 		<activity
 			android:name=".MainActivity"
-			android:noHistory="true"
 			android:excludeFromRecents="true"
 			android:theme="@style/AppTheme"
 			android:exported="false"
@@ -94,7 +92,7 @@
 			android:label="@string/activity_label_shutdown"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@android:style/Theme.NoDisplay"
+			android:theme="@style/AppThemeNoDisplay"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -108,7 +106,7 @@
 			android:label="@string/activity_label_reboot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@android:style/Theme.NoDisplay"
+			android:theme="@style/AppThemeNoDisplay"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -122,7 +120,7 @@
 			android:label="@string/activity_label_reboot_recovery"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@android:style/Theme.NoDisplay"
+			android:theme="@style/AppThemeNoDisplay"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -136,7 +134,7 @@
 			android:label="@string/activity_label_reboot_bootloader"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@android:style/Theme.NoDisplay"
+			android:theme="@style/AppThemeNoDisplay"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -150,7 +148,7 @@
 			android:label="@string/activity_label_soft_reboot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@android:style/Theme.NoDisplay"
+			android:theme="@style/AppThemeNoDisplay"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -164,7 +162,7 @@
 			android:label="@string/activity_label_sleep"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@android:style/Theme.NoDisplay"
+			android:theme="@style/AppThemeNoDisplay"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -178,7 +176,7 @@
 			android:label="@string/activity_label_screenshot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@android:style/Theme.NoDisplay"
+			android:theme="@style/AppThemeNoDisplay"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>

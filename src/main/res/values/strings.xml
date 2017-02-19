@@ -11,6 +11,8 @@
 	<string name="start_activity_fail">Failed starting activity, please report</string>
 	<string name="su_failed">Failed running su command, not rooted?</string>
 	<string name="screenshot_succeed_fallback">Screenshot captured</string>
+	<string name="overlay_permission_required">Please grant us permission to draw over other apps</string>
+	<string name="write_storage_required">Please grant us permission in order to take screenshots</string>
 
 	<string name="restart_mode_normal">Reboot</string>
 	<string name="restart_mode_normal_or_soft">Reboot (hold to soft reboot)</string>
@@ -84,6 +86,8 @@
 	<string name="pref_override_system_menu_key" translatable="false">override_system_menu</string>
 
 	<string name="pref_about_category">About</string>
+
+	<string name="pref_request_overlay_permission_key" translatable="false">request_overlay_permission</string>
 
 	<string name="about_version_key" translatable="false">version</string>
 	<string name="about_version_title">Version</string>

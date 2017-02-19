@@ -37,10 +37,33 @@ class MainFragment : Fragment()
 		return _root
 	}
 
+	override fun onActivityCreated(savedInstanceState: Bundle?)
+	{
+		super.onActivityCreated(savedInstanceState)
+		if (!PermissionUtils.hasWriteExternalStorage(context))
+		{
+			_isReqPermission = true
+			PermissionUtils.requestWriteExternalStorage(this)
+		}
+	}
+
+	override fun onRequestPermissionsResult(requestCode: Int,
+			permissions: Array<out String>, grantResults: IntArray)
+	{
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+		_isReqPermission = false
+	}
+
 	override fun onStop()
 	{
 		super.onStop()
 		_activeDangerousAction?.dismissConfirm()
+		if (!_isReqPermission)
+		{
+			// Like noHistory, not using that because we don't want the
+			// permission activity to kill our activity
+			activity.finish()
+		}
 	}
 
 	override fun onDestroy()
@@ -471,6 +494,7 @@ class MainFragment : Fragment()
 	private val _appContext by lazy({activity.applicationContext})
 	private val _handler by lazy({Handler()})
 	private var _activeDangerousAction: DangerousAction? = null
+	private var _isReqPermission = false
 
 	private lateinit var _root: View
 	private val _actionBtns by lazy(

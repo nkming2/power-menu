@@ -17,48 +17,89 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 		{
 			val intent = Intent(context, PersistentService::class.java)
 			context.startService(createStart(intent))
+			isStarting = true
 		}
 
 		@JvmStatic
 		fun stop(context: Context)
 		{
-			val intent = Intent(context, PersistentService::class.java)
-			context.startService(createStop(intent))
+			if (isRunning() || isStarting)
+			{
+				val intent = Intent(context, PersistentService::class.java)
+				context.startService(createStop(intent))
+			}
 		}
 
 		@JvmStatic
 		fun showView(context: Context)
 		{
-			val intent = Intent(context, PersistentService::class.java)
-			context.startService(createShowView(intent))
+			if (isRunning() || isStarting)
+			{
+				val intent = Intent(context, PersistentService::class.java)
+				context.startService(createShowView(intent))
+			}
 		}
 
 		@JvmStatic
 		fun hideView(context: Context)
 		{
-			val intent = Intent(context, PersistentService::class.java)
-			context.startService(createHideView(intent))
+			if (isRunning() || isStarting)
+			{
+				val intent = Intent(context, PersistentService::class.java)
+				context.startService(createHideView(intent))
+			}
 		}
 
 		@JvmStatic
 		fun setAutohideView(context: Context, flag: Boolean)
 		{
-			val intent = Intent(context, PersistentService::class.java)
-			context.startService(createSetAutohideView(intent, flag))
+			if (isRunning() || isStarting)
+			{
+				val intent = Intent(context, PersistentService::class.java)
+				context.startService(createSetAutohideView(intent, flag))
+			}
 		}
 
 		@JvmStatic
 		fun setAlpha(context: Context, alpha: Float)
 		{
-			val intent = Intent(context, PersistentService::class.java)
-			context.startService(createSetAlpha(intent, alpha))
+			if (isRunning() || isStarting)
+			{
+				val intent = Intent(context, PersistentService::class.java)
+				context.startService(createSetAlpha(intent, alpha))
+			}
 		}
 
 		@JvmStatic
 		fun setEnableHaptic(context: Context, flag: Boolean)
 		{
-			val intent = Intent(context, PersistentService::class.java)
-			context.startService(createSetEnableHaptic(intent, flag))
+			if (isRunning() || isStarting)
+			{
+				val intent = Intent(context, PersistentService::class.java)
+				context.startService(createSetEnableHaptic(intent, flag))
+			}
+		}
+
+		private var isStarting = false
+	}
+
+	override fun onCreate()
+	{
+		super.onCreate()
+		isStarting = false
+	}
+
+	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int
+	{
+		if (!PermissionUtils.hasSystemAlertWindow(this))
+		{
+			// Permission being revoked
+			stopSelf()
+			return START_STICKY
+		}
+		else
+		{
+			return super.onStartCommand(intent, flags, startId)
 		}
 	}
 
