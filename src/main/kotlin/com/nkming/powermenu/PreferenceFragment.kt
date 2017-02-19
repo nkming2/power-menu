@@ -81,13 +81,27 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 		}
 		else if (key == getString(R.string.pref_hide_launcher_key))
 		{
-			SystemHelper.setEnableActivity(activity,
+			SystemHelper.setEnableComponent(activity,
 					LauncherActivity::class.java, !pref.getBoolean(key, false))
 		}
 		else if (key == getString(R.string.pref_haptic_key))
 		{
 			PersistentService.setEnableHaptic(activity, pref.getBoolean(key,
 					true))
+		}
+		else if (key == getString(R.string.pref_soft_reboot_key))
+		{
+			val isEnable = pref.getBoolean(key, false)
+			try
+			{
+				// Will throw on N-
+				SystemHelper.setEnableComponent(activity,
+						SoftRebootTileService::class.java, isEnable)
+			}
+			catch (e: Throwable)
+			{}
+			SystemHelper.setEnableComponent(activity,
+					SoftRebootActivity::class.java, isEnable)
 		}
 		else if (key == getString(R.string.pref_override_system_menu_key))
 		{

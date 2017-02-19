@@ -135,7 +135,8 @@
 			android:name=".SoftRebootTileService"
 			android:label="@string/activity_label_soft_reboot"
 			android:icon="@drawable/ic_action_restart"
-			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+			android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+			android:enabled="false">
 
 			<intent-filter>
 				<action android:name="android.service.quicksettings.action.QS_TILE" />
@@ -226,7 +227,8 @@
 			android:noHistory="true"
 			android:excludeFromRecents="true"
 			android:theme="@style/AppThemeNoDisplay.Light"
-			android:taskAffinity="@string/affinity_main">
+			android:taskAffinity="@string/affinity_main"
+			android:enabled="false">
 
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

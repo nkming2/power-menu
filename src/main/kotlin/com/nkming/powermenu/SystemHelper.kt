@@ -154,19 +154,18 @@ object SystemHelper
 	}
 
 	/**
-	 * Enable/disable an Activity. As a side effect, to show/hide an activity
-	 * from launcher
+	 * Enable/disable a Component
 	 *
 	 * @param context
-	 * @param activityClz
+	 * @param componentClz
 	 * @param isEnable
 	 */
 	@JvmStatic
-	fun setEnableActivity(context: Context, activityClz: Class<*>,
+	fun setEnableComponent(context: Context, componentClz: Class<*>,
 			isEnable: Boolean)
 	{
 		val pm = context.packageManager
-		val com = ComponentName(context, activityClz)
+		val com = ComponentName(context, componentClz)
 		val newState = if (isEnable)
 				PackageManager.COMPONENT_ENABLED_STATE_ENABLED else
 				PackageManager.COMPONENT_ENABLED_STATE_DISABLED
