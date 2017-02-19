@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 
 public class InstallFragment extends DialogFragment
 {
@@ -37,9 +38,11 @@ public class InstallFragment extends DialogFragment
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
+		Preference pref = Preference.from(getActivity());
 		return new MaterialDialog.Builder(getActivity())
 				.title(R.string.install_title)
 				.content(R.string.install_content)
+				.theme(pref.isDarkTheme() ? Theme.DARK : Theme.LIGHT)
 				.progress(true, 0)
 				.progressIndeterminateStyle(true)
 				.cancelable(false)

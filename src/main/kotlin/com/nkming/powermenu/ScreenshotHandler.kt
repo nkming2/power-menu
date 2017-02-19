@@ -198,7 +198,7 @@ class ScreenshotHandler(context: Context)
 						.setWhen(System.currentTimeMillis())
 						.setSmallIcon(R.drawable.ic_photo_white_24dp)
 						.setColor(_context.resources.getColor(
-								R.color.color_primary))
+								R.color.primary_light))
 						.setLargeIcon(thumbnail)
 						.setStyle(NotificationCompat.BigPictureStyle()
 								.bigPicture(bmp)

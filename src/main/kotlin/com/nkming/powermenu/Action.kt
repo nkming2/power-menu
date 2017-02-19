@@ -67,7 +67,7 @@ open class ShutdownAction(appContext: Context, activity: Activity)
 		return MaterialDialog.Builder(_activity)
 				.title(R.string.shutdown_confirm_title)
 				.content(R.string.shutdown_confirm_content)
-				.theme(Theme.LIGHT)
+				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
 				.positiveText(android.R.string.yes)
 				.onPositive{materialDialog, dialogAction -> onPositive()}
 				.negativeText(android.R.string.no)
@@ -93,6 +93,8 @@ open class ShutdownAction(appContext: Context, activity: Activity)
 			onDone?.invoke()
 		})
 	}
+
+	private val _pref by lazy{Preference.from(_context)}
 }
 
 open class RebootAction(appContext: Context, activity: Activity,
@@ -104,7 +106,7 @@ open class RebootAction(appContext: Context, activity: Activity,
 		return MaterialDialog.Builder(_activity)
 				.title(R.string.restart_confirm_title)
 				.content(R.string.restart_confirm_content)
-				.theme(Theme.LIGHT)
+				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
 				.positiveText(android.R.string.yes)
 				.onPositive{materialDialog, dialogAction -> onPositive()}
 				.negativeText(android.R.string.no)
@@ -132,6 +134,7 @@ open class RebootAction(appContext: Context, activity: Activity,
 	}
 
 	private val _rebootMode = rebootMode
+	private val _pref by lazy{Preference.from(_context)}
 }
 
 open class SoftRebootAction(appContext: Context, activity: Activity)
@@ -142,7 +145,7 @@ open class SoftRebootAction(appContext: Context, activity: Activity)
 		return MaterialDialog.Builder(_activity)
 				.title(R.string.restart_confirm_title)
 				.content(R.string.restart_confirm_content)
-				.theme(Theme.LIGHT)
+				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
 				.positiveText(android.R.string.yes)
 				.onPositive{materialDialog, dialogAction -> onPositive()}
 				.negativeText(android.R.string.no)
@@ -168,6 +171,8 @@ open class SoftRebootAction(appContext: Context, activity: Activity)
 			onDone?.invoke()
 		})
 	}
+
+	private val _pref by lazy{Preference.from(_context)}
 }
 
 open class SleepAction(appContext: Context) : Action(appContext)

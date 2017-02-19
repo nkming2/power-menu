@@ -30,7 +30,7 @@ dependencies {
 	compile project(':floating-action-button')
 	compile "com.android.support:appcompat-v7:$support_version"
 	compile "com.android.support:support-v4:$support_version"
-	compile 'com.afollestad.material-dialogs:core:0.8.5.9'
+	compile 'com.afollestad.material-dialogs:core:0.9.3.0'
 	compile 'eu.chainfire:libsuperuser:1.0.0.+'
 }
 

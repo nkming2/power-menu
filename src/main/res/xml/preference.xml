@@ -48,6 +48,13 @@
 			android:summary="@string/pref_confirm_summary"
 			android:defaultValue="false"/>
 
+		<CheckBoxPreference
+			android:key="@string/pref_dark_theme_key"
+			android:title="@string/pref_dark_theme_title"
+			android:summaryOn="@string/pref_dark_theme_summary_on"
+			android:summaryOff="@string/pref_dark_theme_summary_off"
+			android:defaultValue="false" />
+
 		<PreferenceScreen
 			android:key="@string/pref_install_key"
 			android:title="@string/pref_install_title"

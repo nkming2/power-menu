@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.Theme
 
 class InstallConfirmFragment : DialogFragment()
 {
@@ -30,6 +31,7 @@ class InstallConfirmFragment : DialogFragment()
 		return MaterialDialog.Builder(activity)
 				.title(R.string.install_confirm_title)
 				.content(R.string.install_confirm_content)
+				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
 				.positiveText(R.string.install_confirm_positive)
 				.onPositive(
 				{
@@ -73,4 +75,5 @@ class InstallConfirmFragment : DialogFragment()
 
 	private lateinit var _listener: Listener
 	private var _isNoFinish = false
+	private val _pref by lazy{Preference.from(context)}
 }

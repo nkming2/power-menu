@@ -11,9 +11,10 @@ class InstallActivity : AppCompatActivity(), InstallConfirmFragment.Listener
 		f.show(supportFragmentManager, "install")
 	}
 
-	protected override fun onCreate(savedInstanceState: Bundle?)
+	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
+		_themeAdapter.onCreate(savedInstanceState)
 		if (InstallHelper.isSystemApp(this))
 		{
 			_onCreateUninstall(savedInstanceState)
@@ -22,6 +23,12 @@ class InstallActivity : AppCompatActivity(), InstallConfirmFragment.Listener
 		{
 			_onCreateInstall(savedInstanceState)
 		}
+	}
+
+	override fun onDestroy()
+	{
+		super.onDestroy()
+		_themeAdapter.onDestroy()
 	}
 
 	private fun _onCreateInstall(savedInstanceState: Bundle?)
@@ -41,4 +48,7 @@ class InstallActivity : AppCompatActivity(), InstallConfirmFragment.Listener
 			f.show(supportFragmentManager, "uninstall")
 		}
 	}
+
+	private val _themeAdapter by lazy{ActivityThemeAdapter(this,
+			R.style.AppTheme_Dark_Dialog, R.style.AppTheme_Light_Dialog)}
 }

@@ -67,6 +67,10 @@
 	<string name="pref_uninstall_title">Отменить установку приложения в систему</string>
 	<string name="pref_uninstall_summary">Удалить приложение из системного раздела. Обязательно, прежде чем вы удалите это приложение</string>
 
+	<string name="pref_dark_theme_title">Dark theme</string>
+	<string name="pref_dark_theme_summary_on">Using dark theme</string>
+	<string name="pref_dark_theme_summary_off">Using light theme</string>
+
 	<string name="pref_experimental_category">Экспериментальный</string>
 
 	<string name="pref_soft_reboot_title">Включение мягкой перезагрузки</string>

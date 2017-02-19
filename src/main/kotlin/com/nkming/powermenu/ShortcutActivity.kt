@@ -3,7 +3,25 @@ package com.nkming.powermenu
 import android.app.Activity
 import android.os.Bundle
 
-class ShutdownActivity : Activity()
+open class _BaseShortcutActivity : Activity()
+{
+	override fun onCreate(savedInstanceState: Bundle?)
+	{
+		super.onCreate(savedInstanceState)
+		_themeAdapter.onCreate(savedInstanceState)
+	}
+
+	override fun onDestroy()
+	{
+		super.onDestroy()
+		_themeAdapter.onDestroy()
+	}
+
+	private val _themeAdapter by lazy{ActivityThemeAdapter(this,
+			R.style.AppThemeNoDisplay_Dark, R.style.AppThemeNoDisplay_Light)}
+}
+
+class ShutdownActivity : _BaseShortcutActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -22,7 +40,7 @@ class ShutdownActivity : Activity()
 	private val _action by lazy{ShutdownAction(applicationContext, this)}
 }
 
-class RebootActivity : Activity()
+class RebootActivity : _BaseShortcutActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -42,7 +60,7 @@ class RebootActivity : Activity()
 			SystemHelper.RebootMode.NORMAL)}
 }
 
-class RebootRecoveryActivity : Activity()
+class RebootRecoveryActivity : _BaseShortcutActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -62,7 +80,7 @@ class RebootRecoveryActivity : Activity()
 			SystemHelper.RebootMode.RECOVERY)}
 }
 
-class RebootBootloaderActivity : Activity()
+class RebootBootloaderActivity : _BaseShortcutActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -82,7 +100,7 @@ class RebootBootloaderActivity : Activity()
 			SystemHelper.RebootMode.BOOTLOADER)}
 }
 
-class SoftRebootActivity : Activity()
+class SoftRebootActivity : _BaseShortcutActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -101,7 +119,7 @@ class SoftRebootActivity : Activity()
 	private val _action by lazy{SoftRebootAction(applicationContext, this)}
 }
 
-class SleepActivity : Activity()
+class SleepActivity : _BaseShortcutActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
@@ -111,7 +129,7 @@ class SleepActivity : Activity()
 	}
 }
 
-class ScreenshotActivity : Activity()
+class ScreenshotActivity : _BaseShortcutActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{

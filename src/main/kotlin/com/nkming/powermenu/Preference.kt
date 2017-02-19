@@ -42,6 +42,21 @@ class Preference(pref: SharedPreferences, context: Context)
 		})
 	}
 
+	var onSharedPreferenceChangeListener
+			: SharedPreferences.OnSharedPreferenceChangeListener? = null
+		set(v)
+		{
+			if (field != null)
+			{
+				_pref.unregisterOnSharedPreferenceChangeListener(field)
+			}
+			if (v != null)
+			{
+				_pref.registerOnSharedPreferenceChangeListener(v)
+				field = v
+			}
+		}
+
 	var isPersistentViewEnabled: Boolean
 		get()
 		{
@@ -92,6 +107,16 @@ class Preference(pref: SharedPreferences, context: Context)
 			_edit.putBoolean(_confirmKey, v)
 		}
 
+	var isDarkTheme: Boolean
+		get()
+		{
+			return _pref.getBoolean(_darkThemeKey, true)
+		}
+		set(v)
+		{
+			_edit.putBoolean(_darkThemeKey, v)
+		}
+
 	var hasRequestOverlayPermission: Boolean
 		get()
 		{
@@ -118,6 +143,9 @@ class Preference(pref: SharedPreferences, context: Context)
 
 	private val _confirmKey by lazy{_context.getString(
 			R.string.pref_confirm_key)}
+
+	private val _darkThemeKey by lazy{_context.getString(
+			R.string.pref_dark_theme_key)}
 
 	private val _requestOverlayPermissionKey by lazy{_context.getString(
 			R.string.pref_request_overlay_permission_key)}
