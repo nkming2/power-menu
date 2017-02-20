@@ -134,6 +134,25 @@ class ScreenshotActivity : _BaseShortcutActivity()
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
 		super.onCreate(savedInstanceState)
+		if (!PermissionUtils.hasWriteExternalStorage(this))
+		{
+			PermissionUtils.requestWriteExternalStorage(this)
+		}
+		else
+		{
+			doAction()
+		}
+	}
+
+	override fun onRequestPermissionsResult(requestCode: Int,
+			permissions: Array<out String>?, grantResults: IntArray?)
+	{
+		// We don't really care about the result
+		doAction()
+	}
+
+	private fun doAction()
+	{
 		ScreenshotAction(applicationContext)()
 		finish()
 	}

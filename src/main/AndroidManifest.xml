@@ -253,7 +253,6 @@
 		<activity
 			android:name=".ScreenshotActivity"
 			android:label="@string/activity_label_screenshot"
-			android:noHistory="true"
 			android:excludeFromRecents="true"
 			android:theme="@style/AppThemeNoDisplay.Light"
 			android:taskAffinity="@string/affinity_main">
