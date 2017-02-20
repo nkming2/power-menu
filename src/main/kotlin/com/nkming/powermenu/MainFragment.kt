@@ -144,7 +144,8 @@ class MainFragment : Fragment()
 
 	private fun _onShutdownClick()
 	{
-		val action = object: ShutdownAction(_appContext, activity)
+		val action = object: ShutdownAction(_appContext, activity,
+				isExplicitTheming = true)
 		{
 			override fun onPostConfirm()
 			{
@@ -262,7 +263,8 @@ class MainFragment : Fragment()
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
 			rebootMode: SystemHelper.RebootMode)
 	{
-		val action = object: RebootAction(_appContext, activity, rebootMode)
+		val action = object: RebootAction(_appContext, activity, rebootMode,
+				isExplicitTheming = true)
 		{
 			override fun onPostConfirm()
 			{
@@ -291,7 +293,8 @@ class MainFragment : Fragment()
 
 	private fun _onRestartNormalLongClick()
 	{
-		val action = object: SoftRebootAction(_appContext, activity)
+		val action = object: SoftRebootAction(_appContext, activity,
+				isExplicitTheming = true)
 		{
 			override fun onPostConfirm()
 			{

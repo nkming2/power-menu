@@ -19,7 +19,8 @@ abstract class Action(appContext: Context)
 	protected val _context = appContext
 }
 
-abstract class DangerousAction(appContext: Context, activity: Activity)
+abstract class DangerousAction(appContext: Context, activity: Activity,
+		isExplicitTheming: Boolean)
 		: Action(appContext)
 {
 	override fun invoke()
@@ -51,31 +52,61 @@ abstract class DangerousAction(appContext: Context, activity: Activity)
 
 	var onCancel: (() -> Unit)? = null
 
-	protected abstract fun buildConfirmDialog(onPositive: () -> Unit): Dialog
-	protected abstract fun onPostConfirm()
-
-	protected val _activity = activity
-
-	private var _dialog: Dialog? = null
-}
-
-open class ShutdownAction(appContext: Context, activity: Activity)
-		: DangerousAction(appContext, activity)
-{
-	override fun buildConfirmDialog(onPositive: () -> Unit): Dialog
+	/**
+	 * Return the confirmation dialog. Override method to return custom dialog
+	 *
+	 * @param onPositive Callback on positive button click
+	 * @return
+	 */
+	protected open fun buildConfirmDialog(onPositive: () -> Unit): Dialog
 	{
-		return MaterialDialog.Builder(_activity)
-				.title(R.string.shutdown_confirm_title)
-				.content(R.string.shutdown_confirm_content)
+		val builder = MaterialDialog.Builder(_activity)
+				.title(_dialogTitle)
+				.content(_dialogContent)
 				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
 				.positiveText(android.R.string.yes)
 				.onPositive{materialDialog, dialogAction -> onPositive()}
 				.negativeText(android.R.string.no)
 				.onNegative{materialDialog, dialogAction -> onCancel?.invoke()}
 				.cancelListener{onCancel?.invoke()}
-				.build()
+		if (_isExplicitTheming)
+		{
+			if (_pref.isDarkTheme)
+			{
+				builder.positiveColorRes(R.color.accent_dark)
+				builder.negativeColorRes(R.color.accent_dark)
+			}
+			else
+			{
+				builder.positiveColorRes(R.color.accent_light)
+				builder.negativeColorRes(R.color.accent_light)
+			}
+		}
+		return builder.build()
 	}
 
+	/**
+	 * Called when the action is being confirmed by the user
+	 */
+	protected abstract fun onPostConfirm()
+
+	/**
+	 * Title res used in the default confirmation dialog, if custom dialog is
+	 * used instead, this value need not to be overridden
+	 */
+	protected open val _dialogTitle: Int = 0
+	protected open val _dialogContent: Int = 0
+	protected val _activity = activity
+
+	private val _isExplicitTheming = isExplicitTheming
+	private val _pref by lazy{Preference.from(_context)}
+	private var _dialog: Dialog? = null
+}
+
+open class ShutdownAction(appContext: Context, activity: Activity,
+		isExplicitTheming: Boolean = false)
+		: DangerousAction(appContext, activity, isExplicitTheming)
+{
 	override fun onPostConfirm()
 	{
 		SystemHelper.shutdown(_context,
@@ -94,27 +125,15 @@ open class ShutdownAction(appContext: Context, activity: Activity)
 		})
 	}
 
-	private val _pref by lazy{Preference.from(_context)}
+	protected override val _dialogTitle: Int = R.string.shutdown_confirm_title
+	protected override val _dialogContent: Int =
+			R.string.shutdown_confirm_content
 }
 
 open class RebootAction(appContext: Context, activity: Activity,
-		rebootMode: SystemHelper.RebootMode)
-		: DangerousAction(appContext, activity)
+		rebootMode: SystemHelper.RebootMode, isExplicitTheming: Boolean = false)
+		: DangerousAction(appContext, activity, isExplicitTheming)
 {
-	override fun buildConfirmDialog(onPositive: () -> Unit): Dialog
-	{
-		return MaterialDialog.Builder(_activity)
-				.title(R.string.restart_confirm_title)
-				.content(R.string.restart_confirm_content)
-				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
-				.positiveText(android.R.string.yes)
-				.onPositive{materialDialog, dialogAction -> onPositive()}
-				.negativeText(android.R.string.no)
-				.onNegative{materialDialog, dialogAction -> onCancel?.invoke()}
-				.cancelListener{onCancel?.invoke()}
-				.build()
-	}
-
 	override fun onPostConfirm()
 	{
 		SystemHelper.reboot(_rebootMode, _context,
@@ -133,27 +152,17 @@ open class RebootAction(appContext: Context, activity: Activity,
 		})
 	}
 
+	protected override val _dialogTitle: Int = R.string.restart_confirm_title
+	protected override val _dialogContent: Int =
+			R.string.restart_confirm_content
+
 	private val _rebootMode = rebootMode
-	private val _pref by lazy{Preference.from(_context)}
 }
 
-open class SoftRebootAction(appContext: Context, activity: Activity)
-		: DangerousAction(appContext, activity)
+open class SoftRebootAction(appContext: Context, activity: Activity,
+		isExplicitTheming: Boolean = false)
+		: DangerousAction(appContext, activity, isExplicitTheming)
 {
-	override fun buildConfirmDialog(onPositive: () -> Unit): Dialog
-	{
-		return MaterialDialog.Builder(_activity)
-				.title(R.string.restart_confirm_title)
-				.content(R.string.restart_confirm_content)
-				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
-				.positiveText(android.R.string.yes)
-				.onPositive{materialDialog, dialogAction -> onPositive()}
-				.negativeText(android.R.string.no)
-				.onNegative{materialDialog, dialogAction -> onCancel?.invoke()}
-				.cancelListener{onCancel?.invoke()}
-				.build()
-	}
-
 	override fun onPostConfirm()
 	{
 		SystemHelper.killZygote(_context,
@@ -172,7 +181,9 @@ open class SoftRebootAction(appContext: Context, activity: Activity)
 		})
 	}
 
-	private val _pref by lazy{Preference.from(_context)}
+	protected override val _dialogTitle: Int = R.string.restart_confirm_title
+	protected override val _dialogContent: Int =
+			R.string.restart_confirm_content
 }
 
 open class SleepAction(appContext: Context) : Action(appContext)

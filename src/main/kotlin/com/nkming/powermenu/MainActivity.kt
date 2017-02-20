@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity()
 		}
 
 		super.onCreate(savedInstanceState)
-		_themeAdapter.onCreate(savedInstanceState)
 		if (!InstallHelper.isSystemApp(this))
 		{
 			InstallHelper.isPowerCommandAvailable(this,
@@ -59,12 +58,6 @@ class MainActivity : AppCompatActivity()
 			SystemOverrideService.startIfNecessary(this)
 		}
 		_isStop = true
-	}
-
-	override fun onDestroy()
-	{
-		super.onDestroy()
-		_themeAdapter.onDestroy()
 	}
 
 	override fun onUserLeaveHint()
@@ -128,17 +121,4 @@ class MainActivity : AppCompatActivity()
 	private var _isAnimateClose = true
 	private var _isStop = false
 	private var _isKeyguard = false
-	private val _themeAdapter by lazy(
-	{
-		if (_isKeyguard)
-		{
-			ActivityThemeAdapter(this, R.style.AppTheme_Dark,
-					R.style.AppTheme_Light)
-		}
-		else
-		{
-			ActivityThemeAdapter(this, R.style.AppThemeKeyguard_Dark,
-					R.style.AppThemeKeyguard_Light)
-		}
-	})
 }
