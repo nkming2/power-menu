@@ -57,6 +57,16 @@ class Preference(pref: SharedPreferences, context: Context)
 			}
 		}
 
+	var lastVersion: Int
+		get()
+		{
+			return _pref.getInt(_lastVersionKey, -1)
+		}
+		set(v)
+		{
+			_edit.putInt(_lastVersionKey, v)
+		}
+
 	var isPersistentViewEnabled: Boolean
 		get()
 		{
@@ -126,6 +136,9 @@ class Preference(pref: SharedPreferences, context: Context)
 		{
 			_edit.putBoolean(_requestOverlayPermissionKey, v)
 		}
+
+	private val _lastVersionKey by lazy{_context.getString(
+			R.string.pref_last_version_key)}
 
 	private val _persistentViewKey by lazy{_context.getString(
 			R.string.pref_persistent_view_key)}
