@@ -221,6 +221,7 @@ class MainFragment : Fragment()
 		_restartBtn.bound.setOnClickListener(null)
 		_showRestartMenu(Res.ANIMATION_FAST / 2,
 		{
+			activity ?: return@_showRestartMenu
 			_initRestartBtns()
 		})
 	}
@@ -231,11 +232,7 @@ class MainFragment : Fragment()
 				.toLong()
 		_startReveal(_screenshotBtn.btn, R.color.screenshot_bg, true,
 		{
-			// App probably closed
-			if (activity == null)
-			{
-				return@_startReveal
-			}
+			activity ?: return@_startReveal
 			activity.finish()
 
 			val receiver = object: BroadcastReceiver()
