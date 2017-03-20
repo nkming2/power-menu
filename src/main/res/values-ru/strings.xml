@@ -1,111 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Power Menu</string>
-	<string name="app_pref_name">Power Menu Config</string>
-
-	<string name="shutdown_fail">Ошибка выключения, не установлен в качестве системного приложения?</string>
-	<string name="sleep_fail">Ошибка режима сна, пожалуйста, сообщите</string>
-	<string name="restart_fail">Ошибка перезагрузки, не установлен в качестве системного приложения?</string>
-	<string name="soft_reboot_fail">Ошибка мягкой перезагрузки, пожалуйста, сообщите</string>
-	<string name="screenshot_fail_file">Не удался скриншот, попробуйте отключить монтирование разделение пространства в SuperSU</string>
-	<string name="screenshot_fail_screencap">Failed taking screenshot</string>
-	<string name="start_activity_fail">Ошибка активации запуска, пожалуйста, сообщите</string>
-	<string name="su_failed">Ошибка запуска команды su, нет рута?</string>
-	<string name="screenshot_succeed_fallback">Screenshot captured</string>
-	<string name="overlay_permission_required">Please grant us permission to draw over other apps</string>
-	<string name="write_storage_required">Please grant us permission in order to take screenshots</string>
-
-	<string name="restart_mode_normal">Перезагрузка</string>
-	<string name="restart_mode_normal_or_soft">Перезагрузка (удерживайте для мягкой перезагрузки)</string>
-	<string name="restart_mode_recovery">Восстановление</string>
-	<string name="restart_mode_bootloader">Загрузчик</string>
-
-	<string name="install_confirm_title">Установить в качестве системного приложения</string>
-	<string name="install_confirm_content">"Это приложение позволяет использовать функции, доступные только для системных приложений.
+<string name="restart_mode_bootloader">Загрузчик</string>
+<string name="shutdown_confirm_title">Готовы закрыть?</string>
+<string name="restart_confirm_content">@string/shutdown_confirm_content</string>
+<string name="screenshot_notification_title">@string/screenshot_notification_ticker</string>
+<string name="activity_label_shutdown">Выключение</string>
+<string name="notification_ticker">Процент меню питания включено</string>
+<string name="activity_label_reboot_bootloader">Перезагрузка (Загрузчик)</string>
+<string name="pref_soft_reboot_title">Включение мягкой перезагрузки</string>
+<string name="pref_install_title">Установить в качестве системного приложения</string>
+<string name="app_pref_name">Power Menu Config</string>
+<string name="pref_dark_theme_summary_off">Использовать светлую тему</string>
+<string name="pref_alpha_title">Непрозрачность</string>
+<string name="activity_label_sleep">Сон</string>
+<string name="about_version_title">Версия</string>
+<string name="about_translator_credit">Виталя Борисов</string>
+<string name="shutdown_fail">Ошибка выключения, не установлен в качестве системного приложения?</string>
+<string name="affinity_install">com.nkming.powermenu.INSTALL</string>
+<string name="pref_persistent_view_category">Постоянный просмотр</string>
+<string name="pref_soft_reboot_na_summary">Требуется BusyBox</string>
+<string name="pref_soft_reboot_key">soft_reboot</string>
+<string name="pref_persistent_view_key">persistent_view</string>
+<string name="screenshot_fail_file">Не удался скриншот, попробуйте отключить монтирование разделение пространства в SuperSU</string>
+<string name="install_failed">Ошибка установки, нет рута?</string>
+<string name="install_confirm_title">Установить в качестве системного приложения</string>
+<string name="notification_title">@string/app_name</string>
+<string name="about_version_key">версия</string>
+<string name="pref_hide_launcher_title">Скрыть иконку в лаунчере</string>
+<string name="pref_confirm_summary">Подтвердите перед выключением или перезагрузкой устройства</string>
+<string name="pref_confirm_key">подтвердить</string>
+<string name="restart_confirm_title">Готовы к перезагрузке?</string>
+<string name="pref_hide_launcher_summary">Эффект может быть виден только после перезагрузки запущенного приложения</string>
+<string name="about_translator_key">переводчик</string>
+<string name="activity_label_soft_reboot">Мягкая перезагрузка</string>
+<string name="about_translator_help_url">https://github.com/nkming2/power-menu/blob/master/src/main/res/values/strings.xml</string>
+<string name="pref_persistent_view_title">Включить</string>
+<string name="pref_override_system_menu_summary_true">Запустить это приложение, по долгому нажатию кнопки питания. Может быть не совместимы с некоторыми устройствами</string>
+<string name="restart_fail">Ошибка перезагрузки, не установлен в качестве системного приложения?</string>
+<string name="start_activity_fail">Ошибка активации запуска, пожалуйста, сообщите</string>
+<string name="uninstall_failed">Не удалось удалить, нет рута?</string>
+<string name="screenshot_notification_share_chooser">Поделиться с</string>
+<string name="sleep_fail">Ошибка режима сна, пожалуйста, сообщите</string>
+<string name="write_storage_required">Пожалуйста, предоставьте нам разрешение для того, чтобы сделать скриншот</string>
+<string name="soft_reboot_fail">Ошибка мягкой перезагрузки, пожалуйста, сообщите</string>
+<string name="uninstall_content">Ничего не делайте. Ваше устройство будет автоматически перезагружаться в случае успеха</string>
+<string name="notification_text">Нажмите, чтобы открыть конфигурацию</string>
+<string name="about_source_title">Исходный код</string>
+<string name="pref_soft_reboot_summary">Нажмите и удерживайте кнопку перезагрузки, чтобы убить процесс</string>
+<string name="pref_haptic_title">Виброотклик</string>
+<string name="activity_label_reboot">"Перезагрузка "</string>
+<string name="pref_override_system_menu_summary_false">Запуск системного меню питания при долгом нажатии кнопки питания</string>
+<string name="app_name">Power Menu</string>
+<string name="about_source_summary">https://github.com/nkming2/power-menu</string>
+<string name="pref_dark_theme_summary_on">Использовать темную тему</string>
+<string name="pref_install_key">Устанавить</string>
+<string name="screenshot_notification_ticker">Скриншот снят</string>
+<string name="pref_persistent_view_summary">Постоянный запуск в полноэкранном режиме для приложения</string>
+<string name="about_translator_help">Помогите перевести на свой язык ☺</string>
+<string name="status_bar_notification_info_overflow">&gt;999</string>
+<string name="pref_autohide_persistent_view_summary">Скрыть процент просмотра, когда приложение работает в полноэкранном режиме</string>
+<string name="pref_about_category">О программе</string>
+<string name="activity_label_screenshot">Скриншот</string>
+<string name="pref_install_summary">Улучшена совместимость и, в некоторых случаях, производительность</string>
+<string name="restart_mode_recovery">Восстановление</string>
+<string name="screenshot_fail_screencap">Не возможен скриншот</string>
+<string name="pref_uninstall_summary">Удалить приложение из системного раздела. Обязательно, прежде чем вы удалите это приложение</string>
+<string name="affinity_main">com.nkming.powermenu.MAIN</string>
+<string name="pref_confirm_title">Подтверждение действия</string>
+<string name="pref_alpha_summary">Отрегулируйте непрозрачность просмотра</string>
+<string name="su_failed">Ошибка запуска команды su, нет рута?</string>
+<string name="screenshot_notification_delete">Удалить</string>
+<string name="pref_others_category">Другие настройки</string>
+<string name="pref_autohide_persistent_view_title">Скрыть полноэкранный режим</string>
+<string name="install_title">Установка...</string>
+<string name="pref_dark_theme_key">dark_theme</string>
+<string name="uninstall_title">Удаление...</string>
+<string name="pref_haptic_summary">Включить тактильную обратную связь во время долгого нажатия на кнопку</string>
+<string name="pref_autohide_persistent_view_key">autohide_persistent_view</string>
+<string name="pref_alpha_key">альфа</string>
+<string name="pref_dark_theme_title">Темная тема</string>
+<string name="restart_mode_normal_or_soft">Перезагрузка (удерживайте для мягкой перезагрузки)</string>
+<string name="pref_uninstall_title">Отменить установку приложения в систему</string>
+<string name="screenshot_succeed_fallback">Снять скриншот</string>
+<string name="install_content">Ничего не делать. Ваше устройство будет автоматически перезагружаться в случае успеха</string>
+<string name="overlay_permission_required">Пожалуйста, предоставьте нам разрешение наложения поверх других приложений</string>
+<string name="search_menu_title">Поиск</string>
+<string name="install_confirm_content">"Это приложение позволяет использовать функции, доступные только для системных приложений.
 
 Сохраните ваши рабочие процессы перед тем как продолжить, устройство будет автоматически перезагружаться после установки."</string>
-	<string name="install_confirm_positive">Установить</string>
-
-	<string name="install_title">Установка...</string>
-	<string name="install_content">Ничего не делать. Ваше устройство будет автоматически перезагружаться в случае успеха</string>
-	<string name="install_failed">Ошибка установки, нет рута?</string>
-
-	<string name="uninstall_title">Удаление...</string>
-	<string name="uninstall_content">Ничего не делайте. Ваше устройство будет автоматически перезагружаться в случае успеха</string>
-	<string name="uninstall_failed">Не удалось удалить, нет рута?</string>
-
-	<string name="shutdown_confirm_title">Готовы закрыть?</string>
-	<string name="shutdown_confirm_content">Все несохраненные данные будут потеряны</string>
-
-	<string name="restart_confirm_title">Готовы к перезагрузке?</string>
-	<string name="restart_confirm_content">@string/shutdown_confirm_content</string>
-
-	<string name="pref_persistent_view_category">Постоянный просмотр</string>
-
-	<string name="pref_persistent_view_title">Включить</string>
-	<string name="pref_persistent_view_summary">Постоянный запуск в полноэкранном режиме для приложения</string>
-
-	<string name="pref_autohide_persistent_view_title">Скрыть полноэкранный режим</string>
-	<string name="pref_autohide_persistent_view_summary">Скрыть процент просмотра, когда приложение работает в полноэкранном режиме</string>
-
-	<string name="pref_alpha_title">Непрозрачность</string>
-	<string name="pref_alpha_summary">Отрегулируйте непрозрачность просмотра</string>
-
-	<string name="pref_haptic_title">Виброотклик</string>
-	<string name="pref_haptic_summary">Включить тактильную обратную связь во время долгого нажатия на кнопку</string>
-
-	<string name="pref_others_category">Другие настройки</string>
-
-	<string name="pref_hide_launcher_title">Скрыть иконку в лаунчере</string>
-	<string name="pref_hide_launcher_summary">Эффект может быть виден только после перезагрузки запущенного приложения</string>
-
-	<string name="pref_confirm_title">Подтверждение действия</string>
-	<string name="pref_confirm_summary">Подтвердите перед выключением или перезагрузкой устройства</string>
-
-	<string name="pref_install_title">Установить в качестве системного приложения</string>
-	<string name="pref_install_summary">Улучшена совместимость и, в некоторых случаях, производительность</string>
-	<string name="pref_uninstall_title">Отменить установку приложения в систему</string>
-	<string name="pref_uninstall_summary">Удалить приложение из системного раздела. Обязательно, прежде чем вы удалите это приложение</string>
-
-	<string name="pref_dark_theme_title">Dark theme</string>
-	<string name="pref_dark_theme_summary_on">Using dark theme</string>
-	<string name="pref_dark_theme_summary_off">Using light theme</string>
-
-	<string name="pref_experimental_category">Экспериментальный</string>
-
-	<string name="pref_soft_reboot_title">Включение мягкой перезагрузки</string>
-	<string name="pref_soft_reboot_na_summary">Требуется BusyBox</string>
-	<string name="pref_soft_reboot_summary">Нажмите и удерживайте кнопку перезагрузки, чтобы убить процесс</string>
-
-	<string name="pref_override_system_menu_title">Изменения системное меню питания</string>
-	<string name="pref_override_system_menu_summary_false">Запуск системного меню питания при долгом нажатии кнопки питания</string>
-	<string name="pref_override_system_menu_summary_true">Запустить это приложение, по долгому нажатию кнопки питания. Может быть не совместимы с некоторыми устройствами</string>
-
-	<string name="pref_about_category">О программе</string>
-
-	<string name="about_version_title">Версия</string>
-
-	<string name="about_source_title">Исходный код</string>
-
-	<string name="about_translator_title">Переводчик</string>
-	<string name="about_translator_credit">Виталя Борисов</string>
-
-	<string name="notification_ticker">Процент меню питания включено</string>
-	<string name="notification_title">@string/app_name</string>
-	<string name="notification_text">Нажмите, чтобы открыть конфигурацию</string>
-
-	<string name="screenshot_notification_ticker">Скриншот снят</string>
-	<string name="screenshot_notification_title">@string/screenshot_notification_ticker</string>
-	<string name="screenshot_notification_text">Нажмите, чтобы посмотреть скриншот</string>
-	<string name="screenshot_notification_share">Поделиться</string>
-	<string name="screenshot_notification_share_chooser">Поделиться с</string>
-	<string name="screenshot_notification_delete">Удалить</string>
-
-	<string name="activity_label_shutdown">Выключение</string>
-	<string name="activity_label_reboot">"Перезагрузка "</string>
-	<string name="activity_label_reboot_recovery">Перезагрузка (Восстановление)</string>
-	<string name="activity_label_reboot_bootloader">Перезагрузка (Загрузчик)</string>
-	<string name="activity_label_soft_reboot">Мягкая перезагрузка</string>
-	<string name="activity_label_sleep">Сон</string>
-	<string name="activity_label_screenshot">Скриншот</string>
+<string name="pref_override_system_menu_title">Изменения системное меню питания</string>
+<string name="pref_request_overlay_permission_key">request_overlay_permission</string>
+<string name="screenshot_notification_text">Нажмите, чтобы посмотреть скриншот</string>
+<string name="install_confirm_positive">Установить</string>
+<string name="pref_override_system_menu_key">override_system_menu</string>
+<string name="restart_mode_normal">Перезагрузка</string>
+<string name="activity_label_reboot_recovery">Перезагрузка (Восстановление)</string>
+<string name="screenshot_notification_share">Поделиться</string>
+<string name="pref_last_version_key">last_version</string>
+<string name="pref_file">com.nkming.powermenu</string>
+<string name="shutdown_confirm_content">Все несохраненные данные будут потеряны</string>
+<string name="pref_haptic_key">тактильный</string>
+<string name="about_translator_title">Переводчик</string>
+<string name="pref_experimental_category">Экспериментальный</string>
+<string name="pref_hide_launcher_key">hide_launcher</string>
+<string name="affinity_pref">com.nkming.powermenu.PREF</string>
 </resources>
