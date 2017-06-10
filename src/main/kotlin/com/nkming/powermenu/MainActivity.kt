@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity()
 				{
 					supportFragmentManager.beginTransaction()
 							.add(R.id.container, MainFragment())
-							.commit()
+							.commitAllowingStateLoss()
 				}
 			}
 		}
