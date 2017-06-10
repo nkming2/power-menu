@@ -3,6 +3,7 @@ package com.nkming.powermenu
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.preference.CheckBoxPreference
 import android.preference.Preference
@@ -154,7 +155,12 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 	private fun _initInstallPref()
 	{
 		val pref = findPreference(getString(R.string.pref_install_key))
-		if (InstallHelper.isSystemApp(activity))
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+		{
+			// Not recommended for M+
+			pref.isEnabled = false
+		}
+		else if (InstallHelper.isSystemApp(activity))
 		{
 			pref.setTitle(R.string.pref_uninstall_title)
 			pref.setSummary(R.string.pref_uninstall_summary)

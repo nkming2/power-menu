@@ -3,9 +3,11 @@ package com.nkming.powermenu
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity()
 {
@@ -85,7 +87,15 @@ class MainActivity : AppCompatActivity()
 		{
 			// We don't want the animation here
 			super.finish()
-			startActivity(Intent(this, InstallActivity::class.java))
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+			{
+				// System app not recommended for M+
+				Toast.makeText(this, R.string.su_failed, Toast.LENGTH_LONG).show()
+			}
+			else
+			{
+				startActivity(Intent(this, InstallActivity::class.java))
+			}
 		}
 		else
 		{
