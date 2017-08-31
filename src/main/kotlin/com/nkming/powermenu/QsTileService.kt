@@ -12,6 +12,11 @@ open class _BaseTileService : TileService()
 {
 	override fun onStartListening()
 	{
+		if (qsTile == null)
+		{
+			// Not sure why it could be null here, but NPE appears in console so...
+			return
+		}
 		qsTile.state = Tile.STATE_INACTIVE
 		qsTile.updateTile()
 	}
