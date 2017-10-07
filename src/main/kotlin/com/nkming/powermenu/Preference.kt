@@ -24,11 +24,11 @@ class Preference(pref: SharedPreferences, context: Context)
 			if (_edit.commit())
 			{
 				__edit = null
-				return true
+				true
 			}
 			else
 			{
-				return false
+				false
 			}
 		})
 	}
@@ -58,80 +58,56 @@ class Preference(pref: SharedPreferences, context: Context)
 		}
 
 	var lastVersion: Int
-		get()
-		{
-			return _pref.getInt(_lastVersionKey, -1)
-		}
+		get() = _pref.getInt(_lastVersionKey, -1)
 		set(v)
 		{
 			_edit.putInt(_lastVersionKey, v)
 		}
 
 	var isPersistentViewEnabled: Boolean
-		get()
-		{
-			return _pref.getBoolean(_persistentViewKey, false)
-		}
+		get() = _pref.getBoolean(_persistentViewKey, false)
 		set(v)
 		{
 			_edit.putBoolean(_persistentViewKey, v)
 		}
 
 	var isOverrideSystemMenu: Boolean
-		get()
-		{
-			return _pref.getBoolean(_overrideSystemMenuKey, false)
-		}
-		set(v: Boolean)
+		get() = _pref.getBoolean(_overrideSystemMenuKey, false)
+		set(v)
 		{
 			_edit.putBoolean(_overrideSystemMenuKey, v)
 		}
 
 	var isSoftRebootEnabled: Boolean
-		get()
-		{
-			return _pref.getBoolean(_softRebootKey, false)
-		}
-		set(v: Boolean)
+		get() = _pref.getBoolean(_softRebootKey, false)
+		set(v)
 		{
 			_edit.putBoolean(_softRebootKey, v)
 		}
 
 	var isHapticEnabled: Boolean
-		get()
-		{
-			return _pref.getBoolean(_hapticKey, true)
-		}
-		set(v: Boolean)
+		get() = _pref.getBoolean(_hapticKey, true)
+		set(v)
 		{
 			_edit.putBoolean(_hapticKey, v)
 		}
 
 	var isConfirmAction: Boolean
-		get()
-		{
-			return _pref.getBoolean(_confirmKey, false)
-		}
+		get() = _pref.getBoolean(_confirmKey, false)
 		set(v)
 		{
 			_edit.putBoolean(_confirmKey, v)
 		}
 
 	var isDarkTheme: Boolean
-		get()
-		{
-			return _pref.getBoolean(_darkThemeKey, true)
-		}
+		get() = _pref.getBoolean(_darkThemeKey, true)
 		set(v)
 		{
 			_edit.putBoolean(_darkThemeKey, v)
 		}
 
 	var hasRequestOverlayPermission: Boolean
-		get()
-		{
-			return _pref.getBoolean(_requestOverlayPermissionKey, false)
-		}
+		get() = _pref.getBoolean(_requestOverlayPermissionKey, false)
 		set(v)
 		{
 			_edit.putBoolean(_requestOverlayPermissionKey, v)
