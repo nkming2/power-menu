@@ -65,9 +65,9 @@ abstract class DangerousAction(appContext: Context, activity: Activity,
 				.content(_dialogContent)
 				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
 				.positiveText(android.R.string.yes)
-				.onPositive{materialDialog, dialogAction -> onPositive()}
+				.onPositive{_, _ -> onPositive()}
 				.negativeText(android.R.string.no)
-				.onNegative{materialDialog, dialogAction -> onCancel?.invoke()}
+				.onNegative{_, _ -> onCancel?.invoke()}
 				.cancelListener{onCancel?.invoke()}
 		if (_isExplicitTheming)
 		{

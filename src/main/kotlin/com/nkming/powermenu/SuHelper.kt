@@ -8,7 +8,7 @@ object SuHelper
 {
 	fun doSuCommand(context: Context, scripts: List<String>,
 			successWhere: ((exitCode: Int, output: List<String>) -> Boolean) = {
-					exitCode, output -> exitCode >= 0},
+					exitCode, _ -> exitCode >= 0},
 			onSuccess: ((exitCode: Int, output: List<String>) -> Unit)? = null,
 			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
 	{
@@ -18,7 +18,7 @@ object SuHelper
 
 	private fun _doSuCommand(scripts: List<String>,
 			successWhere: ((exitCode: Int, output: List<String>) -> Boolean) = {
-					exitCode, output -> exitCode >= 0},
+					exitCode, _ -> exitCode >= 0},
 			onSuccess: ((exitCode: Int, output: List<String>) -> Unit)? = null,
 			onFailure: ((exitCode: Int, output: List<String>) -> Unit)? = null)
 	{

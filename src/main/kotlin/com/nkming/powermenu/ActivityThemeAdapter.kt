@@ -10,7 +10,7 @@ class ActivityThemeAdapter(activity: Activity, darkTheme: Int, lightTheme: Int)
 	{
 		_activity.setTheme(_theme)
 		_pref.onSharedPreferenceChangeListener =
-				SharedPreferences.OnSharedPreferenceChangeListener{pref, key ->
+				SharedPreferences.OnSharedPreferenceChangeListener{_, key ->
 				run{
 					if (key == _activity.getString(R.string.pref_dark_theme_key))
 					{

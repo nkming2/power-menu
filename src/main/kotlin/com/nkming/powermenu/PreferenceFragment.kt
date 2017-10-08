@@ -121,7 +121,7 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 
 	private fun _initEnablePersistentViewPref()
 	{
-		val l = Preference.OnPreferenceChangeListener{preference, newValue ->
+		val l = Preference.OnPreferenceChangeListener{_, newValue ->
 		run{
 			// User modified preference, could request again
 			PermissionUtils.forceRequestSystemAlertWindowNextTime(activity)

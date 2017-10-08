@@ -59,7 +59,7 @@ object InstallHelper
 	{
 		override fun doInBackground(vararg params: Context?): Boolean
 		{
-			if (params.size == 0)
+			if (params.isEmpty())
 			{
 				Log.e("$LOG_TAG.UninstallTask", "Missing argument")
 				return false
@@ -103,8 +103,8 @@ object InstallHelper
 
 		val scripts = listOf("svc power 2>&1")
 		SuHelper.doSuCommand(context, scripts,
-				successWhere = {exitCode, output -> true},
-				onSuccess = {exitCode, output ->
+				successWhere = {_, _ -> true},
+				onSuccess = {_, output ->
 				run{
 					var isRebootAvailable = false
 					var isShutdownAvailable = false
@@ -123,7 +123,7 @@ object InstallHelper
 							&& isShutdownAvailable)
 					onResult(_isPowerCommandAvailable!!)
 				}},
-				onFailure = {exitCode, output ->
+				onFailure = {exitCode, _ ->
 				run{
 					// SU error?
 					if (exitCode != Shell.OnCommandResultListener.SHELL_DIED)

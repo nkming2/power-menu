@@ -53,8 +53,8 @@ object SystemHelper
 		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isEmpty())},
-				onSuccess = {exitCode, output -> l(true)},
-				onFailure = {exitCode, output -> l(false)})
+				onSuccess = {_, _ -> l(true)},
+				onFailure = {_, _ -> l(false)})
 	}
 
 	@JvmStatic
@@ -96,7 +96,7 @@ object SystemHelper
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isNotEmpty()
 								&& output[0] == "0")},
-				onSuccess = {exitCode, output ->
+				onSuccess = {_, output ->
 				run{
 					val filepath = output[1]
 					if (!File(filepath).exists())
@@ -108,7 +108,7 @@ object SystemHelper
 						l(ScreenshotError.NO_ERROR, filepath)
 					}
 				}},
-				onFailure = {exitCode, output ->
+				onFailure = {_, output ->
 				run{
 					// screencap failed
 					try
@@ -140,8 +140,8 @@ object SystemHelper
 		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isEmpty())},
-				onSuccess = {exitCode, output -> l(true)},
-				onFailure = {exitCode, output -> l(false)})
+				onSuccess = {_, _ -> l(true)},
+				onFailure = {_, _ -> l(false)})
 	}
 
 	/**
@@ -159,10 +159,10 @@ object SystemHelper
 				"am start -n ${clz.`package`.name}/${clz.canonicalName}")
 		SuHelper.doSuCommand(context, scripts,
 				// There's no obvious way to distinguish error
-				successWhere = {exitCode, output ->
+				successWhere = {_, output ->
 						(!output.any{it.contains("error", ignoreCase = true)})},
-				onSuccess = {exitCode, output -> l(true)},
-				onFailure = {exitCode, output -> l(false)})
+				onSuccess = {_, _ -> l(true)},
+				onFailure = {_, _ -> l(false)})
 	}
 
 	/**
@@ -234,13 +234,13 @@ object SystemHelper
 		// See https://android.googlesource.com/platform/frameworks/base/+/master/cmds/svc/src/com/android/commands/svc/PowerCommand.java
 		val scripts = listOf("svc power shutdown")
 		SuHelper.doSuCommand(context, scripts,
-				successWhere = {exitCode, output -> output.isEmpty()},
-				onSuccess = {exitCode, output -> l(true)},
-				onFailure = {exitCode, output -> l(false)})
+				successWhere = {_, output -> output.isEmpty()},
+				onSuccess = {_, _ -> l(true)},
+				onFailure = {_, _ -> l(false)})
 	}
 
 	@JvmStatic
-	fun rebootSystem(mode: RebootMode, context: Context,
+	private fun rebootSystem(mode: RebootMode, context: Context,
 			l: (isSuccessful: Boolean) -> Unit)
 	{
 		try
@@ -300,8 +300,8 @@ object SystemHelper
 
 		val scripts = listOf("svc power reboot $modeStr")
 		SuHelper.doSuCommand(context, scripts,
-				successWhere = {exitCode, output -> output.isEmpty()},
-				onSuccess = {exitCode, output -> l(true)},
-				onFailure = {exitCode, output -> l(false)})
+				successWhere = {_, output -> output.isEmpty()},
+				onSuccess = {_, _ -> l(true)},
+				onFailure = {_, _ -> l(false)})
 	}
 }

@@ -32,7 +32,7 @@ class ScreenshotHandler(context: Context)
 		val l =
 		{
 			val callback = MediaScannerConnection.OnScanCompletedListener{
-					path, uri ->
+					_, uri ->
 					run{
 						_notifyScreenshot(filepath, uri)
 					}}

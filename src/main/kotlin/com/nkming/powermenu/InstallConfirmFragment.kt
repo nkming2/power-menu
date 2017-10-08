@@ -33,17 +33,14 @@ class InstallConfirmFragment : DialogFragment()
 				.content(R.string.install_confirm_content)
 				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
 				.positiveText(R.string.install_confirm_positive)
-				.onPositive(
-				{
-					materialDialog, dialogAction -> (
+				.onPositive({_, _ ->
+				run{
+					if (!isDetached)
 					{
-						if (!isDetached)
-						{
-							_listener.onInstallConfirmed()
-						}
-						_isNoFinish = true
-					}())
-				})
+						_listener.onInstallConfirmed()
+					}
+					_isNoFinish = true
+				}})
 				.negativeText(android.R.string.cancel)
 				.build()
 	}
