@@ -49,7 +49,7 @@ object SystemHelper
 	@JvmStatic
 	fun sleep(context: Context, l: (isSuccessful: Boolean) -> Unit)
 	{
-		val scripts = listOf("input keyevent 26")
+		val scripts = listOf("input keyevent ${KeyEvent.KEYCODE_POWER}")
 		SuHelper.doSuCommand(context, scripts,
 				successWhere = {exitCode, output ->
 						(exitCode == 0 && output.isEmpty())},
