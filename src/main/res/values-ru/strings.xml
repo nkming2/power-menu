@@ -81,4 +81,7 @@
 	<string name="shutdown_confirm_content">Все несохраненные данные будут потеряны</string>
 	<string name="about_translator_title">Переводчик</string>
 	<string name="pref_experimental_category">Экспериментальный</string>
+	<string name="pref_native_screenshot_title">Native screenshot</string>
+	<string name="pref_native_screenshot_summary_on">Using native</string>
+	<string name="pref_native_screenshot_summary_off">Using legacy</string>
 </resources>

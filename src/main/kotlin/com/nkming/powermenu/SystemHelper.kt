@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.PowerManager
 import android.text.format.DateFormat
+import android.view.KeyEvent
 import eu.chainfire.libsuperuser.Shell
 import java.io.File
 
@@ -119,6 +120,17 @@ object SystemHelper
 					{}
 					l(ScreenshotError.SCREENCAP_FAILURE, "")
 				}})
+	}
+
+	@JvmStatic
+	fun screenshotNative(context: Context, l: (isSuccessful: Boolean) -> Unit)
+	{
+		val scripts = listOf("input keyevent ${KeyEvent.KEYCODE_SYSRQ}")
+		SuHelper.doSuCommand(context, scripts,
+				successWhere = {exitCode, output ->
+						(exitCode == 0 && output.isEmpty())},
+				onSuccess = {_, _ -> l(true)},
+				onFailure = {_, _ -> l(false)})
 	}
 
 	@JvmStatic

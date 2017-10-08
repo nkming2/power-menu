@@ -92,6 +92,11 @@
 	<string name="pref_override_system_menu_summary_true">Launch this app while long pressing power button. May not be compatible with all devices</string>
 	<string name="pref_override_system_menu_key" translatable="false">override_system_menu</string>
 
+	<string name="pref_native_screenshot_key" translatable="false">native_screenshot</string>
+	<string name="pref_native_screenshot_title">Native screenshot</string>
+	<string name="pref_native_screenshot_summary_on">Using native</string>
+	<string name="pref_native_screenshot_summary_off">Using legacy</string>
+
 	<string name="pref_about_category">About</string>
 
 	<string name="pref_request_overlay_permission_key" translatable="false">request_overlay_permission</string>

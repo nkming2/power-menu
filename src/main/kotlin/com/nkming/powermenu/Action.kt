@@ -209,7 +209,24 @@ open class SleepAction(appContext: Context) : Action(appContext)
 
 open class ScreenshotAction(appContext: Context) : Action(appContext)
 {
+	companion object
+	{
+		val LOG_TAG = ScreenshotAction::class.java.canonicalName
+	}
+
 	override fun invoke()
+	{
+		if (!_pref.isNativeScreenshot)
+		{
+			invokeLegacy()
+		}
+		else
+		{
+			invokeNative()
+		}
+	}
+
+	private fun invokeLegacy()
 	{
 		val wm = _context.getSystemService(Context.WINDOW_SERVICE)
 				as WindowManager
@@ -221,22 +238,37 @@ open class ScreenshotAction(appContext: Context) : Action(appContext)
 			{
 				screenshotHandler.onScreenshotSuccess(filepath, rotation)
 				onSuccessful?.invoke()
+				onDone?.invoke()
 			}
 			else
 			{
-				val textId = if (error
-						== SystemHelper.ScreenshotError.SCREENCAP_FAILURE)
-				{
-					R.string.screenshot_fail_screencap
-				}
-				else
-				{
-					R.string.screenshot_fail_file
-				}
-				Toast.makeText(_context, textId, Toast.LENGTH_LONG).show()
+				// Now try our new shiny method
+				Log.i("$LOG_TAG.invokeLegacy",
+						"Legacy screenshot failed, switching to native")
+				_pref.isNativeScreenshot = true
+				_pref.apply()
+				invokeNative()
+			}
+		}})
+	}
+
+	private fun invokeNative()
+	{
+		SystemHelper.screenshotNative(_context,
+		{
+			if (it)
+			{
+				onSuccessful?.invoke()
+			}
+			else
+			{
+				Toast.makeText(_context, R.string.screenshot_fail_screencap,
+						Toast.LENGTH_LONG).show()
 				onFailed?.invoke()
 			}
 			onDone?.invoke()
-		}})
+		})
 	}
+
+	private val _pref by lazy{Preference.from(_context)}
 }

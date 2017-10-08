@@ -113,6 +113,13 @@ class Preference(pref: SharedPreferences, context: Context)
 			_edit.putBoolean(_requestOverlayPermissionKey, v)
 		}
 
+	var isNativeScreenshot: Boolean
+		get() = _pref.getBoolean(_nativeScreenshotKey, false)
+		set(v)
+		{
+			_edit.putBoolean(_nativeScreenshotKey, v)
+		}
+
 	private val _lastVersionKey by lazy{_context.getString(
 			R.string.pref_last_version_key)}
 
@@ -138,6 +145,9 @@ class Preference(pref: SharedPreferences, context: Context)
 
 	private val _requestOverlayPermissionKey by lazy{_context.getString(
 			R.string.pref_request_overlay_permission_key)}
+
+	private val _nativeScreenshotKey by lazy{_context.getString(
+			R.string.pref_native_screenshot_key)}
 
 	private val _context = context
 	private val _pref = pref
