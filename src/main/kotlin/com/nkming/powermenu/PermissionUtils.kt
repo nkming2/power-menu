@@ -2,6 +2,7 @@ package com.nkming.powermenu
 
 import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -45,13 +46,24 @@ object PermissionUtils
 			Log.w("$LOG_TAG.requestSystemAlertWindow", "Invoking method on M-")
 			return
 		}
-		Toast.makeText(context, R.string.overlay_permission_required,
-				Toast.LENGTH_LONG).show()
 		Log.d("$LOG_TAG.requestSystemAlertWindow",
 				"Requesting overlay permission")
-		val i = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-		i.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
-		context.startActivity(i)
+		try
+		{
+			val i = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+			i.data = Uri.parse("package:${BuildConfig.APPLICATION_ID}")
+			context.startActivity(i)
+			Toast.makeText(context, R.string.overlay_permission_required,
+					Toast.LENGTH_LONG).show()
+		}
+		catch (e: ActivityNotFoundException)
+		{
+			Log.e("$LOG_TAG.requestSystemAlertWindow",
+					"Activity ACTION_MANAGE_OVERLAY_PERMISSION not found", e)
+			Toast.makeText(context,
+					R.string.overlay_permission_settings_open_failed,
+					Toast.LENGTH_LONG).show()
+		}
 
 		pref.hasRequestOverlayPermission = true
 		pref.apply()

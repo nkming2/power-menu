@@ -12,6 +12,7 @@
 	<string name="su_failed">Failed running su command, not rooted?</string>
 	<string name="screenshot_succeed_fallback">Screenshot captured</string>
 	<string name="overlay_permission_required">Please grant us permission to draw over other apps</string>
+	<string name="overlay_permission_settings_open_failed">Failed opening Android Settings, please grant us permission to draw over other apps manually</string>
 	<string name="write_storage_required">Please grant us permission in order to take screenshots</string>
 
 	<string name="restart_mode_normal">Reboot</string>
