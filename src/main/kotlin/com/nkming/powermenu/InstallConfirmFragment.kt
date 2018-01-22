@@ -28,7 +28,7 @@ class InstallConfirmFragment : DialogFragment()
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
 	{
-		return MaterialDialog.Builder(activity)
+		return MaterialDialog.Builder(activity!!)
 				.title(R.string.install_confirm_title)
 				.content(R.string.install_confirm_content)
 				.theme(if (_pref.isDarkTheme) Theme.DARK else Theme.LIGHT)
@@ -66,11 +66,11 @@ class InstallConfirmFragment : DialogFragment()
 		super.onDismiss(dialog)
 		if (activity != null && !_isNoFinish)
 		{
-			activity.finish()
+			activity!!.finish()
 		}
 	}
 
 	private lateinit var _listener: Listener
 	private var _isNoFinish = false
-	private val _pref by lazy{Preference.from(context)}
+	private val _pref by lazy{Preference.from(context!!)}
 }

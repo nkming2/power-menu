@@ -40,7 +40,7 @@ class MainFragment : Fragment()
 	override fun onActivityCreated(savedInstanceState: Bundle?)
 	{
 		super.onActivityCreated(savedInstanceState)
-		if (!PermissionUtils.hasWriteExternalStorage(context))
+		if (!PermissionUtils.hasWriteExternalStorage(context!!))
 		{
 			_isReqPermission = true
 			PermissionUtils.requestWriteExternalStorage(this)
@@ -62,7 +62,7 @@ class MainFragment : Fragment()
 		{
 			// Like noHistory, not using that because we don't want the
 			// permission activity to kill our activity
-			activity.finish()
+			activity?.finish()
 		}
 	}
 
@@ -92,7 +92,7 @@ class MainFragment : Fragment()
 	{
 		_root.setOnClickListener(
 		{
-			activity.finish()
+			activity?.finish()
 		})
 	}
 
@@ -112,7 +112,7 @@ class MainFragment : Fragment()
 					.setStartDelay(Res.ANIMATION_FAST.toLong() / 2 * i)
 		}
 
-		val pref = Preference.from(context)
+		val pref = Preference.from(context!!)
 		_restartNormalBtn.label.text = getString(
 				if (pref.isSoftRebootEnabled && SystemHelper.isBusyboxPresent())
 						R.string.restart_mode_normal_or_soft
@@ -129,7 +129,7 @@ class MainFragment : Fragment()
 			})
 		}
 
-		val pref = Preference.from(context)
+		val pref = Preference.from(context!!)
 		if (pref.isSoftRebootEnabled && SystemHelper.isBusyboxPresent())
 		{
 			_restartNormalBtn.bound.isHapticFeedbackEnabled =
@@ -144,7 +144,7 @@ class MainFragment : Fragment()
 
 	private fun _onShutdownClick()
 	{
-		val action = object: ShutdownAction(_appContext, activity,
+		val action = object: ShutdownAction(_appContext, activity!!,
 				isExplicitTheming = true)
 		{
 			override fun onPostConfirm()
@@ -180,7 +180,8 @@ class MainFragment : Fragment()
 				activity?.unregisterReceiver(this)
 			}
 		}
-		activity.registerReceiver(receiver, IntentFilter(Intent.ACTION_SCREEN_ON))
+		activity!!.registerReceiver(receiver,
+				IntentFilter(Intent.ACTION_SCREEN_ON))
 
 		// Sleep will run on a new thread and involve su, that takes quite some
 		// time so do it at once
@@ -233,7 +234,7 @@ class MainFragment : Fragment()
 		_startReveal(_screenshotBtn.btn, R.color.screenshot_bg, true,
 		{
 			activity ?: return@_startReveal
-			activity.finish()
+			activity!!.finish()
 
 			val receiver = object: BroadcastReceiver()
 			{
@@ -260,7 +261,7 @@ class MainFragment : Fragment()
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
 			rebootMode: SystemHelper.RebootMode)
 	{
-		val action = object: RebootAction(_appContext, activity, rebootMode,
+		val action = object: RebootAction(_appContext, activity!!, rebootMode,
 				isExplicitTheming = true)
 		{
 			override fun onPostConfirm()
@@ -290,7 +291,7 @@ class MainFragment : Fragment()
 
 	private fun _onRestartNormalLongClick()
 	{
-		val action = object: SoftRebootAction(_appContext, activity,
+		val action = object: SoftRebootAction(_appContext, activity!!,
 				isExplicitTheming = true)
 		{
 			override fun onPostConfirm()
@@ -491,7 +492,7 @@ class MainFragment : Fragment()
 		bound.isEnabled = false
 	}
 
-	private val _appContext by lazy({activity.applicationContext})
+	private val _appContext by lazy({activity!!.applicationContext})
 	private val _handler by lazy({Handler()})
 	private var _activeDangerousAction: DangerousAction? = null
 	private var _isReqPermission = false
