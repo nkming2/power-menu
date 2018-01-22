@@ -1,0 +1,113 @@
+<resources>
+	<string name="app_name">Power Menu</string>
+	<string name="app_pref_name">Power Menu Config</string>
+
+	<string name="shutdown_fail">Falha ao desligar, não está instalado como um aplicativo do sistema?</string>
+	<string name="sleep_fail">Falha ao por para dormir, por favor nos informe.</string>
+	<string name="restart_fail">Falha ao reiniciar, Não está instalado como um aplicativo do sistema?</string>
+	<string name="soft_reboot_fail">Reinício suave falhou, por favor nos informe</string>
+	<string name="screenshot_fail_file">Falha ao realizar a captura de tela, tente desabilitar "mount namespace separation" no SuperSU</string>
+	<string name="screenshot_fail_screencap">Falha ao realizar a captura de tela</string>
+	<string name="start_activity_fail">Falha ao iniciar a atividade inicial, por favor nos informe.</string>
+	<string name="su_failed">Falha ao realizar o comando "SU". seu dispositivo está rooteado?</string>
+	<string name="screenshot_succeed_fallback">Tela Capturada</string>
+	<string name="overlay_permission_required">Por favor, conceda-nos permissão para desenhar em outros apps</string>
+	<string name="overlay_permission_settings_open_failed">Falha ao abrir as Configurações do Android, conceda-nos permissão para desenhar sobre outros aplicativos manualmente</string>
+	<string name="write_storage_required">Por favor conceda-nos permissão para tirar capturas de tela.</string>
+
+	<string name="restart_mode_normal">Reiniciar</string>
+	<string name="restart_mode_normal_or_soft">Reiniciar (segure para reinício suave)</string>
+	<string name="restart_mode_recovery">Recovery</string>
+	<string name="restart_mode_bootloader">Bootloader</string>
+
+	<string name="install_confirm_title">Instalar como um aplicativo do sistema</string>
+	<string name="install_confirm_content">Este aplicativo faz uso de recursos disponíveis apenas para aplicativos do sistema.\n\nRealize um backup antes de prosseguir, seu dispositivo será reiniciado automaticamente após a instalação.</string>
+	<string name="install_confirm_positive">Instalar</string>
+
+	<string name="install_title">Instalando...</string>
+	<string name="install_content">Não faça nada. Seu dispositivo será reiniciado automaticamente se for bem-sucedido</string>
+	<string name="install_failed">Instalação falou, seu dispositivo está rooteado?</string>
+
+	<string name="uninstall_title">Desinstalando...</string>
+	<string name="uninstall_content">Não faça nada. Seu dispositivo será reiniciado automaticamente se for bem-sucedido</string>
+	<string name="uninstall_failed">Desinstalação falou, seu dispositivo está rooteado?</string>
+
+	<string name="shutdown_confirm_title">Pronto para desligar?</string>
+	<string name="shutdown_confirm_content">Todo o trabalho não salvo será perdido</string>
+
+	<string name="restart_confirm_title">Preparado para reiniciar?</string>
+	<string name="restart_confirm_content">@string/shutdown_confirm_content</string>
+
+	<string name="pref_persistent_view_category">Vista persistente</string>
+
+	<string name="pref_persistent_view_title">Ativar</string>
+	<string name="pref_persistent_view_summary">Launcher persistente na tela para o aplicativo</string>
+
+	<string name="pref_autohide_persistent_view_title">Ocultar em tela cheia</string>
+	<string name="pref_autohide_persistent_view_summary">Ocultar a visão persistente quando um aplicativo em tela cheia estiver sendo executado</string>
+
+	<string name="pref_alpha_title">Opacidade</string>
+	<string name="pref_alpha_summary">Ajustar a opacidade da visualização</string>
+
+	<string name="pref_haptic_title">Haptic feedback</string>
+	<string name="pref_haptic_summary">Ative o feedback hábil enquanto faz um clique longo no botão</string>
+
+	<string name="pref_others_category">Outros</string>
+
+	<string name="pref_hide_launcher_title">Ocultar ícone no launcher</string>
+	<string name="pref_hide_launcher_summary">O efeito só pode ser visível após o reinício do seu launcher</string>
+
+	<string name="pref_confirm_title">Confirme a ação não trivial</string>
+	<string name="pref_confirm_summary">Confirme antes de desligar ou reiniciar seu dispositivo</string>
+
+	<string name="pref_install_title">Instalar como um aplicativo de sistema</string>
+	<string name="pref_install_summary">Melhorar a compatibilidade e, em alguns casos, o desempenho</string>
+	<string name="pref_uninstall_title">Desfazer a instalação do aplicativo de sistema</string>
+	<string name="pref_uninstall_summary">Remova o aplicativo da partição do sistema. Necessário antes de poder remover este aplicativo</string>
+
+	<string name="pref_dark_theme_title">Tema preto</string>
+	<string name="pref_dark_theme_summary_on">Usando o tema preto</string>
+	<string name="pref_dark_theme_summary_off">Usando o tema leve</string>
+
+	<string name="pref_experimental_category">Experimental</string>
+
+	<string name="pref_soft_reboot_title">Ativar reinício suave</string>
+	<string name="pref_soft_reboot_na_summary">Necessário busybox</string>
+	<string name="pref_soft_reboot_summary">Pressione e segure o botão de reinício para matar o processo de zigoto</string>
+
+	<string name="pref_override_system_menu_title">Substituir o menu "Power" do sistema</string>
+	<string name="pref_override_system_menu_summary_false">Inicie o menu de alimentação do sistema apertando o botão de energia</string>
+	<string name="pref_override_system_menu_summary_true">Iniciar este app quando pressionar o botão power. Pode não ser compatível com todos os dispositivos</string>
+
+	<string name="pref_native_screenshot_title">Captura de tela nativa</string>
+	<string name="pref_native_screenshot_summary_on">Usando nativo</string>
+	<string name="pref_native_screenshot_summary_off">Usando legado</string>
+
+	<string name="pref_about_category">Sobre</string>
+
+	<string name="about_version_title">Versão</string>
+
+	<string name="about_source_title">Código fonte</string>
+
+	<string name="about_translator_title">Tradutor</string>
+	<string name="about_translator_credit">Lucas K.</string>
+
+	<string name="notification_ticker">Menu power persistente ativado</string>
+	<string name="notification_title">@string/app_name</string>
+	<string name="notification_text">Clique para abrir as configurações</string>
+
+	<string name="screenshot_notification_ticker">Tela capturada</string>
+	<string name="screenshot_notification_title">@string/screenshot_notification_ticker</string>
+	<string name="screenshot_notification_text">Toque para ver sua captura de tela</string>
+	<string name="screenshot_notification_share">Compartilhar</string>
+	<string name="screenshot_notification_share_chooser">Compartilhar com</string>
+	<string name="screenshot_notification_delete">Excluir</string>
+
+	<string name="activity_label_shutdown">Desligar</string>
+	<string name="activity_label_reboot">Reiniciar</string>
+	<string name="activity_label_reboot_recovery">Reiniciar(Recovery)</string>
+	<string name="activity_label_reboot_bootloader">Reiniciar(Bootloader)</string>
+	<string name="activity_label_soft_reboot">Reinício suave</string>
+	<string name="activity_label_sleep">Dormir</string>
+	<string name="activity_label_screenshot">Captura de tela</string>
+</resources>
