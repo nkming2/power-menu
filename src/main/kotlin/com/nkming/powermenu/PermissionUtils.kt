@@ -1,6 +1,7 @@
 package com.nkming.powermenu
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -29,6 +30,7 @@ object PermissionUtils
 		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.M)
 	fun requestSystemAlertWindow(context: Context)
 	{
 		// We don't want to keep bothering the user -- if permission is
