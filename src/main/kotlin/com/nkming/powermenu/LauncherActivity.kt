@@ -2,7 +2,7 @@ package com.nkming.powermenu
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * This class is a proxy class such that the launcher icon could be disabled
