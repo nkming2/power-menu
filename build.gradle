@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 
 android {
 	compileSdkVersion appCompileSdkVersion
-	buildToolsVersion "27.0.3"
 	defaultConfig {
 		applicationId "com.nkming.powermenu"
 		minSdkVersion 15
