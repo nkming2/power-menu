@@ -22,10 +22,8 @@
 	<string name="install_failed">Ошибка установки, нет рута?</string>
 	<string name="install_confirm_title">Установить в качестве системного приложения</string>
 	<string name="notification_title">@string/app_name</string>
-	<string name="pref_hide_launcher_title">Скрыть иконку в лаунчере</string>
 	<string name="pref_confirm_summary">Подтвердите перед выключением или перезагрузкой устройства</string>
 	<string name="restart_confirm_title">Готовы к перезагрузке?</string>
-	<string name="pref_hide_launcher_summary">Эффект может быть виден только после перезагрузки запущенного приложения</string>
 	<string name="activity_label_soft_reboot">Мягкая перезагрузка</string>
 	<string name="pref_persistent_view_title">Включить</string>
 	<string name="pref_override_system_menu_summary_true">Запустить это приложение, по долгому нажатию кнопки питания. Может быть не совместимы с некоторыми устройствами</string>

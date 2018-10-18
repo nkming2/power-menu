@@ -14,7 +14,9 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.shamanland.fab.FloatingActionButton
@@ -34,6 +36,18 @@ class MainFragment : Fragment()
 		_root = inflater.inflate(R.layout.frag_main, container, false)
 		_initRoot()
 		_initButton()
+		_settings.setOnClickListener{
+			val i = Intent(context,  PreferenceActivity::class.java)
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+					or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+			startActivity(i)
+			activity?.finish()
+		}
+		_settings.setOnLongClickListener{
+			Toast.makeText(context, R.string.app_pref_name, Toast.LENGTH_LONG)
+					.show()
+			true
+		}
 		return _root
 	}
 
@@ -155,6 +169,7 @@ class MainFragment : Fragment()
 				_dismissOtherBounds(_shutdownBtn)
 				// Disable all click bounds
 				_disableOtherBounds(null as ActionButtonMeta?)
+				_dismissView(_settings)
 			}
 		}
 		// If succeeded, we'll get killed anyway
@@ -192,6 +207,7 @@ class MainFragment : Fragment()
 		_sleepBtn.btn.isShadow = false
 		_dismissOtherBounds(_sleepBtn)
 		_disableOtherBounds(null as ActionButtonMeta?)
+		_dismissView(_settings)
 	}
 
 	private fun _onRestartClick()
@@ -252,6 +268,7 @@ class MainFragment : Fragment()
 		_screenshotBtn.btn.isShadow = false
 		_dismissOtherBounds(_screenshotBtn)
 		_disableOtherBounds(null as ActionButtonMeta?)
+		_dismissView(_settings)
 	}
 
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
@@ -272,6 +289,7 @@ class MainFragment : Fragment()
 				_dismissOtherBounds(meta)
 				_dismissOtherLabels(null)
 				_disableOtherBounds(null as RestartButtonMeta?)
+				_dismissView(_settings)
 			}
 		}
 		// If succeeded, we'll get killed anyway
@@ -302,6 +320,7 @@ class MainFragment : Fragment()
 				_dismissOtherBounds(_restartNormalBtn)
 				_dismissOtherLabels(null)
 				_disableOtherBounds(null as RestartButtonMeta?)
+				_dismissView(_settings)
 			}
 		}
 		// If succeeded, we'll get killed anyway
@@ -562,4 +581,6 @@ class MainFragment : Fragment()
 		get() = _restartMenuBtns[2]
 
 	private val _reveal by lazy{_root.findViewById(R.id.reveal) as RevealView}
+
+	private val _settings by lazy{_root.findViewById(R.id.settings) as ImageView}
 }

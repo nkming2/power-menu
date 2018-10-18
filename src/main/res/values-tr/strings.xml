@@ -39,8 +39,6 @@ Devam etmeden önce çalışmanızı kaydedin, cihazınız kurulumdan sonra otom
 	<string name="pref_experimental_category">Deneysel</string>
 	<string name="pref_haptic_summary">Butona uzun basıldığı zaman dokunsal geribildirimi aktif et.</string>
 	<string name="pref_haptic_title">Dokunsal geribildirim</string>
-	<string name="pref_hide_launcher_summary">Efekt, uygulamayı yeniden başlattıktan sonra görülebilir.</string>
-	<string name="pref_hide_launcher_title">Başlatıcı simgesini gizle</string>
 	<string name="pref_install_summary">Uyumluluğun ve bazı durumlarda performansın artırılması için.</string>
 	<string name="pref_install_title">Sistem uygulaması olarak kur</string>
 	<string name="pref_native_screenshot_summary_off">Programın aracını kullan.</string>

@@ -39,9 +39,7 @@ Realize um backup antes de prosseguir, seu dispositivo será reiniciado automati
 <string name="pref_experimental_category">Experimental</string>
 <string name="pref_haptic_summary">Ative o feedback hábil enquanto faz um clique longo no botão</string>
 <string name="pref_haptic_title">Feedback Hábil</string>
-<string name="pref_hide_launcher_summary">O efeito só será visível após o reinício do seu launcher</string>
-<string name="pref_hide_launcher_title">Ocultar ícone no launcher</string>
-<string name="pref_install_summary">Melhorar a compatibilidade e, em alguns casos, o desempenho</string>
+	<string name="pref_install_summary">Melhorar a compatibilidade e, em alguns casos, o desempenho</string>
 <string name="pref_install_title">Instalar como um aplicativo de sistema</string>
 <string name="pref_native_screenshot_summary_off">Usando legado</string>
 <string name="pref_native_screenshot_summary_on">Usando nativo</string>

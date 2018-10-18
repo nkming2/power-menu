@@ -80,11 +80,6 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 		{
 			PersistentService.setAlpha(activity, pref.getInt(key, 100) / 100.0f)
 		}
-		else if (key == getString(R.string.pref_hide_launcher_key))
-		{
-			SystemHelper.setEnableComponent(activity,
-					LauncherActivity::class.java, !pref.getBoolean(key, false))
-		}
 		else if (key == getString(R.string.pref_haptic_key))
 		{
 			PersistentService.setEnableHaptic(activity, pref.getBoolean(key,

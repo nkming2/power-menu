@@ -10,6 +10,23 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fitsSystemWindows="true">
+
+		<ImageView
+			android:id="@+id/settings"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="right|top"
+			android:padding="8dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginTop="8dp"
+			android:background="?selectableItemBackground"
+			android:src="@drawable/outline_settings_white_24" />
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
