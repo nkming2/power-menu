@@ -34,6 +34,7 @@ class SystemOverrideService : Service()
 		private val LOG_TAG = SystemOverrideService::class.java.canonicalName
 
 		// From platform/frameworks/base/+/lollipop-mr1-release/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
+		// L+: platform/frameworks/base/+/master/services/core/java/com/android/server/policy/PhoneWindowManager.java
 		private const val SYSTEM_DIALOG_REASON_GLOBAL_ACTIONS = "globalactions"
 
 		private var _isRunning = false
