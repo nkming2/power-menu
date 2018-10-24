@@ -19,7 +19,7 @@
 		<activity
 			android:name=".MainActivity"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppTheme.Light"
+			android:theme="@style/AppTheme.Dark"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -44,7 +44,7 @@
 			android:name=".InstallActivity"
 			android:excludeFromRecents="true"
 			android:exported="false"
-			android:theme="@style/AppTheme.Light.Dialog">
+			android:theme="@style/AppTheme.Dark.Dialog">
 
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -54,7 +54,7 @@
 
 		<activity
 			android:name=".PreferenceActivity"
-			android:theme="@style/AppThemePreference.Light"
+			android:theme="@style/AppThemePreference.Dark"
 			android:label="@string/app_pref_name"
 			android:taskAffinity="@string/affinity_pref">
 
@@ -155,7 +155,7 @@
 			android:label="@string/activity_label_shutdown"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay.Light"
+			android:theme="@style/AppThemeNoDisplay.Dark"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -169,7 +169,7 @@
 			android:label="@string/activity_label_reboot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay.Light"
+			android:theme="@style/AppThemeNoDisplay.Dark"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -183,7 +183,7 @@
 			android:label="@string/activity_label_reboot_recovery"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay.Light"
+			android:theme="@style/AppThemeNoDisplay.Dark"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -197,7 +197,7 @@
 			android:label="@string/activity_label_reboot_bootloader"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay.Light"
+			android:theme="@style/AppThemeNoDisplay.Dark"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -211,7 +211,7 @@
 			android:label="@string/activity_label_soft_reboot"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay.Light"
+			android:theme="@style/AppThemeNoDisplay.Dark"
 			android:taskAffinity="@string/affinity_main"
 			android:enabled="false">
 
@@ -226,7 +226,7 @@
 			android:label="@string/activity_label_sleep"
 			android:noHistory="true"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay.Light"
+			android:theme="@style/AppThemeNoDisplay.Dark"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
@@ -239,7 +239,7 @@
 			android:name=".ScreenshotActivity"
 			android:label="@string/activity_label_screenshot"
 			android:excludeFromRecents="true"
-			android:theme="@style/AppThemeNoDisplay.Light"
+			android:theme="@style/AppThemeNoDisplay.Dark"
 			android:taskAffinity="@string/affinity_main">
 
 			<intent-filter>
