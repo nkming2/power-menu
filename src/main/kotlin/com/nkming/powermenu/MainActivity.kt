@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity()
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
+		_themeAdapter.onCreate(savedInstanceState)
 		val km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 		_isKeyguard = km.inKeyguardRestrictedInputMode()
 		if (_isKeyguard)
@@ -47,6 +48,18 @@ class MainActivity : AppCompatActivity()
 		_isStop = false
 	}
 
+	override fun onResume()
+	{
+		super.onResume()
+		_themeAdapter.onResume()
+	}
+
+	override fun onPause()
+	{
+		super.onPause()
+		_themeAdapter.onPause()
+	}
+
 	override fun onStop()
 	{
 		super.onStop()
@@ -60,6 +73,12 @@ class MainActivity : AppCompatActivity()
 			SystemOverrideService.startIfNecessary(this)
 		}
 		_isStop = true
+	}
+
+	override fun onDestroy()
+	{
+		super.onDestroy()
+		_themeAdapter.onDestroy()
 	}
 
 	override fun onUserLeaveHint()
@@ -131,4 +150,7 @@ class MainActivity : AppCompatActivity()
 	private var _isAnimateClose = true
 	private var _isStop = false
 	private var _isKeyguard = false
+
+	private val _themeAdapter by lazy{ActivityThemeAdapter(this,
+			R.style.AppTheme_Dark, R.style.AppTheme_Light)}
 }

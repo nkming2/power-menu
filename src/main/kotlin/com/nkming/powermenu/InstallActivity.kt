@@ -13,8 +13,8 @@ class InstallActivity : AppCompatActivity(), InstallConfirmFragment.Listener
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
-		super.onCreate(savedInstanceState)
 		_themeAdapter.onCreate(savedInstanceState)
+		super.onCreate(savedInstanceState)
 		if (InstallHelper.isSystemApp(this))
 		{
 			_onCreateUninstall(savedInstanceState)
@@ -23,6 +23,18 @@ class InstallActivity : AppCompatActivity(), InstallConfirmFragment.Listener
 		{
 			_onCreateInstall(savedInstanceState)
 		}
+	}
+
+	override fun onResume()
+	{
+		super.onResume()
+		_themeAdapter.onResume()
+	}
+
+	override fun onPause()
+	{
+		super.onPause()
+		_themeAdapter.onPause()
 	}
 
 	override fun onDestroy()

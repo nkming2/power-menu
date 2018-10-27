@@ -7,8 +7,20 @@ open class _BaseShortcutActivity : Activity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
-		super.onCreate(savedInstanceState)
 		_themeAdapter.onCreate(savedInstanceState)
+		super.onCreate(savedInstanceState)
+	}
+
+	override fun onResume()
+	{
+		super.onResume()
+		_themeAdapter.onResume()
+	}
+
+	override fun onPause()
+	{
+		super.onPause()
+		_themeAdapter.onPause()
 	}
 
 	override fun onDestroy()
