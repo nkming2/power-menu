@@ -34,13 +34,14 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory
+		android:key="@string/pref_others_category_key"
 		android:title="@string/pref_others_category">
 
-		<CheckBoxPreference
-			android:key="@string/pref_hide_launcher_key"
-			android:title="@string/pref_hide_launcher_title"
-			android:summary="@string/pref_hide_launcher_summary"
-			android:defaultValue="false"/>
+		<Preference
+			android:key="@string/pref_config_notification_key"
+			android:title="@string/pref_config_notification_title"
+			android:summary="@string/pref_config_notification_summary"
+			android:persistent="false" />
 
 		<CheckBoxPreference
 			android:key="@string/pref_confirm_key"

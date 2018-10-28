@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 
 android {
 	compileSdkVersion appCompileSdkVersion
-	buildToolsVersion "27.0.3"
 	defaultConfig {
 		applicationId "com.nkming.powermenu"
 		minSdkVersion 15
@@ -20,15 +19,21 @@ android {
 	sourceSets {
 		main.java.srcDirs += 'src/main/kotlin'
 	}
+	lintOptions {
+		disable 'MissingTranslation'
+	}
 }
 
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 	implementation project(':libutils')
 	implementation project(':floating-action-button')
-	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-	implementation "com.android.support:appcompat-v7:$support_version"
-	implementation "com.android.support:support-v4:$support_version"
+	implementation "androidx.annotation:annotation:1.0.0"
+	implementation "androidx.appcompat:appcompat:1.0.0"
+	implementation "androidx.coordinatorlayout:coordinatorlayout:1.0.0"
+	implementation "androidx.recyclerview:recyclerview:1.0.0"
+	implementation "com.google.android.material:material:1.0.0"
 	implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 	implementation 'eu.chainfire:libsuperuser:1.0.0.+'
 }

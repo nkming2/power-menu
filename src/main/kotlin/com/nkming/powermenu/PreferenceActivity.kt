@@ -1,14 +1,14 @@
 package com.nkming.powermenu
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class PreferenceActivity : AppCompatActivity()
 {
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
-		super.onCreate(savedInstanceState)
 		_themeAdapter.onCreate(savedInstanceState)
+		super.onCreate(savedInstanceState)
 
 		setContentView(R.layout.activity_main)
 		if (savedInstanceState == null)
@@ -19,6 +19,18 @@ class PreferenceActivity : AppCompatActivity()
 
 		PersistentViewHelper.startIfNecessary(this)
 		SystemOverrideService.startIfNecessary(this)
+	}
+
+	override fun onResume()
+	{
+		super.onResume()
+		_themeAdapter.onResume()
+	}
+
+	override fun onPause()
+	{
+		super.onPause()
+		_themeAdapter.onPause()
 	}
 
 	override fun onDestroy()

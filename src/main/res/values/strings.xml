@@ -48,6 +48,10 @@
 	<string name="pref_persistent_view_summary">Persistent on-screen launcher for the app</string>
 	<string name="pref_persistent_view_key" translatable="false">persistent_view</string>
 
+	<string name="pref_config_notification_title">Notification settings</string>
+	<string name="pref_config_notification_summary">Open Android Settings to customize the notifications, like priority, lock screen visibility, etc.</string>
+	<string name="pref_config_notification_key" translatable="false">config_notification</string>
+
 	<string name="pref_autohide_persistent_view_title">Hide on fullscreen</string>
 	<string name="pref_autohide_persistent_view_summary">Hide the persistent view when a fullscreen app is running</string>
 	<string name="pref_autohide_persistent_view_key" translatable="false">autohide_persistent_view</string>
@@ -61,10 +65,7 @@
 	<string name="pref_haptic_key" translatable="false">haptic</string>
 
 	<string name="pref_others_category">Others</string>
-
-	<string name="pref_hide_launcher_title">Hide launcher icon</string>
-	<string name="pref_hide_launcher_summary">The effect may only be visible after restarting your launcher app</string>
-	<string name="pref_hide_launcher_key" translatable="false">hide_launcher</string>
+	<string name="pref_others_category_key" translatable="false">others_category</string>
 
 	<string name="pref_confirm_title">Confirm non-trivial action</string>
 	<string name="pref_confirm_summary">Confirm before shutting down or restarting your device</string>
@@ -117,6 +118,8 @@
 	<string name="notification_ticker">Persistent power menu enabled</string>
 	<string name="notification_title">@string/app_name</string>
 	<string name="notification_text">Click to open config</string>
+	<string name="notification_channel_name">Persistent View Service</string>
+	<string name="notification_channel_description">Keep the persistent view active</string>
 
 	<string name="screenshot_notification_ticker">Screenshot captured</string>
 	<string name="screenshot_notification_title">@string/screenshot_notification_ticker</string>
@@ -124,6 +127,8 @@
 	<string name="screenshot_notification_share">Share</string>
 	<string name="screenshot_notification_share_chooser">Share with</string>
 	<string name="screenshot_notification_delete">Delete</string>
+	<string name="screenshot_notification_channel_name">Screenshot</string>
+	<string name="screenshot_notification_channel_description">Screenshot taken with this app</string>
 
 	<string name="affinity_main" translatable="false">com.nkming.powermenu.MAIN</string>
 	<string name="affinity_install" translatable="false">com.nkming.powermenu.INSTALL</string>

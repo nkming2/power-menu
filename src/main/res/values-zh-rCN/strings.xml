@@ -14,7 +14,7 @@
     <string name="app_name">Power Menu</string>
     <string name="app_pref_name">Power Menu Config</string>
     <string name="install_confirm_content">"转换为系统应用后，某些功能才能正常使用
-    
+
     执行该操作前，请保存您的工作进度
     设备将在操作完成后自动重启"</string>
     <string name="install_confirm_positive">转换</string>
@@ -41,8 +41,6 @@
     <string name="pref_experimental_category">实验性选项</string>
     <string name="pref_haptic_summary">长按时，提供触觉反馈</string>
     <string name="pref_haptic_title">触觉反馈</string>
-    <string name="pref_hide_launcher_summary">可能需要重启桌面启动器程序才能生效</string>
-    <string name="pref_hide_launcher_title">在启动器中隐藏图标</string>
     <string name="pref_install_summary">提升兼容性与稳定性</string>
     <string name="pref_install_title">转换为系统应用</string>
     <string name="pref_native_screenshot_summary_off">正在使用传统方式</string>

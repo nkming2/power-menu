@@ -1,8 +1,10 @@
 package com.nkming.powermenu
 
 import android.app.Activity
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 
 class ActivityThemeAdapter(activity: Activity, darkTheme: Int, lightTheme: Int)
 {
@@ -17,6 +19,24 @@ class ActivityThemeAdapter(activity: Activity, darkTheme: Int, lightTheme: Int)
 						_activity.recreate()
 					}
 				}}
+	}
+
+	fun onResume()
+	{
+		_isResumed = true
+		if (_isRecreatePending)
+		{
+			_handler.post{
+				// Why isn't recreate() working? :/
+				_activity.startActivity(Intent(_activity, javaClass))
+				_activity.finish()
+			}
+		}
+	}
+
+	fun onPause()
+	{
+		_isResumed = false
 	}
 
 	fun onDestroy()
@@ -34,4 +54,7 @@ class ActivityThemeAdapter(activity: Activity, darkTheme: Int, lightTheme: Int)
 	private val _darkTheme = darkTheme
 	private val _lightTheme = lightTheme
 	private val _pref by lazy{Preference.from(_activity)}
+	private val _handler = Handler()
+	private var _isResumed = false
+	private var _isRecreatePending = false
 }

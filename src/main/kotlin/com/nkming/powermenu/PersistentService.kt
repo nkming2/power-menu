@@ -1,12 +1,16 @@
 package com.nkming.powermenu
 
+import android.annotation.TargetApi
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.NotificationCompat
-import android.support.v4.content.ContextCompat
+import android.os.Build
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 
 class PersistentService : com.nkming.utils.widget.PersistentService()
 {
@@ -80,7 +84,22 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			}
 		}
 
+		@JvmStatic
+		@TargetApi(Build.VERSION_CODES.O)
+		fun initNotifChannel(context: Context, nm: NotificationManager)
+		{
+			val ch = NotificationChannel(CHANNEL_ID,
+					context.getString(R.string.notification_channel_name),
+					NotificationManager.IMPORTANCE_MIN)
+			ch.description = context.getString(
+					R.string.notification_channel_description)
+			ch.lockscreenVisibility = NotificationCompat.VISIBILITY_SECRET
+			ch.setShowBadge(false)
+			nm.createNotificationChannel(ch)
+		}
+
 		private var isStarting = false
+		private const val CHANNEL_ID = "persistent_service"
 	}
 
 	override fun onCreate()
@@ -110,15 +129,19 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 
 	override fun getForegroundNotification(): Notification?
 	{
-		val builder = NotificationCompat.Builder(this)
+		val builder = NotificationCompat.Builder(this, CHANNEL_ID)
 		builder.setContentTitle(getString(R.string.notification_title))
 				.setContentText(getString(R.string.notification_text))
 				.setLocalOnly(true)
 				.setOnlyAlertOnce(true)
-				.setPriority(NotificationCompat.PRIORITY_MIN)
 				.setSmallIcon(R.drawable.ic_action_shutdown)
 				.setColor(ContextCompat.getColor(this, R.color.primary_light))
 				.setTicker(getString(R.string.notification_ticker))
+
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+		{
+			builder.priority = NotificationCompat.PRIORITY_MIN
+		}
 
 		val activity = Intent(this, PreferenceActivity::class.java)
 		activity.flags = (Intent.FLAG_ACTIVITY_NEW_TASK

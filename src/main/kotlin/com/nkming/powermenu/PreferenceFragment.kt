@@ -7,6 +7,8 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.CheckBoxPreference
 import android.preference.Preference
+import android.preference.PreferenceCategory
+import android.provider.Settings
 import android.view.View
 import android.widget.TextView
 import com.nkming.utils.preference.SeekBarPreference
@@ -80,11 +82,6 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 		{
 			PersistentService.setAlpha(activity, pref.getInt(key, 100) / 100.0f)
 		}
-		else if (key == getString(R.string.pref_hide_launcher_key))
-		{
-			SystemHelper.setEnableComponent(activity,
-					LauncherActivity::class.java, !pref.getBoolean(key, false))
-		}
 		else if (key == getString(R.string.pref_haptic_key))
 		{
 			PersistentService.setEnableHaptic(activity, pref.getBoolean(key,
@@ -117,6 +114,7 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 		_initInstallPref()
 		_initSoftRebootPref()
 		_initAbout()
+		_initNotifSettings()
 	}
 
 	private fun _initEnablePersistentViewPref()
@@ -205,6 +203,30 @@ class PreferenceFragment : android.preference.PreferenceFragment(),
 						startActivity(i)
 						return@OnPreferenceClickListener true
 					}
+		}
+	}
+
+	private fun _initNotifSettings()
+	{
+		val pref = findPreference(getString(
+				R.string.pref_config_notification_key))
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+		{
+			// Start Android Settings
+			pref.setOnPreferenceClickListener{
+				val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+				intent.putExtra(Settings.EXTRA_APP_PACKAGE,
+						BuildConfig.APPLICATION_ID)
+				startActivity(intent)
+				true
+			}
+		}
+		else
+		{
+			// Not needed on O-
+			val prefParent = findPreference(getString(
+					R.string.pref_others_category_key)) as PreferenceCategory?
+			prefParent?.removePreference(pref)
 		}
 	}
 

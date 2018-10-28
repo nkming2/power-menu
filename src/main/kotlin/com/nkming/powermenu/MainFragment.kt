@@ -8,15 +8,17 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v4.content.LocalBroadcastManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.shamanland.fab.FloatingActionButton
 
 class MainFragment : Fragment()
@@ -34,6 +36,18 @@ class MainFragment : Fragment()
 		_root = inflater.inflate(R.layout.frag_main, container, false)
 		_initRoot()
 		_initButton()
+		_settings.setOnClickListener{
+			val i = Intent(context,  PreferenceActivity::class.java)
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+					or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+			startActivity(i)
+			activity?.finish()
+		}
+		_settings.setOnLongClickListener{
+			Toast.makeText(context, R.string.app_pref_name, Toast.LENGTH_LONG)
+					.show()
+			true
+		}
 		return _root
 	}
 
@@ -90,20 +104,18 @@ class MainFragment : Fragment()
 
 	private fun _initRoot()
 	{
-		_root.setOnClickListener(
-		{
+		_root.setOnClickListener{
 			activity?.finish()
-		})
+		}
 	}
 
 	private fun _initButton()
 	{
 		for ((i, btn) in _actionBtns.withIndex())
 		{
-			btn.bound.setOnClickListener(
-			{
+			btn.bound.setOnClickListener{
 				btn.onClick()
-			})
+			}
 			btn.bound.scaleX = 0f
 			btn.bound.scaleY = 0f
 			btn.bound.animate().scaleX(1f).scaleY(1f)
@@ -123,10 +135,9 @@ class MainFragment : Fragment()
 	{
 		for (b in _restartMenuBtns)
 		{
-			b.bound.setOnClickListener(
-			{
+			b.bound.setOnClickListener{
 				b.onClick()
-			})
+			}
 		}
 
 		val pref = Preference.from(context!!)
@@ -134,11 +145,10 @@ class MainFragment : Fragment()
 		{
 			_restartNormalBtn.bound.isHapticFeedbackEnabled =
 					pref.isHapticEnabled
-			_restartNormalBtn.bound.setOnLongClickListener(
-			{
+			_restartNormalBtn.bound.setOnLongClickListener{
 				_onRestartNormalLongClick()
 				true
-			})
+			}
 		}
 	}
 
@@ -159,6 +169,7 @@ class MainFragment : Fragment()
 				_dismissOtherBounds(_shutdownBtn)
 				// Disable all click bounds
 				_disableOtherBounds(null as ActionButtonMeta?)
+				_dismissView(_settings)
 			}
 		}
 		// If succeeded, we'll get killed anyway
@@ -196,6 +207,7 @@ class MainFragment : Fragment()
 		_sleepBtn.btn.isShadow = false
 		_dismissOtherBounds(_sleepBtn)
 		_disableOtherBounds(null as ActionButtonMeta?)
+		_dismissView(_settings)
 	}
 
 	private fun _onRestartClick()
@@ -256,6 +268,7 @@ class MainFragment : Fragment()
 		_screenshotBtn.btn.isShadow = false
 		_dismissOtherBounds(_screenshotBtn)
 		_disableOtherBounds(null as ActionButtonMeta?)
+		_dismissView(_settings)
 	}
 
 	private fun _onRestartMenuClick(meta: RestartButtonMeta,
@@ -276,6 +289,7 @@ class MainFragment : Fragment()
 				_dismissOtherBounds(meta)
 				_dismissOtherLabels(null)
 				_disableOtherBounds(null as RestartButtonMeta?)
+				_dismissView(_settings)
 			}
 		}
 		// If succeeded, we'll get killed anyway
@@ -306,6 +320,7 @@ class MainFragment : Fragment()
 				_dismissOtherBounds(_restartNormalBtn)
 				_dismissOtherLabels(null)
 				_disableOtherBounds(null as RestartButtonMeta?)
+				_dismissView(_settings)
 			}
 		}
 		// If succeeded, we'll get killed anyway
@@ -492,35 +507,34 @@ class MainFragment : Fragment()
 		bound.isEnabled = false
 	}
 
-	private val _appContext by lazy({activity!!.applicationContext})
-	private val _handler by lazy({Handler()})
+	private val _appContext by lazy{activity!!.applicationContext}
+	private val _handler by lazy{Handler()}
 	private var _activeDangerousAction: DangerousAction? = null
 	private var _isReqPermission = false
 
 	private lateinit var _root: View
-	private val _actionBtns by lazy(
-	{
+	private val _actionBtns by lazy{
 		arrayOf(ActionButtonMeta(
 						_root.findViewById(R.id.shutdown_id)
 								as FloatingActionButton,
 						_root.findViewById(R.id.shutdown_btn_bound),
-						{_onShutdownClick()}),
+						::_onShutdownClick),
 				ActionButtonMeta(
 						_root.findViewById(R.id.sleep_btn)
 								as FloatingActionButton,
 						_root.findViewById(R.id.sleep_btn_bound),
-						{_onSleepClick()}),
+						::_onSleepClick),
 				ActionButtonMeta(
 						_root.findViewById(R.id.restart_btn)
 								as FloatingActionButton,
 						_root.findViewById(R.id.restart_btn_bound),
-						{_onRestartClick()}),
+						::_onRestartClick),
 				ActionButtonMeta(
 						_root.findViewById(R.id.screenshot_btn)
 								as FloatingActionButton,
 						_root.findViewById(R.id.screenshot_btn_bound),
-						{_onScreenshotClick()}))
-	})
+						::_onScreenshotClick))
+	}
 
 	private val _shutdownBtn: ActionButtonMeta
 		get() = _actionBtns[0]
@@ -534,29 +548,28 @@ class MainFragment : Fragment()
 	private val _screenshotBtn: ActionButtonMeta
 		get() = _actionBtns[3]
 
-	private val _restartMenuBtns by lazy(
-	{
+	private val _restartMenuBtns by lazy{
 		arrayOf(RestartButtonMeta(
 						_restartBtn.btn,
 						_restartBtn.bound,
 						_root.findViewById(R.id.restart_normal_label)
 								as TextView,
-						{_onRestartNormalClick()}),
+						::_onRestartNormalClick),
 				RestartButtonMeta(
 						_root.findViewById(R.id.restart_recovery_btn)
 								as FloatingActionButton,
 						_root.findViewById(R.id.restart_recovery_btn_bound),
 						_root.findViewById(R.id.restart_recovery_label)
 								as TextView,
-						{_onRestartRecoveryClick()}),
+						::_onRestartRecoveryClick),
 				RestartButtonMeta(
 						_root.findViewById(R.id.restart_bootloader_btn)
 								as FloatingActionButton,
 						_root.findViewById(R.id.restart_bootloader_btn_bound),
 						_root.findViewById(R.id.restart_bootloader_label)
 								as TextView,
-						{_onRestartBootloaderClick()}))
-	})
+						::_onRestartBootloaderClick))
+	}
 
 	private val _restartNormalBtn: RestartButtonMeta
 		get() = _restartMenuBtns[0]
@@ -567,5 +580,7 @@ class MainFragment : Fragment()
 	private val _restartBootloaderBtn: RestartButtonMeta
 		get() = _restartMenuBtns[2]
 
-	private val _reveal by lazy({_root.findViewById(R.id.reveal) as RevealView})
+	private val _reveal by lazy{_root.findViewById(R.id.reveal) as RevealView}
+
+	private val _settings by lazy{_root.findViewById(R.id.settings) as ImageView}
 }
