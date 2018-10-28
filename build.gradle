@@ -19,6 +19,9 @@ android {
 	sourceSets {
 		main.java.srcDirs += 'src/main/kotlin'
 	}
+	lintOptions {
+		disable 'MissingTranslation'
+	}
 }
 
 dependencies {
