@@ -1,5 +1,8 @@
 package com.nkming.powermenu
 
+import android.annotation.TargetApi
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -24,7 +27,22 @@ class ScreenshotHandler(context: Context)
 {
 	companion object
 	{
+		@JvmStatic
+		@TargetApi(Build.VERSION_CODES.O)
+		fun initNotifChannel(context: Context, nm: NotificationManager)
+		{
+			val ch = NotificationChannel(CHANNEL_ID,
+					context.getString(R.string.screenshot_notification_channel_name),
+					NotificationManager.IMPORTANCE_HIGH)
+			ch.description = context.getString(
+					R.string.screenshot_notification_channel_description)
+			ch.lockscreenVisibility = NotificationCompat.VISIBILITY_SECRET
+			nm.createNotificationChannel(ch)
+		}
+
 		private val LOG_TAG = ScreenshotHandler::class.java.canonicalName
+
+		private const val CHANNEL_ID = "screenshot"
 	}
 
 	fun onScreenshotSuccess(filepath: String, rotation: Int)
@@ -187,7 +205,7 @@ class ScreenshotHandler(context: Context)
 				val deletePendingIntent = PendingIntent.getService(_context,
 						2, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-				val n = NotificationCompat.Builder(_context)
+				val n = NotificationCompat.Builder(_context, CHANNEL_ID)
 						.setTicker(_context.getString(
 								R.string.screenshot_notification_ticker))
 						.setContentTitle(_context.getString(

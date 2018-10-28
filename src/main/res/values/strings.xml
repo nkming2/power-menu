@@ -113,6 +113,8 @@
 	<string name="notification_ticker">Persistent power menu enabled</string>
 	<string name="notification_title">@string/app_name</string>
 	<string name="notification_text">Click to open config</string>
+	<string name="notification_channel_name">Persistent View Service</string>
+	<string name="notification_channel_description">Keep the persistent view active</string>
 
 	<string name="screenshot_notification_ticker">Screenshot captured</string>
 	<string name="screenshot_notification_title">@string/screenshot_notification_ticker</string>
@@ -120,6 +122,8 @@
 	<string name="screenshot_notification_share">Share</string>
 	<string name="screenshot_notification_share_chooser">Share with</string>
 	<string name="screenshot_notification_delete">Delete</string>
+	<string name="screenshot_notification_channel_name">Screenshot</string>
+	<string name="screenshot_notification_channel_description">Screenshot taken with this app</string>
 
 	<string name="affinity_main" translatable="false">com.nkming.powermenu.MAIN</string>
 	<string name="affinity_install" translatable="false">com.nkming.powermenu.INSTALL</string>

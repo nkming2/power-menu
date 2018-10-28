@@ -1,7 +1,9 @@
 package com.nkming.powermenu
 
 import android.app.Application
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.preference.PreferenceManager
 
 class PowerMenuApp : Application()
@@ -11,6 +13,10 @@ class PowerMenuApp : Application()
 		super.onCreate()
 		initLog()
 		initDefaultPref()
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+		{
+			initNotifChannel()
+		}
 
 		val pref = Preference.from(this)
 		migrateVersion(pref)
@@ -26,6 +32,14 @@ class PowerMenuApp : Application()
 	{
 		PreferenceManager.setDefaultValues(this, getString(R.string.pref_file),
 				Context.MODE_PRIVATE, R.xml.preference, false)
+	}
+
+	private fun initNotifChannel()
+	{
+		val nm = getSystemService(Context.NOTIFICATION_SERVICE)
+				as NotificationManager
+		PersistentService.initNotifChannel(this, nm)
+		ScreenshotHandler.initNotifChannel(this, nm)
 	}
 
 	private fun migrateVersion(pref: Preference)
