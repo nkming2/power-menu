@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.provider.Settings
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -149,6 +150,19 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 		val pi = PendingIntent.getActivity(this, 0, activity,
 				PendingIntent.FLAG_UPDATE_CURRENT)
 		builder.setContentIntent(pi)
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+		{
+			val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+			intent.putExtra(Settings.EXTRA_APP_PACKAGE,
+					BuildConfig.APPLICATION_ID)
+			intent.putExtra(Settings.EXTRA_CHANNEL_ID, CHANNEL_ID)
+			val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+					PendingIntent.FLAG_UPDATE_CURRENT)
+			builder.addAction(R.drawable.outline_visibility_off_white_24,
+					getString(R.string.notification_action_hide),
+					pendingIntent)
+		}
 
 		return builder.build()
 	}

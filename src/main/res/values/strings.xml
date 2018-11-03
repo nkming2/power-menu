@@ -118,6 +118,7 @@
 	<string name="notification_ticker">Persistent power menu enabled</string>
 	<string name="notification_title">@string/app_name</string>
 	<string name="notification_text">Click to open config</string>
+	<string name="notification_action_hide">Hide</string>
 	<string name="notification_channel_name">Persistent View Service</string>
 	<string name="notification_channel_description">Keep the persistent view active</string>
 
