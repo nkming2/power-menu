@@ -23,6 +23,7 @@
     若转换成功，设备将自动重启"</string>
     <string name="install_failed">转换失败，尚未获取 root 权限？</string>
     <string name="install_title">转换中...</string>
+    <string name="notification_action_hide">隐藏</string>
     <string name="notification_channel_name">界面常驻服务</string>
     <string name="notification_channel_description">守护界面常驻的进程</string>
     <string name="notification_text">点击可进行设置</string>
@@ -36,7 +37,7 @@
     <string name="pref_autohide_persistent_view_summary">运行全屏应用时，按钮将会隐藏</string>
     <string name="pref_autohide_persistent_view_title">全屏时隐藏</string>
     <string name="pref_config_notification_title">通知栏设置</string>
-	<string name="pref_config_notification_summary">在系统设置中自定义通知栏，如优先显示权、在锁屏上显示等。</string>
+    <string name="pref_config_notification_summary">在系统设置中自定义通知栏，如优先显示权、在锁屏上显示等</string>
     <string name="pref_confirm_summary">在关闭或重启设备前进行确认</string>
     <string name="pref_confirm_title">防止误操作</string>
     <string name="pref_dark_theme_summary_off">正在使用亮色主题</string>
