@@ -23,8 +23,11 @@
     若转换成功，设备将自动重启"</string>
     <string name="install_failed">转换失败，尚未获取 root 权限？</string>
     <string name="install_title">转换中...</string>
+    <string name="notification_action_hide">隐藏</string>
+    <string name="notification_channel_name">界面常驻服务</string>
+    <string name="notification_channel_description">守护界面常驻的进程</string>
     <string name="notification_text">点击可进行设置</string>
-    <string name="notification_ticker">Power Menu 界面常驻</string>
+    <string name="notification_ticker">Power Menu 界面常驻已开启</string>
     <string name="notification_title">@string/app_name</string>
     <string name="overlay_permission_required">请授予“在其他应用上层显示”的权限</string>
     <string name="overlay_permission_settings_open_failed">无法打开设置界面，请手动授予“在其他应用上层显示”的权限</string>
@@ -33,6 +36,8 @@
     <string name="pref_alpha_title">透明度</string>
     <string name="pref_autohide_persistent_view_summary">运行全屏应用时，按钮将会隐藏</string>
     <string name="pref_autohide_persistent_view_title">全屏时隐藏</string>
+    <string name="pref_config_notification_title">通知栏设置</string>
+    <string name="pref_config_notification_summary">在系统设置中自定义通知栏，如优先显示权、在锁屏上显示等</string>
     <string name="pref_confirm_summary">在关闭或重启设备前进行确认</string>
     <string name="pref_confirm_title">防止误操作</string>
     <string name="pref_dark_theme_summary_off">正在使用亮色主题</string>
@@ -68,6 +73,8 @@
     <string name="restart_mode_recovery">Recovery</string>
     <string name="screenshot_fail_file">截图失败，请尝试在 SuperSU 中取消勾选“挂载命名空间分离”</string>
     <string name="screenshot_fail_screencap">截图失败</string>
+    <string name="screenshot_notification_channel_name">截图</string>
+    <string name="screenshot_notification_channel_description">来自此应用的截图</string>
     <string name="screenshot_notification_delete">删除</string>
     <string name="screenshot_notification_share">分享</string>
     <string name="screenshot_notification_share_chooser">分享至</string>
