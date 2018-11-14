@@ -26,7 +26,7 @@
     <string name="notification_action_hide">隐藏</string>
     <string name="notification_channel_name">界面常驻服务</string>
     <string name="notification_channel_description">守护界面常驻的进程</string>
-    <string name="notification_text">点击可进行设置</string>
+    <string name="notification_text">界面常驻服务</string>
     <string name="notification_ticker">Power Menu 界面常驻已开启</string>
     <string name="notification_title">@string/app_name</string>
     <string name="overlay_permission_required">请授予“在其他应用上层显示”的权限</string>

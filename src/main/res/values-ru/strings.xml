@@ -35,7 +35,6 @@
 	<string name="write_storage_required">Пожалуйста, предоставьте нам разрешение для того, чтобы сделать скриншот</string>
 	<string name="soft_reboot_fail">Ошибка мягкой перезагрузки, пожалуйста, сообщите</string>
 	<string name="uninstall_content">Ничего не делайте. Ваше устройство будет автоматически перезагружаться в случае успеха</string>
-	<string name="notification_text">Нажмите, чтобы открыть конфигурацию</string>
 	<string name="about_source_title">Исходный код</string>
 	<string name="pref_soft_reboot_summary">Нажмите и удерживайте кнопку перезагрузки, чтобы убить процесс</string>
 	<string name="pref_haptic_title">Виброотклик</string>

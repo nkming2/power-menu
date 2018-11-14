@@ -21,7 +21,6 @@ Devam etmeden önce çalışmanızı kaydedin, cihazınız kurulumdan sonra otom
 	<string name="install_content">Hiçbir şey yapmayın. Eğer başarılı olursa cihazınız otomatik olarak yeniden başlatılacak.</string>
 	<string name="install_failed">Kurulurken hata oluştu, cihaz rootlu değil mi?</string>
 	<string name="install_title">Kuruluyor...</string>
-	<string name="notification_text">Ayarları açmak için dokunun.</string>
 	<string name="notification_ticker">Kalıcı güç menüsü etkin.</string>
 	<string name="notification_title">@string/app_name</string>
 	<string name="overlay_permission_required">Lütfen bize diğer uygulamalardan yararlanmak için izin verin.</string>

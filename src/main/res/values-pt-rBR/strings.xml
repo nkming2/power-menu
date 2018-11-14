@@ -21,8 +21,7 @@ Realize um backup antes de prosseguir, seu dispositivo será reiniciado automati
 <string name="install_content">Não faça nada. Seu dispositivo será reiniciado automaticamente se for bem-sucedido</string>
 <string name="install_failed">Instalação falou, seu dispositivo está rooteado?</string>
 <string name="install_title">Instalando...</string>
-<string name="notification_text">Clique para abrir as configurações</string>
-<string name="notification_ticker">Menu power persistente ativado</string>
+	<string name="notification_ticker">Menu power persistente ativado</string>
 <string name="notification_title">@string/app_name</string>
 <string name="overlay_permission_required">Por favor, conceda-nos permissão para desenhar em outros apps</string>
 <string name="overlay_permission_settings_open_failed">Falha ao abrir as Configurações do Android, conceda-nos permissão para desenhar sobre outros aplicativos manualmente</string>

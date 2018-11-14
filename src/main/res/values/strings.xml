@@ -117,7 +117,7 @@
 
 	<string name="notification_ticker">Persistent power menu enabled</string>
 	<string name="notification_title">@string/app_name</string>
-	<string name="notification_text">Click to open config</string>
+	<string name="notification_text">Persistent view service</string>
 	<string name="notification_action_hide">Hide</string>
 	<string name="notification_channel_name">Persistent View Service</string>
 	<string name="notification_channel_description">Keep the persistent view active</string>
@@ -130,6 +130,12 @@
 	<string name="screenshot_notification_delete">Delete</string>
 	<string name="screenshot_notification_channel_name">Screenshot</string>
 	<string name="screenshot_notification_channel_description">Screenshot taken with this app</string>
+
+	<string name="system_override_notif_title" translatable="false">@string/app_name</string>
+	<string name="system_override_notif_text">System override service</string>
+	<string name="system_override_notif_action_hide" translatable="false">@string/notification_action_hide</string>
+	<string name="system_override_notif_channel_name">System Override Service</string>
+	<string name="system_override_notif_channel_description" translatable="false">@string/pref_override_system_menu_title</string>
 
 	<string name="affinity_main" translatable="false">com.nkming.powermenu.MAIN</string>
 	<string name="affinity_install" translatable="false">com.nkming.powermenu.INSTALL</string>

@@ -21,7 +21,7 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 		fun start(context: Context)
 		{
 			val intent = Intent(context, PersistentService::class.java)
-			context.startService(createStart(intent))
+			ContextCompat.startForegroundService(context, createStart(intent))
 			isStarting = true
 		}
 
@@ -31,7 +31,7 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			if (isRunning() || isStarting)
 			{
 				val intent = Intent(context, PersistentService::class.java)
-				context.startService(createStop(intent))
+				ContextCompat.startForegroundService(context, createStop(intent))
 			}
 		}
 
@@ -41,7 +41,8 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			if (isRunning() || isStarting)
 			{
 				val intent = Intent(context, PersistentService::class.java)
-				context.startService(createShowView(intent))
+				ContextCompat.startForegroundService(context,
+						createShowView(intent))
 			}
 		}
 
@@ -51,7 +52,8 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			if (isRunning() || isStarting)
 			{
 				val intent = Intent(context, PersistentService::class.java)
-				context.startService(createHideView(intent))
+				ContextCompat.startForegroundService(context,
+						createHideView(intent))
 			}
 		}
 
@@ -61,7 +63,8 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			if (isRunning() || isStarting)
 			{
 				val intent = Intent(context, PersistentService::class.java)
-				context.startService(createSetAutohideView(intent, flag))
+				ContextCompat.startForegroundService(context,
+						createSetAutohideView(intent, flag))
 			}
 		}
 
@@ -71,7 +74,8 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			if (isRunning() || isStarting)
 			{
 				val intent = Intent(context, PersistentService::class.java)
-				context.startService(createSetAlpha(intent, alpha))
+				ContextCompat.startForegroundService(context,
+						createSetAlpha(intent, alpha))
 			}
 		}
 
@@ -81,7 +85,8 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			if (isRunning() || isStarting)
 			{
 				val intent = Intent(context, PersistentService::class.java)
-				context.startService(createSetEnableHaptic(intent, flag))
+				ContextCompat.startForegroundService(context,
+						createSetEnableHaptic(intent, flag))
 			}
 		}
 
@@ -128,6 +133,8 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 		return R.layout.persistent_view
 	}
 
+	override fun getForegroundNotificationId() = Res.NOTIF_PERSIST_SERVICE
+
 	override fun getForegroundNotification(): Notification?
 	{
 		val builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -157,7 +164,8 @@ class PersistentService : com.nkming.utils.widget.PersistentService()
 			intent.putExtra(Settings.EXTRA_APP_PACKAGE,
 					BuildConfig.APPLICATION_ID)
 			intent.putExtra(Settings.EXTRA_CHANNEL_ID, CHANNEL_ID)
-			val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+			val pendingIntent = PendingIntent.getActivity(this,
+					Res.PENDING_INTENT_REQ_HIDE_PERSIST_NOTIF, intent,
 					PendingIntent.FLAG_UPDATE_CURRENT)
 			builder.addAction(R.drawable.outline_visibility_off_white_24,
 					getString(R.string.notification_action_hide),

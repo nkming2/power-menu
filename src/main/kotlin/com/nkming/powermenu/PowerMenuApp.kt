@@ -40,6 +40,7 @@ class PowerMenuApp : Application()
 				as NotificationManager
 		PersistentService.initNotifChannel(this, nm)
 		ScreenshotHandler.initNotifChannel(this, nm)
+		SystemOverrideService.initNotifChannel(this, nm)
 	}
 
 	private fun migrateVersion(pref: Preference)
